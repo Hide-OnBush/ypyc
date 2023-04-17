@@ -116,11 +116,11 @@ body {
 
   .el-tag {
     //标签原始样式
-    font-size: large;
+    font-size: small;
     margin-right: 15px;
     margin-bottom: 20px;
     padding: 5px 10px;
-    border-radius: 10px;
+    // border-radius: 10px;
     color: #2f3542;
     opacity: 1;
     transition: 1s;
@@ -157,8 +157,7 @@ body {
 
   .el-tab-pane {
     //分栏高度
-    height: 30
-  vh;
+    height: 30 vh;
   }
 
   .el-tabs__item {

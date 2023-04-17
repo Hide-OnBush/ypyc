@@ -7,28 +7,28 @@
         <el-tabs tab-position="top" v-model="weekday" style="height: 30vh; font: bold;" type="card"
           @tab-change="getCurrentDelCusList">
           <el-tab-pane label="周一" name="周一">
-            <el-tag size="large" v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
+            <el-tag size="small" v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
             <el-tag v-for="del in delCustomers1" :key="del" type="info" size="large"
               :color="colorForTag[del.Visit[0].拜访建议]" closable @close="handleClose(del)"> {{ del.Visit[0].客户简称 }}
             </el-tag><el-tag size="large" v-if="delCustomers1.length > 0">公司</el-tag></el-tab-pane>
           <el-tab-pane label="周二" name="周二">
-            <el-tag size="large" v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
+            <el-tag size="small" v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
             <el-tag v-for="del in delCustomers2" :key="del" type="info" size="large"
               :color="colorForTag[del.Visit[0].拜访建议]" closable @close="handleClose(del)"> {{ del.Visit[0].客户简称 }}
             </el-tag><el-tag size="large" v-if="delCustomers2.length > 0">公司</el-tag>
           </el-tab-pane>
           <el-tab-pane label="周三" name="周三">
-            <el-tag size="large" v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
+            <el-tag size="small" v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
             <el-tag v-for="del in delCustomers3" :key="del" type="info" size="large"
               :color="colorForTag[del.Visit[0].拜访建议]" closable @close="handleClose(del)"> {{ del.Visit[0].客户简称 }}
             </el-tag><el-tag size="large" v-if="delCustomers3.length > 0">公司</el-tag></el-tab-pane>
           <el-tab-pane label="周四" name="周四">
-            <el-tag size="large" v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
+            <el-tag size="small" v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
             <el-tag v-for="del in delCustomers4" :key="del" type="info" size="large"
               :color="colorForTag[del.Visit[0].拜访建议]" closable @close="handleClose(del)"> {{ del.Visit[0].客户简称 }}
             </el-tag><el-tag size="large" v-if="delCustomers4.length > 0">公司</el-tag></el-tab-pane>
           <el-tab-pane label="周五" name="周五">
-            <el-tag size="large" v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
+            <el-tag size="small" v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
             <el-tag v-for="del in delCustomers5" :key="del" type="info" size="large"
               :color="colorForTag[del.Visit[0].拜访建议]" closable @close="handleClose(del)"> {{ del.Visit[0].客户简称 }}
             </el-tag><el-tag size="large" v-if="delCustomers5.length > 0">公司</el-tag></el-tab-pane>
@@ -64,17 +64,16 @@
               </el-table>
             </el-popover>
           </div> -->
-         <!-- <el-tag v-for="cus,index in customers" :key="index"   @click="colorForTag[cus.Visit[0].拜访建议]=='red'?handleClick(cus):0"
+          <!-- <el-tag v-for="cus,index in customers" :key="index"   @click="colorForTag[cus.Visit[0].拜访建议]=='red'?handleClick(cus):0"
                   
                  :color="colorForTag[cus.Visit[0].拜访建议]" >{{ cus.Visit[0].客户简称 }}</el-tag> -->
-                 <el-tag v-for="cus,index in customers" :key="index"   @click="flag?handleFalseClick(cus):handleClick(cus)"
-                  
-                  :color="colorForTag[cus.Visit[0].拜访建议]" >{{ cus.Visit[0].客户简称 }}</el-tag>
+          <el-tag v-for="cus, index in customers" :key="index" @click="flag ? handleFalseClick(cus) : handleClick(cus)"
+            :color="colorForTag[cus.Visit[0].拜访建议]">{{ cus.Visit[0].客户简称 }}</el-tag>
         </el-scrollbar>
       </el-col>
     </el-row>
     <!-- 下半区 -->
-    <el-row class='row-bottom'>    
+    <el-row class='row-bottom'>
       <!-- 左下：列表展示部分    -->
       <el-col :span="12" class="col-right-bottom">
         <el-scrollbar height="42.5vh">
@@ -83,7 +82,7 @@
               empty-text="没有客户被排入行程" stripe>
               <el-table-column type="expand">
                 <template #default="props">
-                  <div m="4" class="inTable"> 
+                  <div m="4" class="inTable">
                     <div class="p-info-father" style="display: flex;">
                       <div class="p-info" style="width:50%">
                         <p style="font-weight:bold;"> {{ props.row.modern }}</p>
@@ -360,14 +359,14 @@ function getCurrentDelCusList(weekday: string) {
 function clearCurList(weekday: string) {
   let temLi = ref([])
   temLi.value = delCustomers[weekday].value
-  for (let index = 0; index <temLi.value.length; index++) {
+  for (let index = 0; index < temLi.value.length; index++) {
     const element = temLi.value[index]
     customers.value.unshift(element)
     // getCurrentDelCusList(weekday).value.splice(getCurrentDelCusList(weekday).value.indexOf(element), 1)
 
 
   }
-  flag=false
+  flag = false
   delCustomers[weekday].value = []
   clearTableData(tableData, weekday)
 }
@@ -394,16 +393,16 @@ function clearDelCusList() {
 //定义处理标签（即客户选择）的方法
 const handleClick = (cus: string) => {
 
-  if (colorForTag[cus.Visit[0].拜访建议]=='red'){
-  getCurrentDelCusList(weekday).value.push(cus)
-  customers.value.splice(customers.value.indexOf(cus), 1)
-  insertTableData(getTableData(cus))
-  // console.log({ cus }.cus.Task[0]);
-  // console.log(customers.value[1]);
-  // console.log(delCustomers[weekday]);
-  // console.log(customers.value.map(item => (item)));
-  // console.log(sss.value)
-  // console.log(delCustomers1.value[0].Visit[0].客户代码_id);
+  if (colorForTag[cus.Visit[0].拜访建议] == 'red') {
+    getCurrentDelCusList(weekday).value.push(cus)
+    customers.value.splice(customers.value.indexOf(cus), 1)
+    insertTableData(getTableData(cus))
+    // console.log({ cus }.cus.Task[0]);
+    // console.log(customers.value[1]);
+    // console.log(delCustomers[weekday]);
+    // console.log(customers.value.map(item => (item)));
+    // console.log(sss.value)
+    // console.log(delCustomers1.value[0].Visit[0].客户代码_id);
   }
   stateFlag(customers.value)
   console.log(delCustomers1.value.length);
@@ -415,20 +414,20 @@ const handleClick = (cus: string) => {
 
 }
 const handleFalseClick = (cus: string) => {
-  
-  if (colorForTag[cus.Visit[0].拜访建议]!='red'){
-  getCurrentDelCusList(weekday).value.push(cus)
-  customers.value.splice(customers.value.indexOf(cus), 1)
-  insertTableData(getTableData(cus))
-  // console.log({ cus }.cus.Task[0]);
-  // console.log(customers.value[1]);
-  // console.log(delCustomers[weekday]);
-  // console.log(customers.value.map(item => (item)));
-  // console.log(sss.value)
-  // console.log(delCustomers1.value[0].Visit[0].客户代码_id);
+
+  if (colorForTag[cus.Visit[0].拜访建议] != 'red') {
+    getCurrentDelCusList(weekday).value.push(cus)
+    customers.value.splice(customers.value.indexOf(cus), 1)
+    insertTableData(getTableData(cus))
+    // console.log({ cus }.cus.Task[0]);
+    // console.log(customers.value[1]);
+    // console.log(delCustomers[weekday]);
+    // console.log(customers.value.map(item => (item)));
+    // console.log(sss.value)
+    // console.log(delCustomers1.value[0].Visit[0].客户代码_id);
 
   }
- 
+
 
   // getTime(cus, getCurrentDelCusList(weekday))
 
@@ -439,13 +438,13 @@ const handleFalseClick = (cus: string) => {
 
 
 //定义巡视flag的函数
-function stateFlag(cus:array){
-   let state =cus.every(function (item,index,array){
+function stateFlag(cus: array) {
+  let state = cus.every(function (item, index, array) {
     return (colorForTag[item.Visit[0].拜访建议] != 'red');
   })
-    flag=state
+  flag = state
   console.log(state);
-  
+
   // let res:number=0
   // for (let index=0;index<cus.value.length;index++){
   //   if (colorForTag[cus.Visit[0].拜访建议]=='red'){
