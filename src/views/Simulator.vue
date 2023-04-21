@@ -4,13 +4,14 @@
     <el-row class='row-top'>
       <!-- 左上：排线路部分 -->
       <el-col :span="12" class="col-left-top">
-        <el-tabs tab-position="top" v-model="weekday" style="height: 30vh; font: bold;" type="card"
+        <el-tabs tab-position="top" v-model="weekday" style="height: 30vh; font: bold;" type="card" stretch=true
           @tab-change="getCurrentDelCusList">
           <el-tab-pane label="周一" name="周一">
             <el-tag size="small" v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
             <el-tag v-for="del in delCustomers1" :key="del" type="info" size="large"
               :color="colorForTag[del.Visit[0].拜访建议]" closable @close="handleClose(del)"> {{ del.Visit[0].客户简称 }}
-            </el-tag><el-tag size="large" v-if="delCustomers1.length > 0">公司</el-tag></el-tab-pane>
+            </el-tag><el-tag size="large" v-if="delCustomers1.length > 0">公司</el-tag>
+          </el-tab-pane>
           <el-tab-pane label="周二" name="周二">
             <el-tag size="small" v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
             <el-tag v-for="del in delCustomers2" :key="del" type="info" size="large"
