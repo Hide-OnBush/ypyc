@@ -4,7 +4,7 @@
     <el-row class='row-top'>
       <!-- 左上：排线路部分 -->
       <el-col :span="12" class="col-left-top">
-        <el-tabs tab-position="top" v-model="weekday" style="height: 30vh; font: bold;" type="card" stretch=true
+        <el-tabs tab-position="top" v-model="weekday" style="height: 30vh; font: bold;" type="card"
           @tab-change="getCurrentDelCusList">
           <el-tab-pane label="周一" name="周一">
             <el-tag size="small" v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
@@ -36,7 +36,7 @@
         </el-tabs>
         <el-button type="warning" @click="clearCurList(weekday)" style="z-index: 100;">重置当天客户</el-button>
         <!-- <el-button type="warning" @click="getRoad(weekday)" style="z-index: 100;">发送数据</el-button> -->
-        <el-button type="warning" @click="postRoad(weekday)" style="z-index: 100;">线路优化</el-button>
+        <!-- <el-button type="warning" @click="postRoad(weekday)" style="z-index: 100;">线路优化</el-button> -->
       </el-col>
       <!-- 右上：客户列表展示 -->
       <el-col :span="12" class="col-right-top" style="z-index: 1;">
@@ -114,8 +114,7 @@
                     <h3 style="color: #418525;">任务<el-icon>
                         <Star />
                       </el-icon></h3>
-                    <el-table :data="props.row.task" :ref="multipleTableRef" :row-key="(row) => row.id"
-                      :reserve-selection="true" @selection-change="handleSelectionChange">
+                    <el-table :data="props.row.task" :row-key="(row) => row.id" :reserve-selection="true">
                       <!-- <el-table-column type="selection" width="55" /> -->
                       <!-- <el-table-column label="任务编号" prop="id" /> -->
                       <el-table-column label="任务内容" prop="任务内容" />
@@ -148,15 +147,12 @@
 
 <script setup lang="ts">
 // 导入部分
-import { StarFilled, Location, Calendar, Star, User, Avatar, InfoFilled, Sunny, MoonNight, Printer, Position } from '@element-plus/icons-vue'
+import { StarFilled, Star, Avatar, InfoFilled, Sunny, MoonNight, Printer, Position } from '@element-plus/icons-vue'
 import { onBeforeMount, onMounted, ref } from 'vue';
 import axios from "axios";
-import initMap from '../views/Map.vue';
-import { shallowRef } from 'vue';
-import { indexOf, lowerFirst } from 'lodash';
-import homeIcon from '@/assets/bg.jpg'
+import { indexOf } from 'lodash';
 import type { ElTable } from 'element-plus';
-import { stringLiteral } from '@babel/types';
+
 
 
 interface TD {
@@ -169,57 +165,50 @@ interface TD {
   task?: object[],
   day_index: string
 }
-
-const multipleTableRef = ref<InstanceType<typeof ElTable>>()
-const multipleSelection = ref<TD[]>([])
-const toggleSelection = (rows?: TD[]) => {
-  if (rows) {
-    rows.forEach((row) => {
-      // TODO: improvement typing when refactor table
-      // esli-nt-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      multipleTableRef.value!.toggleRowSelection(row, undefined)
-    })
-  } else {
-    multipleTableRef.value!.clearSelection()
-  }
+interface Visit {
+  [key: string]: any;
 }
-const handleSelectionChange = (val: TD[]) => {
-  // multipleSelection.value = val
 
+interface Cus {
+  // Visit: { 拜访建议: string, 客户简称: string, }[],
+  Visit: Visit[],
+  Task: object[]
 }
 
 
 //变量定义部分
 let flag: boolean = false
-let customers = ref([])//客户列表
-let delCustomers1 = ref([])//删除客户列表，即排入周一行程的客户列表
-let delCustomers2 = ref([])
-let delCustomers3 = ref([])
-let delCustomers4 = ref([])
-let delCustomers5 = ref([])
-let delCustomers: Object = {
+const customers = ref<Cus[]>([])//客户列表
+let delCustomers1 = ref<Cus[]>([])///删除客户列表，即排入周一行程的客户列表
+let delCustomers2 = ref<Cus[]>([])
+let delCustomers3 = ref<Cus[]>([])
+let delCustomers4 = ref<Cus[]>([])
+let delCustomers5 = ref<Cus[]>([])
+let delCustomers: DelCustomers = {
   "周一": delCustomers1,
   "周二": delCustomers2,
   "周三": delCustomers3,
   "周四": delCustomers4,
   "周五": delCustomers5
 }
-let path1 = ref([]);
-let path2 = ref([]);
-let path3 = ref([]);
-let path4 = ref([]);
-let path5 = ref([]);
-let paths = [path1, path2, path3, path4, path5]
-function clearPaths(paths) {
-  for (let index = 0; index < paths.length; index++) {
-    paths[index].value = [];
-  }
-}
+// let path1 = ref([]);
+// let path2 = ref([]);
+// let path3 = ref([]);
+// let path4 = ref([]);
+// let path5 = ref([]);
+// let paths = [path1, path2, path3, path4, path5]
+// function clearPaths(paths) {
+//   for (let index = 0; index < paths.length; index++) {
+//     paths[index].value = [];
+//   }
+// }
 
 let weekday = "周一"
-const value = ref('')//客户经理value
-const colorForTag: Object = {
+// const value = ref('')//客户经理value
+interface ColorMap {
+  [key: string]: string;
+}
+const colorForTag: ColorMap = {
   "一周内拜访": "red",
   "两周内拜访": "orange",
   "可一月内拜访": "yellow",
@@ -227,72 +216,70 @@ const colorForTag: Object = {
 }//定义对象，给标签打颜色
 //方法定义部分
 //处理原始客户
-function getHandle() {
-  axios.get("http://122.9.67.194:8000/api/customer/info/",
-    { params: {}, headers: {} })
-    .then((res) => { customers.value = res.data; }
-
-
-    );
-}
+// function getHandle() {
+//   axios.get("http://122.9.67.194:8000/api/customer/info/",
+//     { params: {}, headers: {} })
+//     .then((res) => { customers.value = res.data; }
+//     );
+// }
 //处理线路重新规划逻辑
-function resetRoad(array, newarray) {
-  let temroad = ref([])
-  for (let index = 0; index < newarray.value.length; index++) {
-    const element1 = newarray.value[index];
-    for (let i = 0; i < array.value.length; i++) {
-      const element2 = array.value[i];
-      if (element1 == element2.Visit[0].客户代码_id) {
-        temroad.value.push(element2)
-      }
-    }
+// function resetRoad(array, newarray) {
+//   let temroad = ref([])
+//   for (let index = 0; index < newarray.value.length; index++) {
+//     const element1 = newarray.value[index];
+//     for (let i = 0; i < array.value.length; i++) {
+//       const element2 = array.value[i];
+//       if (element1 == element2.Visit[0].客户代码_id) {
+//         temroad.value.push(element2)
+//       }
+//     }
 
-  }
-  return temroad
+//   }
+//   return temroad
 
-}
-function resetTable(array, newarray) {
-  let temroad = ref([])
-  for (let index = 0; index < newarray.value.length; index++) {
-    const element1 = newarray.value[index];
-    for (let i = 0; i < array.value.length; i++) {
-      const element2 = array.value[i];
-      if (element1 == element2.id) {
-        temroad.value.push(element2)
-      }
-    }
+// }
+// function resetTable(array, newarray) {
+//   let temroad = ref([])
+//   for (let index = 0; index < newarray.value.length; index++) {
+//     const element1 = newarray.value[index];
+//     for (let i = 0; i < array.value.length; i++) {
+//       const element2 = array.value[i];
+//       if (element1 == element2.id) {
+//         temroad.value.push(element2)
+//       }
+//     }
 
-  }
-  return temroad
+//   }
+//   return temroad
 
-}
+// }
 
 //处理最终路线的渲染
-function postRoad(e) {
-  let cusList11 = ref([])
-  cusList11 = getCurrentDelCusList(e)
-  let idPost = ref([])
-  for (let index = 0; index < cusList11.value.length; index++) {
-    idPost.value.push(cusList11.value[index].Visit[0].客户代码_id);
-  }
-  axios.post("http://122.9.67.194:8000/api/customer/info/getRoad/",
-    { text: idPost.value }, {})
-    .then((res) => {
-      let newRoad = ref([])
+// function postRoad(e) {
+//   let cusList11 = ref([])
+//   cusList11 = getCurrentDelCusList(e)
+//   let idPost = ref([])
+//   for (let index = 0; index < cusList11.value.length; index++) {
+//     idPost.value.push(cusList11.value[index].Visit[0].客户代码_id);
+//   }
+//   axios.post("http://122.9.67.194:8000/api/customer/info/getRoad/",
+//     { text: idPost.value }, {})
+//     .then((res) => {
+//       let newRoad = ref([])
 
-      newRoad.value = res.data
-      console.log(newRoad.value[0]);
-      console.log(resetRoad(getCurrentDelCusList(e), newRoad));
+//       newRoad.value = res.data
+//       console.log(newRoad.value[0]);
+//       console.log(resetRoad(getCurrentDelCusList(e), newRoad));
 
-      getCurrentDelCusList(e).value = resetRoad(getCurrentDelCusList(e), newRoad).value
-      tableData.value = resetTable(tableData, newRoad).value
-
-      // console.log(delCustomers1);
+//       getCurrentDelCusList(e).value = resetRoad(getCurrentDelCusList(e), newRoad).value
+//       tableData.value = resetTable(tableData, newRoad).value
 
 
-    }
-    );
-}
+
+
+//     }
+//     );
+// }
 //处理请求客户(base客户经理)
 function postHandle(e: string) {
   clearDelCusList()
@@ -316,24 +303,24 @@ const cusMangers = [
   { value: 10, text: "何玉萍", Lng: 121.51352, Lat: 31.306419 },
   { value: 11, text: "沈秀月", Lng: 121.532549, Lat: 31.281506 },
 ]
-const company = {
-  Lng: 121.525144, Lat: 31.29509
-}
+// const company:object = {
+//   Lng: 121.525144, Lat: 31.29509
+// }
 //处理客户经理选择--处理方法
-function oncusMChange(e: number) {
-  const cusMName = cusMangers[e - 1].text
-  delCustomers1.value = []
-  tableData.value = []
-  cusMIndex = e
-  flag = true
-  postHandle(cusMName)
-  clearPaths(paths)
-  path1.value.push(new AMap.LngLat(cusMangers[e - 1].Lng, cusMangers[e - 1].Lat))
-  path2.value.push(new AMap.LngLat(cusMangers[e - 1].Lng, cusMangers[e - 1].Lat))
-  path3.value.push(new AMap.LngLat(cusMangers[e - 1].Lng, cusMangers[e - 1].Lat))
-  path4.value.push(new AMap.LngLat(cusMangers[e - 1].Lng, cusMangers[e - 1].Lat))
-  path5.value.push(new AMap.LngLat(cusMangers[e - 1].Lng, cusMangers[e - 1].Lat))
-}
+// function oncusMChange(e: number) {
+//   const cusMName = cusMangers[e - 1].text
+//   delCustomers1.value = []
+//   tableData.value = []
+//   cusMIndex = e
+//   flag = true
+//   postHandle(cusMName)
+//   clearPaths(paths)
+//   path1.value.push(new AMap.LngLat(cusMangers[e - 1].Lng, cusMangers[e - 1].Lat))
+//   path2.value.push(new AMap.LngLat(cusMangers[e - 1].Lng, cusMangers[e - 1].Lat))
+//   path3.value.push(new AMap.LngLat(cusMangers[e - 1].Lng, cusMangers[e - 1].Lat))
+//   path4.value.push(new AMap.LngLat(cusMangers[e - 1].Lng, cusMangers[e - 1].Lat))
+//   path5.value.push(new AMap.LngLat(cusMangers[e - 1].Lng, cusMangers[e - 1].Lat))
+// }
 
 
 //处理地图原始渲染，此处必须加key  
@@ -345,13 +332,13 @@ onBeforeMount(() => {
   // initMap()
 })
 onMounted(() => {
-  getRoad(weekday)
-  // console
-  // getHandle()
+  // getRoad(weekday)
   postHandle("闻毅")
-
 })
 
+interface DelCustomers {
+  [key: string]: any // any[] 可以替换成您的特定类型
+}
 
 function getCurrentDelCusList(weekday: string) {
   return delCustomers[weekday]
@@ -371,7 +358,7 @@ function clearCurList(weekday: string) {
   delCustomers[weekday].value = []
   clearTableData(tableData, weekday)
 }
-function clearTableData(tableData: array, weekday: string) {
+function clearTableData(tableData: TableData[], weekday: string) {
   const tindex: array = []
   for (let index = 0; index < tableData.value.length; index++) {
     const element = tableData.value[index];
@@ -392,7 +379,7 @@ function clearDelCusList() {
   delCustomers5.value = []
 }
 //定义处理标签（即客户选择）的方法
-const handleClick = (cus: string) => {
+const handleClick = (cus: Cus) => {
 
   if (colorForTag[cus.Visit[0].拜访建议] == 'red') {
     getCurrentDelCusList(weekday).value.push(cus)
@@ -414,7 +401,7 @@ const handleClick = (cus: string) => {
   // updateMap()
 
 }
-const handleFalseClick = (cus: string) => {
+const handleFalseClick = (cus: Cus) => {
 
   if (colorForTag[cus.Visit[0].拜访建议] != 'red') {
     getCurrentDelCusList(weekday).value.push(cus)
@@ -439,8 +426,8 @@ const handleFalseClick = (cus: string) => {
 
 
 //定义巡视flag的函数
-function stateFlag(cus: array) {
-  let state = cus.every(function (item, index, array) {
+function stateFlag(cus: any) {
+  let state = cus.every(function (item: any) {
     return (colorForTag[item.Visit[0].拜访建议] != 'red');
   })
   flag = state
@@ -460,7 +447,7 @@ function stateFlag(cus: array) {
 
 
 //定义处理标签（即客户退回）的方法
-const handleClose = (del: string) => {
+const handleClose = (del: Cus) => {
   deleteTableData(getTableData(del))
   customers.value.unshift(del)
   getCurrentDelCusList(weekday).value.splice(getCurrentDelCusList(weekday).value.indexOf(del), 1)
@@ -477,6 +464,13 @@ let tableDataObj: {
   date: string,
   name: string,
   id: string,
+  modern: string,
+  road: string,
+  latest_time: string,
+  open: string,
+  close: string,
+  visit_time: string,
+  pos: string,
   type: string,
   address?: string,
   last_date?: string,
@@ -485,8 +479,27 @@ let tableDataObj: {
   time?: number,
   visit_time_cost?: number
 }
+interface TableData {
+  date: string;
+  name: string;
+  id: string;
+  modern: string;
+  road: string;
+  latest_time: string;
+  open: string;
+  close: string;
+  visit_time: string;
+  pos: string;
+  type: string;
+  address?: string;
+  last_date?: string;
+  task?: object[];
+  day_index: string;
+  time?: number;
+  visit_time_cost?: number;
+}
 //indexOf(weekdays,weekday)排序依据
-function getTableData(cus) {
+function getTableData(cus: Cus) {
   tableDataObj = {
     name: cus.Visit[0].客户简称, modern: cus.Visit[0].是否现代终端, id: cus.Visit[0].客户代码_id,
     type: cus.Visit[0].经营业态, road: cus.Visit[0].送货路段, latest_time: cus.Visit[0].最晚线路规划时间, visit_time_cost: cus.Visit[0].拜访时长预估,
@@ -497,41 +510,24 @@ function getTableData(cus) {
   return (tableDataObj)
 }
 
-function getTime(tableData, weekday) {
-  // if (delCustomers1.value.length == 1) {
-  //   console.log("<" + delCustomers1.value[0].Visit[0].客户代码_id + "," + "公司>");
-  //   const ti = sss.value.filter(item => item.OD === ("<" + delCustomers1.value[0].Visit[0].客户代码_id + "," + "公司>"))
-  //   console.log(ti[0].time);
-  //   return ti[0].times
-  // }else{  
-  //   for (let index = 0; index < array.value.length; index++) {
+// function getTime(tableData, weekday) {
+//   const s = getCurrentDelCusList(weekday)
+//   for (let index = 0; index < tableData.value.length; index++) {
+//     const element = tableData.value[index];
+//   }
+//   const ti = sss.value.filter(item => item.OD === ("<" + s.value[index_t].Visit[0].客户代码_id + "," + s.value[index_t + 11].Visit[0].客户代码_id + ">"))
+//   console.log(ti);
+// }
 
 
-  // } }
-  const s = getCurrentDelCusList(weekday)
-
-  // console.log(index_t)
-  // console.log(s[0].Visit[0].客户代码_id);
-  for (let index = 0; index < tableData.value.length; index++) {
-    const element = tableData.value[index];
-  }
-  const ti = sss.value.filter(item => item.OD === ("<" + s.value[index_t].Visit[0].客户代码_id + "," + s.value[index_t + 11].Visit[0].客户代码_id + ">"))
-
-  console.log(ti);
-
-  // return ti[0].time
-
-}
-
-
-function insertTableData(tableDataObj) {
+function insertTableData(tableDataObj: TableData) {
   tableData.value.push(tableDataObj)
 }
 
 const tableData = ref([])
 
 
-function deleteTableData(tableDataObj) {
+function deleteTableData(tableDataObj: TableData) {
   for (let i = 0; i < tableData.value.length; i++) {
     const element = tableData.value[i];
     if (element.name == tableDataObj.name) {
@@ -541,21 +537,21 @@ function deleteTableData(tableDataObj) {
 }
 
 
-let sss = ref([])
+// let sss = ref([])
 
-function getRoad(Q) {
+// function getRoad(Q) {
 
-  axios.post("http://122.9.67.194:8000/api/customer/info/road/",
-    {
-      text: customers.value
+//   axios.post("http://122.9.67.194:8000/api/customer/info/road/",
+//     {
+//       text: customers.value
 
-    }, {})
-    .then((res) => {
-      sss.value = res.data
-      console.log(sss.value[0].OD)
-    }
-    );
-}
+//     }, {})
+//     .then((res) => {
+//       sss.value = res.data
+//       console.log(sss.value[0].OD)
+//     }
+//     );
+// }
 
 
 
