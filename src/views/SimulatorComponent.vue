@@ -1,6 +1,4 @@
 <template>
-  <div>
-  </div>
   <el-main>
     <!-- 上半区 -->
     <el-row class='row-top'>
@@ -36,7 +34,6 @@
               @close="handleClose(del)"> {{ del.Visit[0].客户简称 }}
             </el-tag><el-tag v-if="delCustomers5.length > 0">公司</el-tag></el-tab-pane>
         </el-tabs>
-
         <!-- <el-button type="warning" @click="getRoad(weekday)" style="z-index: 100;">发送数据</el-button> -->
         <!-- <el-button type="warning" @click="postRoad(weekday)" style="z-index: 100;">线路优化</el-button> -->
       </el-col>
@@ -67,8 +64,7 @@
               </el-table>
             </el-popover>
           </div> -->
-          <!-- <el-tag v-for="cus,index in customers" :key="index"   @click="colorForTag[cus.Visit[0].拜访建议]=='red'?handleClick(cus):0"
-                  
+          <!-- <el-tag v-for="cus,index in customers" :key="index"   @click="colorForTag[cus.Visit[0].拜访建议]=='red'?handleClick(cus):0"             
                  :color="colorForTag[cus.Visit[0].拜访建议]" >{{ cus.Visit[0].客户简称 }}</el-tag> -->
           <el-tag v-for="cus, index in customers" :key="index" @click="flag ? handleFalseClick(cus) : handleClick(cus)"
             :color="colorForTag[cus.Visit[0].拜访建议]">{{ cus.Visit[0].客户简称 }}</el-tag>
@@ -125,9 +121,7 @@
                       <el-table-column label="剩余完成时间(工作日)" prop="任务剩余完成时间_工作日" />
                     </el-table>
                   </div>
-
                 </template>
-
               </el-table-column>
               <el-table-column label="周期" prop="date" />
               <el-table-column label="客户名称" prop="name" />
@@ -141,11 +135,6 @@
   </el-main>
 </template>
       
-
-
-
-
-
 <script setup lang="ts">
 // 导入部分
 import { StarFilled, Star, Avatar, InfoFilled, Sunny, MoonNight, Printer, Position } from '@element-plus/icons-vue'
@@ -155,9 +144,6 @@ import { indexOf } from 'lodash';
 import type { ElTable } from 'element-plus';
 import DraggableTag from '../components/DraggableTag.vue';
 import WlTag from '../components/WlTag.vue';
-
-
-
 interface TD {
   date: string,
   name: string,
@@ -171,14 +157,11 @@ interface TD {
 interface Visit {
   [key: string]: any;
 }
-
 interface Cus {
   // Visit: { 拜访建议: string, 客户简称: string, }[],
   Visit: Visit[],
   Task: object[]
 }
-
-
 //变量定义部分
 let flag: boolean = false
 const customers = ref<Cus[]>([])//客户列表
@@ -205,7 +188,6 @@ let delCustomers: DelCustomers = {
 //     paths[index].value = [];
 //   }
 // }
-
 let weekday = "周一"
 // const value = ref('')//客户经理value
 interface ColorMap {
@@ -236,10 +218,8 @@ const colorForTag: ColorMap = {
 //         temroad.value.push(element2)
 //       }
 //     }
-
 //   }
 //   return temroad
-
 // }
 // function resetTable(array, newarray) {
 //   let temroad = ref([])
@@ -251,12 +231,9 @@ const colorForTag: ColorMap = {
 //         temroad.value.push(element2)
 //       }
 //     }
-
 //   }
 //   return temroad
-
 // }
-
 //处理最终路线的渲染
 // function postRoad(e) {
 //   let cusList11 = ref([])
@@ -269,17 +246,11 @@ const colorForTag: ColorMap = {
 //     { text: idPost.value }, {})
 //     .then((res) => {
 //       let newRoad = ref([])
-
 //       newRoad.value = res.data
 //       console.log(newRoad.value[0]);
 //       console.log(resetRoad(getCurrentDelCusList(e), newRoad));
-
 //       getCurrentDelCusList(e).value = resetRoad(getCurrentDelCusList(e), newRoad).value
 //       tableData.value = resetTable(tableData, newRoad).value
-
-
-
-
 //     }
 //     );
 // }
@@ -325,7 +296,6 @@ const cusMangers = [
 //   path5.value.push(new AMap.LngLat(cusMangers[e - 1].Lng, cusMangers[e - 1].Lat))
 // }
 
-
 //处理地图原始渲染，此处必须加key  
 //生命周期函数
 onBeforeMount(() => {
@@ -365,8 +335,6 @@ function clearTableData(tableData: TableData[], weekday: string) {
     if (element.date == weekday) {
       tindex.push(index)
     }
-
-
   }
   console.log(tindex);
   tableData.value.splice(tindex[0], tindex.length)
@@ -380,7 +348,6 @@ function clearDelCusList() {
 }
 //定义处理标签（即客户选择）的方法
 const handleClick = (cus: Cus) => {
-
   if (colorForTag[cus.Visit[0].拜访建议] == 'red') {
     getCurrentDelCusList(weekday).value.push(cus)
     customers.value.splice(customers.value.indexOf(cus), 1)
@@ -394,15 +361,10 @@ const handleClick = (cus: Cus) => {
   }
   stateFlag(customers.value)
   console.log(delCustomers1.value.length);
-
   // getTime(cus, getCurrentDelCusList(weekday))
-
-
   // updateMap()
-
 }
 const handleFalseClick = (cus: Cus) => {
-
   if (colorForTag[cus.Visit[0].拜访建议] != 'red') {
     getCurrentDelCusList(weekday).value.push(cus)
     customers.value.splice(customers.value.indexOf(cus), 1)
@@ -413,17 +375,10 @@ const handleFalseClick = (cus: Cus) => {
     // console.log(customers.value.map(item => (item)));
     // console.log(sss.value)
     // console.log(delCustomers1.value[0].Visit[0].客户代码_id);
-
   }
-
-
   // getTime(cus, getCurrentDelCusList(weekday))
-
-
   // updateMap()
-
 }
-
 
 //定义巡视flag的函数
 function stateFlag(cus: any) {
@@ -432,19 +387,7 @@ function stateFlag(cus: any) {
   })
   flag = state
   console.log(state);
-
-  // let res:number=0
-  // for (let index=0;index<cus.value.length;index++){
-  //   if (colorForTag[cus.Visit[0].拜访建议]=='red'){
-  //      res+=1
-  //   }
-  // }
-  // if (res<1){
-  //   flag=false
-  // }
 }
-
-
 
 //定义处理标签（即客户退回）的方法
 const handleClose = (del: Cus) => {
@@ -454,49 +397,18 @@ const handleClose = (del: Cus) => {
   // console.log(tableData)
   // updateMap()
 }
-
-
-
-
 //定义右下角拜访列表的数据
 const weekdays = ["周一", "周二", "周三", "周四", "周五"]
 let tableDataObj: {
-  date: string,
-  name: string,
-  id: string,
-  modern: string,
-  road: string,
-  latest_time: string,
-  open: string,
-  close: string,
-  visit_time: string,
-  pos: string,
-  type: string,
-  address?: string,
-  last_date?: string,
-  task?: object[],
-  day_index: string,
-  time?: number,
-  visit_time_cost?: number
+  date: string, name: string, id: string, modern: string, road: string, latest_time: string,
+  open: string, close: string, visit_time: string, pos: string, type: string, address?: string,
+  last_date?: string, task?: object[], day_index: string, time?: number, visit_time_cost?: number
 }
+
 interface TableData {
-  date: string;
-  name: string;
-  id: string;
-  modern: string;
-  road: string;
-  latest_time: string;
-  open: string;
-  close: string;
-  visit_time: string;
-  pos: string;
-  type: string;
-  address?: string;
-  last_date?: string;
-  task?: object[];
-  day_index: string;
-  time?: number;
-  visit_time_cost?: number;
+  date: string; name: string; id: string; modern: string; road: string; latest_time: string;
+  open: string; close: string; visit_time: string; pos: string; type: string; address?: string;
+  last_date?: string; task?: object[]; day_index: string; time?: number; visit_time_cost?: number;
 }
 //indexOf(weekdays,weekday)排序依据
 function getTableData(cus: Cus) {
@@ -519,13 +431,11 @@ function getTableData(cus: Cus) {
 //   console.log(ti);
 // }
 
-
 function insertTableData(tableDataObj: TableData) {
   tableData.value.push(tableDataObj)
 }
 
 const tableData = ref([])
-
 
 function deleteTableData(tableDataObj: TableData) {
   for (let i = 0; i < tableData.value.length; i++) {
@@ -535,12 +445,8 @@ function deleteTableData(tableDataObj: TableData) {
     }
   }
 }
-
-
 // let sss = ref([])
-
 // function getRoad(Q) {
-
 //   axios.post("http://122.9.67.194:8000/api/customer/info/road/",
 //     {
 //       text: customers.value
@@ -552,11 +458,6 @@ function deleteTableData(tableDataObj: TableData) {
 //     }
 //     );
 // }
-
-
-
-
-
 </script>
       
       
