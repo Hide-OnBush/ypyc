@@ -1,4 +1,6 @@
 <template>
+  <div>
+  </div>
   <el-main>
     <!-- 上半区 -->
     <el-row class='row-top'>
@@ -7,40 +9,40 @@
         <el-tabs tab-position="top" v-model="weekday" style="height: 30vh; font: bold;" type="card"
           @tab-change="getCurrentDelCusList">
           <el-tab-pane label="周一" name="周一">
-            <el-tag size="small" v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
-            <el-tag v-for="del in delCustomers1" :key="del" type="info" size="large"
-              :color="colorForTag[del.Visit[0].拜访建议]" closable @close="handleClose(del)"> {{ del.Visit[0].客户简称 }}
-            </el-tag><el-tag size="large" v-if="delCustomers1.length > 0">公司</el-tag>
+            <el-tag v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
+            <el-tag v-for="del in delCustomers1" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]" closable
+              @close="handleClose(del)"> {{ del.Visit[0].客户简称 }}
+            </el-tag><el-tag v-if="delCustomers1.length > 0">公司</el-tag>
           </el-tab-pane>
           <el-tab-pane label="周二" name="周二">
-            <el-tag size="small" v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
-            <el-tag v-for="del in delCustomers2" :key="del" type="info" size="large"
-              :color="colorForTag[del.Visit[0].拜访建议]" closable @close="handleClose(del)"> {{ del.Visit[0].客户简称 }}
-            </el-tag><el-tag size="large" v-if="delCustomers2.length > 0">公司</el-tag>
+            <el-tag v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
+            <el-tag v-for="del in delCustomers2" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]" closable
+              @close="handleClose(del)"> {{ del.Visit[0].客户简称 }}
+            </el-tag><el-tag v-if="delCustomers2.length > 0">公司</el-tag>
           </el-tab-pane>
           <el-tab-pane label="周三" name="周三">
-            <el-tag size="small" v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
-            <el-tag v-for="del in delCustomers3" :key="del" type="info" size="large"
-              :color="colorForTag[del.Visit[0].拜访建议]" closable @close="handleClose(del)"> {{ del.Visit[0].客户简称 }}
-            </el-tag><el-tag size="large" v-if="delCustomers3.length > 0">公司</el-tag></el-tab-pane>
+            <el-tag v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
+            <el-tag v-for="del in delCustomers3" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]" closable
+              @close="handleClose(del)"> {{ del.Visit[0].客户简称 }}
+            </el-tag><el-tag v-if="delCustomers3.length > 0">公司</el-tag></el-tab-pane>
           <el-tab-pane label="周四" name="周四">
-            <el-tag size="small" v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
-            <el-tag v-for="del in delCustomers4" :key="del" type="info" size="large"
-              :color="colorForTag[del.Visit[0].拜访建议]" closable @close="handleClose(del)"> {{ del.Visit[0].客户简称 }}
-            </el-tag><el-tag size="large" v-if="delCustomers4.length > 0">公司</el-tag></el-tab-pane>
+            <el-tag v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
+            <el-tag v-for="del in delCustomers4" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]" closable
+              @close="handleClose(del)"> {{ del.Visit[0].客户简称 }}
+            </el-tag><el-tag v-if="delCustomers4.length > 0">公司</el-tag></el-tab-pane>
           <el-tab-pane label="周五" name="周五">
-            <el-tag size="small" v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
-            <el-tag v-for="del in delCustomers5" :key="del" type="info" size="large"
-              :color="colorForTag[del.Visit[0].拜访建议]" closable @close="handleClose(del)"> {{ del.Visit[0].客户简称 }}
-            </el-tag><el-tag size="large" v-if="delCustomers5.length > 0">公司</el-tag></el-tab-pane>
+            <el-tag v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
+            <el-tag v-for="del in delCustomers5" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]" closable
+              @close="handleClose(del)"> {{ del.Visit[0].客户简称 }}
+            </el-tag><el-tag v-if="delCustomers5.length > 0">公司</el-tag></el-tab-pane>
         </el-tabs>
-        <el-button type="warning" @click="clearCurList(weekday)" style="z-index: 100;">重置当天客户</el-button>
+
         <!-- <el-button type="warning" @click="getRoad(weekday)" style="z-index: 100;">发送数据</el-button> -->
         <!-- <el-button type="warning" @click="postRoad(weekday)" style="z-index: 100;">线路优化</el-button> -->
       </el-col>
       <!-- 右上：客户列表展示 -->
       <el-col :span="12" class="col-right-top" style="z-index: 1;">
-        <div style="height: auto; text-align: center;font-size: larger;      ">客户列表</div>
+        <div style="height: auto; text-align: center;font-size: larger;">客户列表</div>
         <!-- <el-select v-model="value" style="margin-left: 5px;" effect="dark" filterable placeholder="客户经理"
           @change="oncusMChange(value)">
           <el-option v-for="cusM in cusMangers" :key="cusM.value" :label="cusM.text" :value="cusM.value" />
@@ -78,6 +80,7 @@
       <!-- 左下：列表展示部分    -->
       <el-col :span="12" class="col-right-bottom">
         <el-scrollbar height="42.5vh">
+          <el-button type="warning" @click="clearCurList(weekday)" style="z-index: 100;">重置当天客户</el-button>
           <KeepAlive>
             <el-table :data="tableData" style="width: 100%;" :default-sort='{ prop: "day_index", order: "ascending" }'
               empty-text="没有客户被排入行程" stripe>
@@ -134,8 +137,6 @@
           </KeepAlive>
         </el-scrollbar>
       </el-col>
-      <el-col :span="12" class="col-left-bottom" style="height: 0; z-index: -1">
-      </el-col>
     </el-row>
   </el-main>
 </template>
@@ -152,6 +153,8 @@ import { onBeforeMount, onMounted, ref } from 'vue';
 import axios from "axios";
 import { indexOf } from 'lodash';
 import type { ElTable } from 'element-plus';
+import DraggableTag from '../components/DraggableTag.vue';
+import WlTag from '../components/WlTag.vue';
 
 
 
@@ -350,9 +353,6 @@ function clearCurList(weekday: string) {
   for (let index = 0; index < temLi.value.length; index++) {
     const element = temLi.value[index]
     customers.value.unshift(element)
-    // getCurrentDelCusList(weekday).value.splice(getCurrentDelCusList(weekday).value.indexOf(element), 1)
-
-
   }
   flag = false
   delCustomers[weekday].value = []
@@ -529,7 +529,7 @@ const tableData = ref([])
 
 function deleteTableData(tableDataObj: TableData) {
   for (let i = 0; i < tableData.value.length; i++) {
-    const element = tableData.value[i];
+    const element: TableData = tableData.value[i];
     if (element.name == tableDataObj.name) {
       tableData.value.splice(i, 1)
     }
