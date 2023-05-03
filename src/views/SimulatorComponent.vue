@@ -3,18 +3,145 @@
     <!-- 上半区 -->
     <el-row class='row-top'>
       <!-- 左上：排线路部分 -->
+      <!-- <el-tabs type="border-card" stretch="false">
+  <el-tab-pane label="标签1">标签1的内容</el-tab-pane>
+  <el-tab-pane label="标签2">标签2的内容</el-tab-pane>
+  <el-tab-pane label="标签3">标签3的内容</el-tab-pane>
+</el-tabs> -->
       <el-col :span="12" class="col-left-top">
-        <el-tabs tab-position="top" v-model="weekday" style="height: 30vh; font: bold;" type="card"
+
+
+<div class="tabs-container">
+    <el-tabs tab-position="top" v-model="weekday" style="height: 30vh; font: bold;" type="card"
+             @tab-change="getCurrentDelCusList" stretch>
+      <el-scrollbar height="30vh">
+        <el-tab-pane label="周一" name="周一"></el-tab-pane>
+        <el-tab-pane label="周二" name="周二"></el-tab-pane>
+        <el-tab-pane label="周三" name="周三"></el-tab-pane>
+        <el-tab-pane label="周四" name="周四"></el-tab-pane>
+        <el-tab-pane label="周五" name="周五"></el-tab-pane>
+        <div class="wlcontainer">
+    <div class="wlbox" >            <el-tag v-for="del in delCustomers1" :key="del" type="info"
+                    :color="colorForTag[del.Visit[0].拜访建议]"
+                    :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true"
+                    @close="handleClose(del)">
+              {{ del.Visit[0].客户简称 }}
+            </el-tag></div>
+    <div class="wlbox"> <el-tag v-for="del in delCustomers2" :key="del" type="info"
+                    :color="colorForTag[del.Visit[0].拜访建议]"
+                    :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true"
+                    @close="handleClose(del)">
+              {{ del.Visit[0].客户简称 }}
+            </el-tag></div>
+    <div class="wlbox"><el-tag v-for="del in delCustomers3" :key="del" type="info"
+                    :color="colorForTag[del.Visit[0].拜访建议]"
+                    :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true"
+                    @close="handleClose(del)">
+              {{ del.Visit[0].客户简称 }}
+            </el-tag></div>
+    <div class="wlbox"><el-tag v-for="del in delCustomers4" :key="del" type="info"
+                    :color="colorForTag[del.Visit[0].拜访建议]"
+                    :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true"
+                    @close="handleClose(del)">
+              {{ del.Visit[0].客户简称 }}
+            </el-tag></div>
+    <div class="wlbox"><el-tag v-for="del in delCustomers5" :key="del" type="info"
+                    :color="colorForTag[del.Visit[0].拜访建议]"
+                    :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true"
+                    @close="handleClose(del)">
+              {{ del.Visit[0].客户简称 }}
+            </el-tag></div>
+</div>
+          <!-- <el-tab-pane label="周一" name="周一"> 
+          <div class="tab-content">
+            <el-tag v-for="del in delCustomers1" :key="del" type="info"
+                    :color="colorForTag[del.Visit[0].拜访建议]"
+                    :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true"
+                    @close="handleClose(del)">
+              {{ del.Visit[0].客户简称 }}
+            </el-tag>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="周二" name="周二">
+          <div class="tab-content">
+            <el-tag v-for="del in delCustomers2" :key="del" type="info"
+                    :color="colorForTag[del.Visit[0].拜访建议]"
+                    :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true"
+                    @close="handleClose(del)">
+              {{ del.Visit[0].客户简称 }}
+            </el-tag>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="周三" name="周三">
+          <div class="tab-content">
+            <el-tag v-for="del in delCustomers3" :key="del" type="info"
+                    :color="colorForTag[del.Visit[0].拜访建议]"
+                    :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true"
+                    @close="handleClose(del)">
+              {{ del.Visit[0].客户简称 }}
+            </el-tag>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="周四" name="周四">
+          <div class="tab-content">
+            <el-tag v-for="del in delCustomers4" :key="del" type="info"
+                    :color="colorForTag[del.Visit[0].拜访建议]"
+                    :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true"
+                    @close="handleClose(del)">
+              {{ del.Visit[0].客户简称 }}
+            </el-tag>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="周五" name="周五">
+          <div class="tab-content">
+            <el-tag v-for="del in delCustomers5" :key="del" type="info"
+                    :color="colorForTag[del.Visit[0].拜访建议]"
+                    :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true"
+                    @close="handleClose(del)">
+              {{ del.Visit[0].客户简称 }}
+            </el-tag>
+          </div>
+        </el-tab-pane>  -->
+
+
+
+      </el-scrollbar>
+    </el-tabs>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- <el-tabs tab-position="top" v-model="weekday" style="height: 30vh; font: bold;" type="card"
           @tab-change="getCurrentDelCusList" stretch>
           <el-scrollbar height="30vh">
-            <el-tab-pane label="周一" name="周一">
+            <el-tab-pane label="周一" name="周一"> -->
               <!-- <el-tag v-show="homeflag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag> -->
-              <el-tag v-for="del in delCustomers1" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
+              <!-- <el-tag v-for="del in delCustomers1" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
                 :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @close="handleClose(del)">
                 {{ del.Visit[0].客户简称 }}
-              </el-tag>
+              </el-tag> -->
               <!-- <el-tag v-if="delCustomers1.length > 0">公司</el-tag> -->
-            </el-tab-pane>
+            <!-- </el-tab-pane>
             <el-tab-pane label="周二" name="周二">
               <el-tag v-for="del in delCustomers2" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
                 :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @close="handleClose(del)"> {{
@@ -40,7 +167,7 @@
               </el-tag>
             </el-tab-pane>
           </el-scrollbar>
-        </el-tabs>
+        </el-tabs> -->
       </el-col>
       <!-- 右上：客户列表展示 -->
       <el-col :span="12" class="col-right-top" style="z-index: 1;">
@@ -296,15 +423,20 @@ function getCurrentDelCusList(weekday: string) {
 }
 
 function clearCurList(weekday: string) {
-  let temLi = ref([])
-  temLi.value = delCustomers[weekday].value
-  for (let index = 0; index < temLi.value.length; index++) {
-    const element = temLi.value[index]
-    customers.value.unshift(element)
+  let tempLi =[...delCustomers[weekday].value]
+
+  for (let i = tempLi.length - 1; i >= 0; i--) {
+    const element = tempLi[i]
+    if (colorForTag[element.Visit[0].拜访建议] !== 'red') {
+      customers.value.unshift(element)
+      delCustomers[weekday].value.splice(i, 1)
+      deleteTableData(getTableData(element))
+    }
   }
-  flag = false
-  delCustomers[weekday].value = []
-  clearTableData(tableData, weekday)
+  
+  // delCustomers[weekday].value = []
+  
+  // clearTableData(tableData, weekday)
 }
 function clearTableData(tableData: TableData[], weekday: string) {
   const tindex: array = []
@@ -314,7 +446,6 @@ function clearTableData(tableData: TableData[], weekday: string) {
       tindex.push(index)
     }
   }
-  console.log(tindex);
   tableData.value.splice(tindex[0], tindex.length)
 }
 function clearDelCusList() {
@@ -326,7 +457,7 @@ function clearDelCusList() {
 }
 //定义处理标签（即客户选择）的方法
 const handleClick = (cus: Cus) => {
-  homeflag = true
+  // homeflag = true
   if (colorForTag[cus.Visit[0].拜访建议] == 'red') {
     getCurrentDelCusList(weekday).value.push(cus)
     customers.value.splice(customers.value.indexOf(cus), 1)
@@ -339,7 +470,7 @@ const handleClick = (cus: Cus) => {
     // console.log(delCustomers1.value[0].Visit[0].客户代码_id);
   }
   stateFlag(customers.value)
-  console.log(delCustomers1.value.length);
+  // console.log(delCustomers1.value.length);
   // getTime(cus, getCurrentDelCusList(weekday))
   // updateMap()
 }
@@ -365,13 +496,23 @@ function stateFlag(cus: any) {
     return (colorForTag[item.Visit[0].拜访建议] != 'red');
   })
   flag = state
-  console.log(state);
+  // console.log(state);
 }
 
 //定义处理标签（即客户退回）的方法
 const handleClose = (del: Cus) => {
   deleteTableData(getTableData(del))
-  customers.value.unshift(del)
+  let i_index:number=ref()
+  for (let i = 0; i < customers.value.length; i++) {
+    const element: TableData = customers.value[i];
+    if (colorForTag[element.Visit[0].拜访建议]==colorForTag[del.Visit[0].拜访建议])
+       {i_index=i; break
+      } 
+     
+    // customers.value.unshift(del)
+  }
+  console.log(i_index)
+  customers.value.splice(i_index,0,del)
   getCurrentDelCusList(weekday).value.splice(getCurrentDelCusList(weekday).value.indexOf(del), 1)
   // console.log(tableData)
   // updateMap()
@@ -439,4 +580,15 @@ function deleteTableData(tableDataObj: TableData) {
 // }
 </script>
       
-      
+<style>
+.wl-tab {
+  display: flex;
+}
+
+.wl-box {
+  flex: 1;
+  height: 30vh;
+  width: 9vw;
+  border: 1px solid #000;
+}
+</style>      

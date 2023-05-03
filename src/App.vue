@@ -57,7 +57,17 @@ body {
 .common-layout {
   height: 100vh;
   background-color: #57606f;
+  .wlcontainer {
+  display: flex;
+}
 
+.wlbox {
+  flex: 1;
+  height: 30vh;
+ 
+
+
+}
   .el-header {
     //header
     padding: 0;
@@ -151,7 +161,10 @@ body {
   .el-tab-pane {
     //分栏高度
     height: 30 vh;
+    border: #2f3542 ;
+    border: solid;
   }
+
 
   .el-tabs__item {
     //分栏内边距
@@ -170,4 +183,35 @@ body {
 .col-right-top {
   height: 75vh;
 }
+.tab-content {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.el-tab-pane:nth-child(1) .tab-content {
+  width: 10vw;
+}
+
+.el-tab-pane:nth-child(2) .tab-content {
+  width: 20vw;
+  margin-left: 10vw;
+}
+
+.el-tab-pane:nth-child(3) .tab-content {
+  width: 20vw;
+  margin-left: 20vw;
+}
+
+.el-tab-pane:nth-child(4) .tab-content {
+  width: 20vw;
+  margin-left: 30vw;
+}
+
+.el-tab-pane:nth-child(5) .tab-content {
+  width: 20vw;
+  margin-left: 40vw;
+}
+
+
+
 </style>
