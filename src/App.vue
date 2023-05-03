@@ -32,14 +32,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { StarFilled, Location, Calendar, Star, User, Avatar, InfoFilled, Sunny, MoonNight, Printer, Position } from '@element-plus/icons-vue'
-import { onBeforeMount, onMounted, ref } from 'vue';
-import axios from "axios";
-import AMapLoader from '@amap/amap-jsapi-loader';
-import { shallowRef } from 'vue'
-import { indexOf } from 'lodash';
 import homeIcon from '@/assets/logo.png'
-import getHandle from './views/Simulator.vue'
 
 
 

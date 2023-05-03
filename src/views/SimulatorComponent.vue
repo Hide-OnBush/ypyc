@@ -6,72 +6,49 @@
       <el-col :span="12" class="col-left-top">
         <el-tabs tab-position="top" v-model="weekday" style="height: 30vh; font: bold;" type="card"
           @tab-change="getCurrentDelCusList" stretch>
-          <el-tab-pane label="周一" name="周一">
-            <el-tag v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
-            <el-tag v-for="del in delCustomers1" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
-              :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @close="handleClose(del)"> {{
-                del.Visit[0].客户简称
-              }}
-            </el-tag><el-tag v-if="delCustomers1.length > 0">公司</el-tag>
-          </el-tab-pane>
-          <el-tab-pane label="周二" name="周二">
-            <el-tag v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
-            <el-tag v-for="del in delCustomers2" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
-              :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @close="handleClose(del)"> {{
-                del.Visit[0].客户简称 }}
-            </el-tag><el-tag v-if="delCustomers2.length > 0">公司</el-tag>
-          </el-tab-pane>
-          <el-tab-pane label="周三" name="周三">
-            <el-tag v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
-            <el-tag v-for="del in delCustomers3" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
-              :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @close="handleClose(del)"> {{
-                del.Visit[0].客户简称 }}
-            </el-tag><el-tag v-if="delCustomers3.length > 0">公司</el-tag></el-tab-pane>
-          <el-tab-pane label="周四" name="周四">
-            <el-tag v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
-            <el-tag v-for="del in delCustomers4" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
-              :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @close="handleClose(del)"> {{
-                del.Visit[0].客户简称 }}
-            </el-tag><el-tag v-if="delCustomers4.length > 0">公司</el-tag></el-tab-pane>
-          <el-tab-pane label="周五" name="周五">
-            <el-tag v-show="flag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag>
-            <el-tag v-for="del in delCustomers5" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
-              :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @close="handleClose(del)"> {{
-                del.Visit[0].客户简称 }}
-            </el-tag><el-tag v-if="delCustomers5.length > 0">公司</el-tag></el-tab-pane>
+          <el-scrollbar height="30vh">
+            <el-tab-pane label="周一" name="周一">
+              <!-- <el-tag v-show="homeflag">{{ cusMangers[cusMIndex - 1].text }}家</el-tag> -->
+              <el-tag v-for="del in delCustomers1" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
+                :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @close="handleClose(del)">
+                {{ del.Visit[0].客户简称 }}
+              </el-tag>
+              <!-- <el-tag v-if="delCustomers1.length > 0">公司</el-tag> -->
+            </el-tab-pane>
+            <el-tab-pane label="周二" name="周二">
+              <el-tag v-for="del in delCustomers2" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
+                :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @close="handleClose(del)"> {{
+                  del.Visit[0].客户简称 }}
+              </el-tag>
+            </el-tab-pane>
+            <el-tab-pane label="周三" name="周三">
+              <el-tag v-for="del in delCustomers3" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
+                :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @close="handleClose(del)"> {{
+                  del.Visit[0].客户简称 }}
+              </el-tag>
+            </el-tab-pane>
+            <el-tab-pane label="周四" name="周四">
+              <el-tag v-for="del in delCustomers4" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
+                :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @close="handleClose(del)"> {{
+                  del.Visit[0].客户简称 }}
+              </el-tag>
+            </el-tab-pane>
+            <el-tab-pane label="周五" name="周五">
+              <el-tag v-for="del in delCustomers5" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
+                :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @close="handleClose(del)"> {{
+                  del.Visit[0].客户简称 }}
+              </el-tag>
+            </el-tab-pane>
+          </el-scrollbar>
         </el-tabs>
-        <!-- <el-button type="warning" @click="getRoad(weekday)" style="z-index: 100;">发送数据</el-button> -->
-        <!-- <el-button type="warning" @click="postRoad(weekday)" style="z-index: 100;">线路优化</el-button> -->
       </el-col>
       <!-- 右上：客户列表展示 -->
       <el-col :span="12" class="col-right-top" style="z-index: 1;">
-        <div style="height: auto; text-align: center;font-size: larger;">客户列表</div>
-        <!-- <el-select v-model="value" style="margin-left: 5px;" effect="dark" filterable placeholder="客户经理"
-          @change="oncusMChange(value)">
-          <el-option v-for="cusM in cusMangers" :key="cusM.value" :label="cusM.text" :value="cusM.value" />
-        </el-select> -->
+        <div style="height: auto; text-align: center; font-size: larger;">客户列表</div>
         <el-divider style="margin-bottom:15px;">
           <el-icon><star-filled /></el-icon>
         </el-divider>
         <el-scrollbar height="75vh" always:true min-size:100>
-          <!-- <div style="display:inline-block;">
-            <el-popover v-for="cus, index in customers" :hide-after="0" :key="index" placement="right" :width="400">
-              <template #reference>
-                <el-tag class="mx-1" :key="cus" type="info" size="large" :color="colorForTag[cus.Visit[0].拜访建议]" @click="{
-                  handleClick(cus);
-                }">
-                  {{ cus.Visit[0].客户简称 }}
-                </el-tag>
-              </template>
-              <el-table :data="cus.Task">
-                <el-table-column width="150" prop="任务内容" label="任务内容"> </el-table-column>
-                <el-table-column width="100" prop="任务剩余完成时间_工作日" label="剩余完成时间(天)" />
-                <el-table-column width="300" prop="预估时间_分钟" label="预估时长(分钟)" />
-              </el-table>
-            </el-popover>
-          </div> -->
-          <!-- <el-tag v-for="cus,index in customers" :key="index"   @click="colorForTag[cus.Visit[0].拜访建议]=='red'?handleClick(cus):0"             
-                 :color="colorForTag[cus.Visit[0].拜访建议]" >{{ cus.Visit[0].客户简称 }}</el-tag> -->
           <el-tag v-for="cus, index in customers" :key="index" @click="flag ? handleFalseClick(cus) : handleClick(cus)"
             :color="colorForTag[cus.Visit[0].拜访建议]">{{ cus.Visit[0].客户简称 }}</el-tag>
         </el-scrollbar>
@@ -120,8 +97,6 @@
                         <Star />
                       </el-icon></h3>
                     <el-table :data="props.row.task" :row-key="(row) => row.id" :reserve-selection="true">
-                      <!-- <el-table-column type="selection" width="55" /> -->
-                      <!-- <el-table-column label="任务编号" prop="id" /> -->
                       <el-table-column label="任务内容" prop="任务内容" />
                       <el-table-column label="预估时长(分钟)" prop="预估时间_分钟" />
                       <el-table-column label="剩余完成时间(工作日)" prop="任务剩余完成时间_工作日" />
@@ -140,7 +115,6 @@
     </el-row>
   </el-main>
 </template>
-      
 <script setup lang="ts">
 // 导入部分
 import { StarFilled, Star, Avatar, InfoFilled, Sunny, MoonNight, Printer, Position } from '@element-plus/icons-vue'
@@ -168,6 +142,7 @@ interface Cus {
 }
 //变量定义部分
 let flag: boolean = false
+// let homeflag: boolean = false
 const customers = ref<Cus[]>([])//客户列表
 let delCustomers1 = ref<Cus[]>([])///删除客户列表，即排入周一行程的客户列表
 let delCustomers2 = ref<Cus[]>([])
@@ -193,7 +168,6 @@ let delCustomers: DelCustomers = {
 //   }
 // }
 let weekday = "周一"
-// const value = ref('')//客户经理value
 interface ColorMap {
   [key: string]: string;
 }
@@ -352,6 +326,7 @@ function clearDelCusList() {
 }
 //定义处理标签（即客户选择）的方法
 const handleClick = (cus: Cus) => {
+  homeflag = true
   if (colorForTag[cus.Visit[0].拜访建议] == 'red') {
     getCurrentDelCusList(weekday).value.push(cus)
     customers.value.splice(customers.value.indexOf(cus), 1)
