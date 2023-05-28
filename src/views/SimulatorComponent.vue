@@ -21,12 +21,43 @@
         <el-tab-pane label="周四" name="周四"></el-tab-pane>
         <el-tab-pane label="周五" name="周五"></el-tab-pane>
         <div class="wlcontainer">
-    <div class="wlbox" >            <el-tag v-for="del in delCustomers1" :key="del" type="info"
+    <div class="wlbox" >
+                    <el-tag v-for="del in delCustomers1" :key="del" type="info"
                     :color="colorForTag[del.Visit[0].拜访建议]"
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true"
+                    @mouseover="showTagPreview(del)"
+                    @mouseleave="hideTagPreview()"
                     @close="handleClose(del)">
-              {{ del.Visit[0].客户简称 }}
-            </el-tag></div>
+                     {{ del.Visit[0].客户简称 }}            
+                     
+                     
+                      <div class="tag-preview" v-if="showPreview" :style="{ top: previewTop, left: previewLeft }">
+              <!-- <div class="tag-preview" v-if="previewVisible">{{ previewContent }} -->
+    <!-- 显示预览信息的内容 --><el-icon><BellFilled /></el-icon>
+                        <div class="tag-pre-left"><el-icon size="large"  color="blue"><Bell/></el-icon>
+                        <el-badge  :value="previewContent.拜访建议=='本周期已拜访'?'...':previewContent.最晚线路规划时间_工作日_field" :style="{color:colorForTag[previewContent.拜访建议]}"> <h2 text="2xl" justify="center">  {{ previewContent.客户简称 }}</h2>  </el-badge>
+                        <h5>{{ previewContent.客户代码_id}}</h5>
+                        <el>
+                          <h3><li><el-icon  v-if="previewContent.是否现代终端=='是现代终端'"><Star /></el-icon>{{ previewContent.是否现代终端}}</li></h3>
+                          <h3><li>{{ previewContent.送货路段}}</li></h3>
+                          <h3><li>{{ previewContent.经营业态}}</li></h3>
+                        </el>
+                      
+                      </div>
+
+                        <div class="tag-pre-right">
+                        <h2 text="2xl" justify="center" style="text-align:center ;align-items: center;"> 任务列表</h2>  
+                        <el-table :data="previewTaskContent">
+                          <el-table-column prop="任务内容" label="任务内容" width="180" />
+                          <el-table-column prop="任务剩余完成时间_工作日" label="剩余天数" width="180" />
+                          <el-table-column prop="预估时间_分钟" label="预估时长" />
+                        </el-table>
+                      
+                      
+                      </div>
+  </div>
+            </el-tag>
+          </div>
     <div class="wlbox"> <el-tag v-for="del in delCustomers2" :key="del" type="info"
                     :color="colorForTag[del.Visit[0].拜访建议]"
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true"
@@ -244,7 +275,7 @@
 </template>
 <script setup lang="ts">
 // 导入部分
-import { StarFilled, Star, Avatar, InfoFilled, Sunny, MoonNight, Printer, Position } from '@element-plus/icons-vue'
+import { StarFilled, Star, Avatar, InfoFilled, Sunny, MoonNight, Printer, Position,Bell } from '@element-plus/icons-vue'
 import { onBeforeMount, onMounted, ref } from 'vue';
 import axios from "axios";
 import { indexOf } from 'lodash';
@@ -294,6 +325,47 @@ let delCustomers: DelCustomers = {
 //     paths[index].value = [];
 //   }
 // }
+
+// const previewVisible = ref(false);
+const showPreview = ref(false);
+const previewContent = ref('');
+const previewTop = ref('');
+const previewLeft = ref('');
+const previewTaskContent=ref('')
+const showTagPreview = (del: any) => {
+  showPreview.value = true;
+  previewContent.value = del.Visit[0];
+  previewTaskContent.value=del.Task;
+  previewTop.value = 'calc(60vh - 10px)';
+  previewLeft.value = 'calc(60vw - 10px)';
+};
+
+const hideTagPreview = () => {
+  showPreview.value = false;
+  previewTaskContent.value='';
+  previewContent.value = '';
+  previewTop.value = '';
+  previewLeft.value = '';
+};
+// function showPreview(tag) {
+//     previewTop.value = 'calc(50vh - 10px)';
+//   previewLeft.value = 'calc(50vw - 10px)';
+//   previewVisible.value = true;
+//   previewContent.value = tag.preview;
+// }
+
+// function hidePreview() {
+//   previewVisible.value = false;
+// }
+
+
+
+
+
+
+
+
+
 let weekday = "周一"
 interface ColorMap {
   [key: string]: string;
@@ -362,7 +434,7 @@ const colorForTag: ColorMap = {
 //处理请求客户(base客户经理)
 function postHandle(e: string) {
   clearDelCusList()
-  axios.post("http://122.9.67.194:8000/api/customer/info/cusForMan/",
+  axios.post("http://122.9.67.194:8000/api/customer/info/cusForManTest/",
     { text: e }, {})
     .then((res) => { customers.value = res.data; }
     );
@@ -586,9 +658,45 @@ function deleteTableData(tableDataObj: TableData) {
 }
 
 .wl-box {
-  flex: 1;
+  position: relative;
+  flex:1;
   height: 30vh;
   width: 9vw;
   border: 1px solid #000;
+  justify-items: stretch;
+
+
+}
+.tag-preview {
+  display: flex;
+  position: fixed;
+  bottom: 10vh;
+  right: 5vw;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(50px);
+  color: #333;
+  font-size: 14px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+}
+.tag-pre-left {
+  flex: 3;
+  /* 根据需求设置样式 */
+}
+
+.tag-pre-right {
+  flex: 7;
+  /* 根据需求设置样式 */
+}
+.el-descriptions {
+  margin-top: 20px;
+}
+.cell-item {
+  display: flex;
+  align-items: center;
+}
+.margin-top {
+  margin-top: 20px;
 }
 </style>      
