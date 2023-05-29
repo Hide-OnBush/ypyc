@@ -57,17 +57,19 @@ body {
 .common-layout {
   height: 100vh;
   background-color: #57606f;
+
   .wlcontainer {
-  display: flex;
-}
+    display: flex;
+  }
 
-.wlbox {
-  flex: 1;
-  height: 30vh;
- 
+  .wlbox {
+    flex: 1;
+    height: 30vh;
 
 
-}
+
+  }
+
   .el-header {
     //header
     padding: 0;
@@ -161,7 +163,7 @@ body {
   .el-tab-pane {
     //分栏高度
     height: 30 vh;
-    border: #2f3542 ;
+    border: #2f3542;
     border: solid;
   }
 
@@ -181,8 +183,9 @@ body {
 }
 
 .col-right-top {
-  height: 75vh;
+  height: 40vh;
 }
+
 .tab-content {
   display: flex;
   flex-wrap: wrap;
@@ -211,7 +214,4 @@ body {
   width: 20vw;
   margin-left: 40vw;
 }
-
-
-
 </style>
