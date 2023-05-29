@@ -13,11 +13,12 @@
               <el-tab-pane label="周四" name="周四"></el-tab-pane>
               <el-tab-pane label="周五" name="周五"></el-tab-pane>
               <div class="wlcontainer">
+
                 <div class="wlbox">
                   <el-tag v-for="del in delCustomers1" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @mouseover="showTagPreview(del)"
                     @mouseleave="hideTagPreview()" @close="handleClose(del)"
-                    @click="dialogFormVisible = true; handleTagClick(del, '周一')">
+                    @click="dialogForm1Visible = true; handleTagClick(del, '周一')">
 
                     {{ del.Visit[0].客户简称 }}
                     <div class="tag-preview" v-if="showPreview" :style="{ top: previewTop, left: previewLeft }">
@@ -53,10 +54,10 @@
                       </div>
                     </div>
                   </el-tag>
-                  <el-dialog v-model="dialogFormVisible" title="移动至" :style="{ zIndex: 9999 }">
-                    <el-form :model="form">
+                  <el-dialog v-model="dialogForm1Visible" title="移动至" :style="{ zIndex: 9 }">
+                    <el-form :model="form1">
                       <el-form-item label="周期" :label-width="formLabelWidth">
-                        <el-select v-model="form.region" placeholder="请选择你要调整到的日期">
+                        <el-select v-model="form1.region" placeholder="请选择你要调整到的日期">
                           <el-option label="周二" value="周二" />
                           <el-option label="周三" value="周三" />
                           <el-option label="周四" value="周四" />
@@ -66,8 +67,8 @@
                     </el-form>
                     <template #footer>
                       <span class="dialog-footer">
-                        <el-button @click="dialogFormVisible = false">取消</el-button>
-                        <el-button type="primary" @click="dialogFormVisible = false; moveCus(form.region)">
+                        <el-button @click="dialogForm1Visible = false">取消</el-button>
+                        <el-button type="primary" @click="dialogForm1Visible = false; moveCus(form1.region)">
                           确认
                         </el-button>
                       </span>
@@ -76,12 +77,264 @@
                 </div>
 
 
-                <div class="wlbox"> <el-tag v-for="del in delCustomers2" :key="del" type="info"
+                <!-- <div class="wlbox"> <el-tag v-for="del in delCustomers2" :key="del" type="info"
                     :color="colorForTag[del.Visit[0].拜访建议]"
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @close="handleClose(del)">
                     {{ del.Visit[0].客户简称 }}
-                  </el-tag></div>
-                <div class="wlbox"><el-tag v-for="del in delCustomers3" :key="del" type="info"
+                  </el-tag></div> -->
+
+                  <div class="wlbox">
+                  <el-tag v-for="del in delCustomers2" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
+                    :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @mouseover="showTagPreview(del)"
+                    @mouseleave="hideTagPreview()" @close="handleClose(del)"
+                    @click="dialogForm2Visible = true; handleTagClick(del, '周二')">
+
+                    {{ del.Visit[0].客户简称 }}
+                    <div class="tag-preview" v-if="showPreview" :style="{ top: previewTop, left: previewLeft }">
+                      <div class="tag-pre-left"><el-icon size="large" color="blue">
+                          <Bell />
+                        </el-icon>
+                        <el-badge :value="previewContent.拜访建议 == '本周期已拜访' ? '...' : previewContent.最晚线路规划时间_工作日_field"
+                          :style="{ color: colorForTag[previewContent.拜访建议] }">
+                          <h2 text="2xl" justify="center"> {{ previewContent.客户简称 }}</h2>
+                        </el-badge>
+                        <h3>{{ previewContent.客户代码_id }}</h3>
+                        <el>
+                          <h3>
+                            <li><el-icon v-if="previewContent.是否现代终端 == '是现代终端'">
+                                <Star />
+                              </el-icon>{{ previewContent.是否现代终端 }}</li>
+                          </h3>
+                          <h3>
+                            <li>{{ previewContent.送货路段 }}</li>
+                          </h3>
+                          <h3>
+                            <li>{{ previewContent.经营业态 }}</li>
+                          </h3>
+                        </el>
+                      </div>
+                      <div class="tag-pre-right">
+                        <h2 text="2xl" justify="center" style="text-align:center ;align-items: center;"> 任务列表</h2>
+                        <el-table :data="previewTaskContent">
+                          <el-table-column prop="任务内容" label="任务内容" width="180" />
+                          <el-table-column prop="任务剩余完成时间_工作日" label="剩余天数" width="90" />
+                          <el-table-column prop="预估时间_分钟" label="预估时长" />
+                        </el-table>
+                      </div>
+                    </div>
+                  </el-tag>
+                  <el-dialog v-model="dialogForm2Visible" title="移动至" :style="{ zIndex: 9999 }">
+                    <el-form :model="form2">
+                      <el-form-item label="周期" :label-width="formLabelWidth">
+                        <el-select v-model="form2.region" placeholder="请选择你要调整到的日期">
+                          <el-option label="周一" value="周一" />
+                          <el-option label="周三" value="周三" />
+                          <el-option label="周四" value="周四" />
+                          <el-option label="周五" value="周五" />
+                        </el-select>
+                      </el-form-item>
+                    </el-form>
+                    <template #footer>
+                      <span class="dialog-footer">
+                        <el-button @click="dialogForm2Visible = false">取消</el-button>
+                        <el-button type="primary" @click="dialogForm2Visible = false; moveCus(form2.region)">
+                          确认
+                        </el-button>
+                      </span>
+                    </template>
+                  </el-dialog>
+                </div>
+
+
+
+                <div class="wlbox">
+                  <el-tag v-for="del in delCustomers3" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
+                    :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @mouseover="showTagPreview(del)"
+                    @mouseleave="hideTagPreview()" @close="handleClose(del)"
+                    @click="dialogForm3Visible = true; handleTagClick(del, '周三')">
+
+                    {{ del.Visit[0].客户简称 }}
+                    <div class="tag-preview" v-if="showPreview" :style="{ top: previewTop, left: previewLeft }">
+                      <div class="tag-pre-left"><el-icon size="large" color="blue">
+                          <Bell />
+                        </el-icon>
+                        <el-badge :value="previewContent.拜访建议 == '本周期已拜访' ? '...' : previewContent.最晚线路规划时间_工作日_field"
+                          :style="{ color: colorForTag[previewContent.拜访建议] }">
+                          <h2 text="2xl" justify="center"> {{ previewContent.客户简称 }}</h2>
+                        </el-badge>
+                        <h3>{{ previewContent.客户代码_id }}</h3>
+                        <el>
+                          <h3>
+                            <li><el-icon v-if="previewContent.是否现代终端 == '是现代终端'">
+                                <Star />
+                              </el-icon>{{ previewContent.是否现代终端 }}</li>
+                          </h3>
+                          <h3>
+                            <li>{{ previewContent.送货路段 }}</li>
+                          </h3>
+                          <h3>
+                            <li>{{ previewContent.经营业态 }}</li>
+                          </h3>
+                        </el>
+                      </div>
+                      <div class="tag-pre-right">
+                        <h2 text="2xl" justify="center" style="text-align:center ;align-items: center;"> 任务列表</h2>
+                        <el-table :data="previewTaskContent">
+                          <el-table-column prop="任务内容" label="任务内容" width="180" />
+                          <el-table-column prop="任务剩余完成时间_工作日" label="剩余天数" width="90" />
+                          <el-table-column prop="预估时间_分钟" label="预估时长" />
+                        </el-table>
+                      </div>
+                    </div>
+                  </el-tag>
+                  <el-dialog v-model="dialogForm3Visible" title="移动至" :style="{ zIndex: 9999 }">
+                    <el-form :model="form3">
+                      <el-form-item label="周期" :label-width="formLabelWidth">
+                        <el-select v-model="form3.region" placeholder="请选择你要调整到的日期">
+                          <el-option label="周一" value="周一" />
+                          <el-option label="周二" value="周二" />
+                          <el-option label="周四" value="周四" />
+                          <el-option label="周五" value="周五" />
+                        </el-select>
+                      </el-form-item>
+                    </el-form>
+                    <template #footer>
+                      <span class="dialog-footer">
+                        <el-button @click="dialogForm3Visible = false">取消</el-button>
+                        <el-button type="primary" @click="dialogForm3Visible = false; moveCus(form3.region)">
+                          确认
+                        </el-button>
+                      </span>
+                    </template>
+                  </el-dialog>
+                </div>
+
+                <div class="wlbox">
+                  <el-tag v-for="del in delCustomers4" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
+                    :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @mouseover="showTagPreview(del)"
+                    @mouseleave="hideTagPreview()" @close="handleClose(del)"
+                    @click="dialogForm4Visible = true; handleTagClick(del, '周四')">
+
+                    {{ del.Visit[0].客户简称 }}
+                    <div class="tag-preview" v-if="showPreview" :style="{ top: previewTop, left: previewLeft }">
+                      <div class="tag-pre-left"><el-icon size="large" color="blue">
+                          <Bell />
+                        </el-icon>
+                        <el-badge :value="previewContent.拜访建议 == '本周期已拜访' ? '...' : previewContent.最晚线路规划时间_工作日_field"
+                          :style="{ color: colorForTag[previewContent.拜访建议] }">
+                          <h2 text="2xl" justify="center"> {{ previewContent.客户简称 }}</h2>
+                        </el-badge>
+                        <h3>{{ previewContent.客户代码_id }}</h3>
+                        <el>
+                          <h3>
+                            <li><el-icon v-if="previewContent.是否现代终端 == '是现代终端'">
+                                <Star />
+                              </el-icon>{{ previewContent.是否现代终端 }}</li>
+                          </h3>
+                          <h3>
+                            <li>{{ previewContent.送货路段 }}</li>
+                          </h3>
+                          <h3>
+                            <li>{{ previewContent.经营业态 }}</li>
+                          </h3>
+                        </el>
+                      </div>
+                      <div class="tag-pre-right">
+                        <h2 text="2xl" justify="center" style="text-align:center ;align-items: center;"> 任务列表</h2>
+                        <el-table :data="previewTaskContent">
+                          <el-table-column prop="任务内容" label="任务内容" width="180" />
+                          <el-table-column prop="任务剩余完成时间_工作日" label="剩余天数" width="90" />
+                          <el-table-column prop="预估时间_分钟" label="预估时长" />
+                        </el-table>
+                      </div>
+                    </div>
+                  </el-tag>
+                  <el-dialog v-model="dialogForm4Visible" title="移动至" :style="{ zIndex: 9999 }">
+                    <el-form :model="form4">
+                      <el-form-item label="周期" :label-width="formLabelWidth">
+                        <el-select v-model="form4.region" placeholder="请选择你要调整到的日期">
+                          <el-option label="周一" value="周一" />
+                          <el-option label="周二" value="周二" />
+                          <el-option label="周三" value="周三" />
+                          <el-option label="周五" value="周五" />
+                        </el-select>
+                      </el-form-item>
+                    </el-form>
+                    <template #footer>
+                      <span class="dialog-footer">
+                        <el-button @click="dialogForm4Visible = false">取消</el-button>
+                        <el-button type="primary" @click="dialogForm4Visible = false; moveCus(form4.region)">
+                          确认
+                        </el-button>
+                      </span>
+                    </template>
+                  </el-dialog>
+                </div>
+
+
+                <div class="wlbox">
+                  <el-tag v-for="del in delCustomers5" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
+                    :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @mouseover="showTagPreview(del)"
+                    @mouseleave="hideTagPreview()" @close="handleClose(del)"
+                    @click="dialogForm5Visible = true; handleTagClick(del, '周五')">
+
+                    {{ del.Visit[0].客户简称 }}
+                    <div class="tag-preview" v-if="showPreview" :style="{ top: previewTop, left: previewLeft }">
+                      <div class="tag-pre-left"><el-icon size="large" color="blue">
+                          <Bell />
+                        </el-icon>
+                        <el-badge :value="previewContent.拜访建议 == '本周期已拜访' ? '...' : previewContent.最晚线路规划时间_工作日_field"
+                          :style="{ color: colorForTag[previewContent.拜访建议] }">
+                          <h2 text="2xl" justify="center"> {{ previewContent.客户简称 }}</h2>
+                        </el-badge>
+                        <h3>{{ previewContent.客户代码_id }}</h3>
+                        <el>
+                          <h3>
+                            <li><el-icon v-if="previewContent.是否现代终端 == '是现代终端'">
+                                <Star />
+                              </el-icon>{{ previewContent.是否现代终端 }}</li>
+                          </h3>
+                          <h3>
+                            <li>{{ previewContent.送货路段 }}</li>
+                          </h3>
+                          <h3>
+                            <li>{{ previewContent.经营业态 }}</li>
+                          </h3>
+                        </el>
+                      </div>
+                      <div class="tag-pre-right">
+                        <h2 text="2xl" justify="center" style="text-align:center ;align-items: center;"> 任务列表</h2>
+                        <el-table :data="previewTaskContent">
+                          <el-table-column prop="任务内容" label="任务内容" width="180" />
+                          <el-table-column prop="任务剩余完成时间_工作日" label="剩余天数" width="90" />
+                          <el-table-column prop="预估时间_分钟" label="预估时长" />
+                        </el-table>
+                      </div>
+                    </div>
+                  </el-tag>
+                  <el-dialog v-model="dialogForm5Visible" title="移动至" :style="{ zIndex: 9999 }">
+                    <el-form :model="form5">
+                      <el-form-item label="周期" :label-width="formLabelWidth">
+                        <el-select v-model="form5.region" placeholder="请选择你要调整到的日期">
+                          <el-option label="周一" value="周一" />
+                          <el-option label="周二" value="周二" />
+                          <el-option label="周三" value="周三" />
+                          <el-option label="周四" value="周四" />
+                        </el-select>
+                      </el-form-item>
+                    </el-form>
+                    <template #footer>
+                      <span class="dialog-footer">
+                        <el-button @click="dialogForm5Visible = false">取消</el-button>
+                        <el-button type="primary" @click="dialogForm5Visible = false; moveCus(form5.region)">
+                          确认
+                        </el-button>
+                      </span>
+                    </template>
+                  </el-dialog>
+                </div>
+
+                <!-- <div class="wlbox"><el-tag v-for="del in delCustomers3" :key="del" type="info"
                     :color="colorForTag[del.Visit[0].拜访建议]"
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @close="handleClose(del)">
                     {{ del.Visit[0].客户简称 }}
@@ -95,7 +348,7 @@
                     :color="colorForTag[del.Visit[0].拜访建议]"
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @close="handleClose(del)">
                     {{ del.Visit[0].客户简称 }}
-                  </el-tag></div>
+                  </el-tag></div> -->
               </div>
             </el-scrollbar>
           </el-tabs>
@@ -109,7 +362,44 @@
         </el-divider>
         <el-scrollbar height="75vh" always:true min-size:100>
           <el-tag v-for="cus, index in customers" :key="index" @click="flag ? handleFalseClick(cus) : handleClick(cus)"
-            :color="colorForTag[cus.Visit[0].拜访建议]">{{ cus.Visit[0].客户简称 }}</el-tag>
+            :color="colorForTag[cus.Visit[0].拜访建议]"   @mouseover="showTagPreview(cus)"
+                    @mouseleave="hideTagPreview()">{{ cus.Visit[0].客户简称 }}
+                  
+                  
+                    <div class="tag-preview" v-if="showPreview" :style="{ top: previewTop, left: previewLeft }">
+                      <div class="tag-pre-left"><el-icon size="large" color="blue">
+                          <Bell />
+                        </el-icon>
+                        <el-badge :value="previewContent.拜访建议 == '本周期已拜访' ? '...' : previewContent.最晚线路规划时间_工作日_field"
+                          :style="{ color: colorForTag[previewContent.拜访建议] }">
+                          <h2 text="2xl" justify="center"> {{ previewContent.客户简称 }}</h2>
+                        </el-badge>
+                        <h3>{{ previewContent.客户代码_id }}</h3>
+                        <el>
+                          <h3>
+                            <li><el-icon v-if="previewContent.是否现代终端 == '是现代终端'">
+                                <Star />
+                              </el-icon>{{ previewContent.是否现代终端 }}</li>
+                          </h3>
+                          <h3>
+                            <li>{{ previewContent.送货路段 }}</li>
+                          </h3>
+                          <h3>
+                            <li>{{ previewContent.经营业态 }}</li>
+                          </h3>
+                        </el>
+                      </div>
+                      <div class="tag-pre-right">
+                        <h2 text="2xl" justify="center" style="text-align:center ;align-items: center;"> 任务列表</h2>
+                        <el-table :data="previewTaskContent">
+                          <el-table-column prop="任务内容" label="任务内容" width="180" />
+                          <el-table-column prop="任务剩余完成时间_工作日" label="剩余天数" width="90" />
+                          <el-table-column prop="预估时间_分钟" label="预估时长" />
+                        </el-table>
+                      </div>
+                    </div>
+                  
+                  </el-tag>
         </el-scrollbar>
       </el-col>
     </el-row>
@@ -229,18 +519,32 @@ let delCustomers: DelCustomers = {
 //   }
 // }
 
-const dialogFormVisible = ref(false)
+const dialogForm1Visible = ref(false)
+const dialogForm2Visible = ref(false)
+const dialogForm3Visible = ref(false)
+const dialogForm4Visible = ref(false)
+const dialogForm5Visible = ref(false)
 const formLabelWidth = '140px'
 
-const form = reactive({
-  name: '',
-  region: '',
-  date1: '',
-  date2: '',
-  delivery: false,
-  type: [],
-  resource: '',
-  desc: '',
+const form1 = reactive({
+  region: ''
+
+})
+const form2 = reactive({
+  region: ''
+
+})
+const form3 = reactive({
+  region: ''
+
+})
+const form4 = reactive({
+  region: ''
+
+})
+const form5 = reactive({
+  region: ''
+
 })
 
 const moveCus = (e: any) => {
@@ -252,6 +556,13 @@ const moveCus = (e: any) => {
   getCurrentDelCusList(e).value.push(movedCus)
 
 }
+
+let movedCus: Cus = ref<Cus>;
+let temDay = '周一'
+const handleTagClick = (del, e) => {
+  movedCus = del
+  temDay = e
+};
 
 
 
@@ -270,11 +581,14 @@ const showTagPreview = (del: any) => {
 };
 
 const hideTagPreview = () => {
+
   showPreview.value = false;
   previewTaskContent.value = '';
   previewContent.value = '';
   previewTop.value = '';
   previewLeft.value = '';
+
+
 };
 
 
@@ -462,12 +776,7 @@ const handleClick = (cus: Cus) => {
   // getTime(cus, getCurrentDelCusList(weekday))
   // updateMap()
 }
-let movedCus: Cus = ref<Cus>;
-let temDay = '周一'
-const handleTagClick = (del, e) => {
-  movedCus = del
-  temDay = e
-};
+
 const handleFalseClick = (cus: Cus) => {
   if (colorForTag[cus.Visit[0].拜访建议] != 'red') {
     getCurrentDelCusList(weekday).value.push(cus)
@@ -602,6 +911,7 @@ function deleteTableData(tableDataObj: TableData) {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 15px;
+  
 }
 
 .tag-pre-left {
@@ -626,4 +936,5 @@ function deleteTableData(tableDataObj: TableData) {
 .margin-top {
   margin-top: 20px;
 }
+
 </style>      
