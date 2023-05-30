@@ -475,7 +475,7 @@ interface Cus {
 //变量定义部分
 let flag: boolean = false
 // let homeflag: boolean = false
-const customers = ref<Cus[]>([])//客户列表
+let customers = ref<Cus[]>([])//客户列表
 let delCustomers1 = ref<Cus[]>([])///删除客户列表，即排入周一行程的客户列表
 let delCustomers2 = ref<Cus[]>([])
 let delCustomers3 = ref<Cus[]>([])
@@ -505,13 +505,13 @@ const weekdays = ["周一", "周二", "周三", "周四", "周五"]
 let tableDataObj: {
   date: string, name: string, id: string, modern: string, road: string, latest_time: string,
   open: string, close: string, visit_time: string, pos: string, type: string, address?: string,
-  last_date?: string, task?: object[], day_index: string, time?: number, visit_time_cost?: number
+  last_date?: string, task?: object[],time?: number, visit_time_cost?: number
 }
 
 interface TableData {
   date: string; name: string; id: string; modern: string; road: string; latest_time: string;
   open: string; close: string; visit_time: string; pos: string; type: string; address?: string;
-  last_date?: string; task?: object[]; day_index: string; time?: number; visit_time_cost?: number;
+  last_date?: string; task?: object[];  time?: number; visit_time_cost?: number;
 }
 //indexOf(weekdays,weekday)排序依据
 function getTableData(cus: Cus) {
@@ -519,16 +519,15 @@ function getTableData(cus: Cus) {
     name: cus.Visit[0].客户简称, modern: cus.Visit[0].是否现代终端, id: cus.Visit[0].客户代码_id,
     type: cus.Visit[0].经营业态, road: cus.Visit[0].送货路段, latest_time: cus.Visit[0].最晚线路规划时间, visit_time_cost: cus.Visit[0].拜访时长预估,
     open: cus.Visit[0].开门时间, close: cus.Visit[0].关门时间, visit_time: cus.Visit[0].拜访日期, pos: cus.Visit[0].pos机类型,
-    date: weekday, task: cus.Task, day_index: ((indexOf(weekdays, weekday) as unknown as string) + (indexOf(getCurrentDelCusList(weekday), cus) + 2 as unknown as string)),
+    date: weekday, task: cus.Task,
+    //  day_index: ((indexOf(weekdays, weekday) as unknown as string) + (indexOf(getCurrentDelCusList(weekday), cus) + 2 as unknown as string)),
 
   }
   return (tableDataObj)
 }
 
 function getCurrentTableData(e: string) {
-  console.log(tableData.value);
-
-  console.log(tableData.value);
+    return tableDatas[e]
 
 }
 //定义处理标签（即客户选择）的方法
@@ -538,7 +537,7 @@ const handleClick = (cus: Cus) => {
     getCurrentDelCusList(weekday.value).value.push(cus)
     customers.value.splice(customers.value.indexOf(cus), 1)
     insertTableData(getTableData(cus))
-    tableData.value = tableDatas[weekday.value].value
+    
   }
   else {
     alert("请先处理红色客户")
@@ -590,22 +589,38 @@ const form4 = reactive({
 const form5 = reactive({
   region: ''
 })
-
-const moveCus = (e: any) => {
-  console.log(e)
-  const temIndex = getCurrentDelCusList(temDay).value.indexOf(movedCus)
-  if (temIndex > -1) {
-    getCurrentDelCusList(temDay).value.splice(temIndex, 1);
-  }
-  getCurrentDelCusList(e).value.push(movedCus)
-
-}
 let movedCus: Cus = ref<Cus>;
 let temDay = '周一'
 const handleTagClick = (del, e) => {
   movedCus = del
   temDay = e
+  console.log(del);
+  console.log(e);
+  
+  
 };
+
+
+const moveCus = (e: any) => {
+ 
+  const temIndex = getCurrentDelCusList(temDay).value.indexOf(movedCus)
+  
+  console.log(temIndex);
+  // console.log(temTableIndex);
+  
+  console.log(getCurrentTableData(temDay).value) 
+  console.log(getTableData(movedCus))
+  if (temIndex > -1) {
+    getCurrentDelCusList(temDay).value.splice(temIndex, 1);
+    getCurrentDelCusList(e).value.push(movedCus)
+  }
+  
+    tableDatas[temDay].value.splice(temIndex,1)
+    tableDatas[e].value.push(tableDataObj)
+  
+ 
+
+}
 
 
 
@@ -826,7 +841,7 @@ const handleClose = (del: Cus) => {
   }
   console.log(i_index)
   customers.value.splice(i_index, 0, del)
-  getCurrentDelCusList(weekday).value.splice(getCurrentDelCusList(weekday).value.indexOf(del), 1)
+  getCurrentDelCusList(weekday.value).value.splice(getCurrentDelCusList(weekday.value).value.indexOf(del), 1)
   // console.log(tableData)
   // updateMap()
 }
@@ -843,8 +858,10 @@ const handleClose = (del: Cus) => {
 
 function insertTableData(tableDataObj: TableData) {
   tableDatas[weekday.value].value.push(tableDataObj)
-  console.log(tableDatas[weekday.value].value)
+ 
 }
+
+
 
 const tableData = computed(() => {
   if (weekday.value === '周一') {
