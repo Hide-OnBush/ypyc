@@ -5,7 +5,7 @@
       <el-col :span="12" class="col-left-top">
         <div class="tabs-container">
           <el-tabs tab-position="top" v-model="weekday" style="height: 30vh; font: bold;" type="card"
-            @tab-change="getCurrentDelCusList" stretch>
+            @tab-change="[getCurrentDelCusList, getCurrentTableData]" stretch>
             <el-scrollbar height="30vh">
               <el-tab-pane label="周一" name="周一"></el-tab-pane>
               <el-tab-pane label="周二" name="周二"></el-tab-pane>
@@ -15,7 +15,8 @@
               <div class="wlcontainer">
 
                 <div class="wlbox">
-                  <el-tag v-for="del in delCustomers1" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
+                  <el-tag v-for="  del in delCustomers1     " :key="del" type="info"
+                    :color="colorForTag[del.Visit[0].拜访建议]"
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @mouseover="showTagPreview(del)"
                     @mouseleave="hideTagPreview()" @close="handleClose(del)"
                     @click="dialogForm1Visible = true; handleTagClick(del, '周一')">
@@ -54,10 +55,10 @@
                       </div>
                     </div>
                   </el-tag>
-                  <el-dialog v-model="dialogForm1Visible" title="移动至" :style="{ zIndex: 9 }">
+                  <el-dialog v-model="dialogForm1Visible" title="移动至" style="width: 30vw;height: 25vh;">
                     <el-form :model="form1">
                       <el-form-item label="周期" :label-width="formLabelWidth">
-                        <el-select v-model="form1.region" placeholder="请选择你要调整到的日期">
+                        <el-select v-model="form1.region" placeholder="请选择要调整到的日期">
                           <el-option label="周二" value="周二" />
                           <el-option label="周三" value="周三" />
                           <el-option label="周四" value="周四" />
@@ -75,16 +76,9 @@
                     </template>
                   </el-dialog>
                 </div>
-
-
-                <!-- <div class="wlbox"> <el-tag v-for="del in delCustomers2" :key="del" type="info"
+                <div class="wlbox">
+                  <el-tag v-for="     del      in      delCustomers2     " :key="del" type="info"
                     :color="colorForTag[del.Visit[0].拜访建议]"
-                    :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @close="handleClose(del)">
-                    {{ del.Visit[0].客户简称 }}
-                  </el-tag></div> -->
-
-                  <div class="wlbox">
-                  <el-tag v-for="del in delCustomers2" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @mouseover="showTagPreview(del)"
                     @mouseleave="hideTagPreview()" @close="handleClose(del)"
                     @click="dialogForm2Visible = true; handleTagClick(del, '周二')">
@@ -123,10 +117,10 @@
                       </div>
                     </div>
                   </el-tag>
-                  <el-dialog v-model="dialogForm2Visible" title="移动至" :style="{ zIndex: 9999 }">
+                  <el-dialog v-model="dialogForm2Visible" title="移动至" style="width: 30vw;height: 25vh;">
                     <el-form :model="form2">
                       <el-form-item label="周期" :label-width="formLabelWidth">
-                        <el-select v-model="form2.region" placeholder="请选择你要调整到的日期">
+                        <el-select v-model="form2.region" placeholder="请选择要调整到的日期">
                           <el-option label="周一" value="周一" />
                           <el-option label="周三" value="周三" />
                           <el-option label="周四" value="周四" />
@@ -148,7 +142,8 @@
 
 
                 <div class="wlbox">
-                  <el-tag v-for="del in delCustomers3" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
+                  <el-tag v-for="     del      in      delCustomers3     " :key="del" type="info"
+                    :color="colorForTag[del.Visit[0].拜访建议]"
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @mouseover="showTagPreview(del)"
                     @mouseleave="hideTagPreview()" @close="handleClose(del)"
                     @click="dialogForm3Visible = true; handleTagClick(del, '周三')">
@@ -187,10 +182,10 @@
                       </div>
                     </div>
                   </el-tag>
-                  <el-dialog v-model="dialogForm3Visible" title="移动至" :style="{ zIndex: 9999 }">
+                  <el-dialog v-model="dialogForm3Visible" title="移动至" style="width: 30vw;height: 25vh;">
                     <el-form :model="form3">
                       <el-form-item label="周期" :label-width="formLabelWidth">
-                        <el-select v-model="form3.region" placeholder="请选择你要调整到的日期">
+                        <el-select v-model="form3.region" placeholder="请选择要调整到的日期">
                           <el-option label="周一" value="周一" />
                           <el-option label="周二" value="周二" />
                           <el-option label="周四" value="周四" />
@@ -210,7 +205,8 @@
                 </div>
 
                 <div class="wlbox">
-                  <el-tag v-for="del in delCustomers4" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
+                  <el-tag v-for="     del      in      delCustomers4     " :key="del" type="info"
+                    :color="colorForTag[del.Visit[0].拜访建议]"
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @mouseover="showTagPreview(del)"
                     @mouseleave="hideTagPreview()" @close="handleClose(del)"
                     @click="dialogForm4Visible = true; handleTagClick(del, '周四')">
@@ -249,10 +245,10 @@
                       </div>
                     </div>
                   </el-tag>
-                  <el-dialog v-model="dialogForm4Visible" title="移动至" :style="{ zIndex: 9999 }">
+                  <el-dialog v-model="dialogForm4Visible" title="移动至" style="width: 30vw;height: 25vh;">
                     <el-form :model="form4">
                       <el-form-item label="周期" :label-width="formLabelWidth">
-                        <el-select v-model="form4.region" placeholder="请选择你要调整到的日期">
+                        <el-select v-model="form4.region" placeholder="请选择要调整到的日期">
                           <el-option label="周一" value="周一" />
                           <el-option label="周二" value="周二" />
                           <el-option label="周三" value="周三" />
@@ -273,7 +269,8 @@
 
 
                 <div class="wlbox">
-                  <el-tag v-for="del in delCustomers5" :key="del" type="info" :color="colorForTag[del.Visit[0].拜访建议]"
+                  <el-tag v-for="     del      in      delCustomers5     " :key="del" type="info"
+                    :color="colorForTag[del.Visit[0].拜访建议]"
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @mouseover="showTagPreview(del)"
                     @mouseleave="hideTagPreview()" @close="handleClose(del)"
                     @click="dialogForm5Visible = true; handleTagClick(del, '周五')">
@@ -312,10 +309,10 @@
                       </div>
                     </div>
                   </el-tag>
-                  <el-dialog v-model="dialogForm5Visible" title="移动至" :style="{ zIndex: 9999 }">
+                  <el-dialog v-model="dialogForm5Visible" title="移动至" style="width: 30vw;height: 25vh;">
                     <el-form :model="form5">
                       <el-form-item label="周期" :label-width="formLabelWidth">
-                        <el-select v-model="form5.region" placeholder="请选择你要调整到的日期">
+                        <el-select v-model="form5.region" placeholder="请选择要调整到的日期">
                           <el-option label="周一" value="周一" />
                           <el-option label="周二" value="周二" />
                           <el-option label="周三" value="周三" />
@@ -333,22 +330,6 @@
                     </template>
                   </el-dialog>
                 </div>
-
-                <!-- <div class="wlbox"><el-tag v-for="del in delCustomers3" :key="del" type="info"
-                    :color="colorForTag[del.Visit[0].拜访建议]"
-                    :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @close="handleClose(del)">
-                    {{ del.Visit[0].客户简称 }}
-                  </el-tag></div>
-                <div class="wlbox"><el-tag v-for="del in delCustomers4" :key="del" type="info"
-                    :color="colorForTag[del.Visit[0].拜访建议]"
-                    :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @close="handleClose(del)">
-                    {{ del.Visit[0].客户简称 }}
-                  </el-tag></div>
-                <div class="wlbox"><el-tag v-for="del in delCustomers5" :key="del" type="info"
-                    :color="colorForTag[del.Visit[0].拜访建议]"
-                    :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @close="handleClose(del)">
-                    {{ del.Visit[0].客户简称 }}
-                  </el-tag></div> -->
               </div>
             </el-scrollbar>
           </el-tabs>
@@ -361,45 +342,44 @@
           <el-icon><star-filled /></el-icon>
         </el-divider>
         <el-scrollbar height="75vh" always:true min-size:100>
-          <el-tag v-for="cus, index in customers" :key="index" @click="flag ? handleFalseClick(cus) : handleClick(cus)"
-            :color="colorForTag[cus.Visit[0].拜访建议]"   @mouseover="showTagPreview(cus)"
-                    @mouseleave="hideTagPreview()">{{ cus.Visit[0].客户简称 }}
-                  
-                  
-                    <div class="tag-preview" v-if="showPreview" :style="{ top: previewTop, left: previewLeft }">
-                      <div class="tag-pre-left"><el-icon size="large" color="blue">
-                          <Bell />
-                        </el-icon>
-                        <el-badge :value="previewContent.拜访建议 == '本周期已拜访' ? '...' : previewContent.最晚线路规划时间_工作日_field"
-                          :style="{ color: colorForTag[previewContent.拜访建议] }">
-                          <h2 text="2xl" justify="center"> {{ previewContent.客户简称 }}</h2>
-                        </el-badge>
-                        <h3>{{ previewContent.客户代码_id }}</h3>
-                        <el>
-                          <h3>
-                            <li><el-icon v-if="previewContent.是否现代终端 == '是现代终端'">
-                                <Star />
-                              </el-icon>{{ previewContent.是否现代终端 }}</li>
-                          </h3>
-                          <h3>
-                            <li>{{ previewContent.送货路段 }}</li>
-                          </h3>
-                          <h3>
-                            <li>{{ previewContent.经营业态 }}</li>
-                          </h3>
-                        </el>
-                      </div>
-                      <div class="tag-pre-right">
-                        <h2 text="2xl" justify="center" style="text-align:center ;align-items: center;"> 任务列表</h2>
-                        <el-table :data="previewTaskContent">
-                          <el-table-column prop="任务内容" label="任务内容" width="180" />
-                          <el-table-column prop="任务剩余完成时间_工作日" label="剩余天数" width="90" />
-                          <el-table-column prop="预估时间_分钟" label="预估时长" />
-                        </el-table>
-                      </div>
-                    </div>
-                  
-                  </el-tag>
+          <el-tag v-for="     cus, index      in      customers     " :key="index"
+            @click="flag ? handleFalseClick(cus) : handleClick(cus)" :color="colorForTag[cus.Visit[0].拜访建议]"
+            @mouseover="showTagPreview(cus)" @mouseleave="hideTagPreview()">{{
+              cus.Visit[0].客户简称 }}
+            <div class="tag-preview" v-if="showPreview" :style="{ top: previewTop, left: previewLeft }">
+              <div class="tag-pre-left"><el-icon size="large" color="blue">
+                  <Bell />
+                </el-icon>
+                <el-badge :value="previewContent.拜访建议 == '本周期已拜访' ? '...' : previewContent.最晚线路规划时间_工作日_field"
+                  :style="{ color: colorForTag[previewContent.拜访建议] }">
+                  <h2 text="2xl" justify="center"> {{ previewContent.客户简称 }}</h2>
+                </el-badge>
+                <h3>{{ previewContent.客户代码_id }}</h3>
+                <el>
+                  <h3>
+                    <li><el-icon v-if="previewContent.是否现代终端 == '是现代终端'">
+                        <Star />
+                      </el-icon>{{ previewContent.是否现代终端 }}</li>
+                  </h3>
+                  <h3>
+                    <li>{{ previewContent.送货路段 }}</li>
+                  </h3>
+                  <h3>
+                    <li>{{ previewContent.经营业态 }}</li>
+                  </h3>
+                </el>
+              </div>
+              <div class="tag-pre-right">
+                <h2 text="2xl" justify="center" style="text-align:center ;align-items: center;"> 任务列表</h2>
+                <el-table :data="previewTaskContent">
+                  <el-table-column prop="任务内容" label="任务内容" width="180" />
+                  <el-table-column prop="任务剩余完成时间_工作日" label="剩余天数" width="90" />
+                  <el-table-column prop="预估时间_分钟" label="预估时长" />
+                </el-table>
+              </div>
+            </div>
+
+          </el-tag>
         </el-scrollbar>
       </el-col>
     </el-row>
@@ -410,7 +390,7 @@
         <el-scrollbar height="42.5vh">
           <el-button type="warning" @click="clearCurList(weekday)" style="z-index: 100;">重置当天客户</el-button>
           <el-button type="warning" @click="postRoad(weekday)" style="z-index: 100;">生成当天最优线路</el-button>
-          <KeepAlive>
+          <keep-alive>
             <el-table :data="tableData" style="width: 100%;" :default-sort='{ prop: "day_index", order: "ascending" }'
               empty-text="没有客户被排入行程" stripe>
               <el-table-column type="expand">
@@ -448,7 +428,8 @@
                       </el-icon></h3>
                     <el-table :data="props.row.task" :row-key="(row) => row.id" :reserve-selection="true">
                       <el-table-column label="任务内容" prop="任务内容" />
-                      <el-table-column label="预估时长(分钟)" prop="预估时间_分钟" />
+                      <el-table-column label="预估时长(分钟)" prop="预估时间_分钟" highlight-current-row="true" />
+
                       <el-table-column label="剩余完成时间(工作日)" prop="任务剩余完成时间_工作日" />
                     </el-table>
                   </div>
@@ -459,7 +440,7 @@
               <el-table-column label="组别" prop="day_index" />
               <el-table-column label="时间" prop="time" />
             </el-table>
-          </KeepAlive>
+          </keep-alive>
         </el-scrollbar>
       </el-col>
     </el-row>
@@ -468,11 +449,11 @@
 <script setup lang="ts">
 // 导入部分
 import { StarFilled, Star, Avatar, InfoFilled, Sunny, MoonNight, Printer, Position, Bell } from '@element-plus/icons-vue'
-import { onBeforeMount, onMounted, reactive, ref } from 'vue';
+import { onBeforeMount, onMounted, reactive, ref, computed } from 'vue';
 import axios from "axios";
 import { indexOf } from 'lodash';
 import type { ElTable } from 'element-plus';
-import type AboutViewVue from './AboutView.vue';
+
 interface TD {
   date: string,
   name: string,
@@ -500,13 +481,80 @@ let delCustomers2 = ref<Cus[]>([])
 let delCustomers3 = ref<Cus[]>([])
 let delCustomers4 = ref<Cus[]>([])
 let delCustomers5 = ref<Cus[]>([])
-let delCustomers: DelCustomers = {
+let delCustomers: DelCustomers = {//设置一个客户列表选择器
   "周一": delCustomers1,
   "周二": delCustomers2,
   "周三": delCustomers3,
   "周四": delCustomers4,
   "周五": delCustomers5
 }
+let tableData1 = ref([])
+let tableData2 = ref([])
+let tableData3 = ref([])
+let tableData4 = ref([])
+let tableData5 = ref([])
+let tableDatas: TDPlus = {
+  "周一": tableData1,
+  "周二": tableData2,
+  "周三": tableData3,
+  "周四": tableData4,
+  "周五": tableData5
+}
+//定义右下角拜访列表的数据
+const weekdays = ["周一", "周二", "周三", "周四", "周五"]
+let tableDataObj: {
+  date: string, name: string, id: string, modern: string, road: string, latest_time: string,
+  open: string, close: string, visit_time: string, pos: string, type: string, address?: string,
+  last_date?: string, task?: object[], day_index: string, time?: number, visit_time_cost?: number
+}
+
+interface TableData {
+  date: string; name: string; id: string; modern: string; road: string; latest_time: string;
+  open: string; close: string; visit_time: string; pos: string; type: string; address?: string;
+  last_date?: string; task?: object[]; day_index: string; time?: number; visit_time_cost?: number;
+}
+//indexOf(weekdays,weekday)排序依据
+function getTableData(cus: Cus) {
+  tableDataObj = {
+    name: cus.Visit[0].客户简称, modern: cus.Visit[0].是否现代终端, id: cus.Visit[0].客户代码_id,
+    type: cus.Visit[0].经营业态, road: cus.Visit[0].送货路段, latest_time: cus.Visit[0].最晚线路规划时间, visit_time_cost: cus.Visit[0].拜访时长预估,
+    open: cus.Visit[0].开门时间, close: cus.Visit[0].关门时间, visit_time: cus.Visit[0].拜访日期, pos: cus.Visit[0].pos机类型,
+    date: weekday, task: cus.Task, day_index: ((indexOf(weekdays, weekday) as unknown as string) + (indexOf(getCurrentDelCusList(weekday), cus) + 2 as unknown as string)),
+
+  }
+  return (tableDataObj)
+}
+
+function getCurrentTableData(e: string) {
+  console.log(tableData.value);
+
+  console.log(tableData.value);
+
+}
+//定义处理标签（即客户选择）的方法
+const handleClick = (cus: Cus) => {
+  // homeflag = true
+  if (colorForTag[cus.Visit[0].拜访建议] == 'red') {
+    getCurrentDelCusList(weekday.value).value.push(cus)
+    customers.value.splice(customers.value.indexOf(cus), 1)
+    insertTableData(getTableData(cus))
+    tableData.value = tableDatas[weekday.value].value
+  }
+  else {
+    alert("请先处理红色客户")
+  }
+  stateFlag(customers.value)
+}
+
+const handleFalseClick = (cus: Cus) => {
+  if (colorForTag[cus.Visit[0].拜访建议] != 'red') {
+    getCurrentDelCusList(weekday.value).value.push(cus)
+    customers.value.splice(customers.value.indexOf(cus), 1)
+    insertTableData(getTableData(cus))
+  }
+
+}
+
 // let path1 = ref([]);
 // let path2 = ref([]);
 // let path3 = ref([]);
@@ -519,32 +567,28 @@ let delCustomers: DelCustomers = {
 //   }
 // }
 
+
+//设置处理已选客户移动的逻辑
 const dialogForm1Visible = ref(false)
 const dialogForm2Visible = ref(false)
 const dialogForm3Visible = ref(false)
 const dialogForm4Visible = ref(false)
 const dialogForm5Visible = ref(false)
 const formLabelWidth = '140px'
-
 const form1 = reactive({
   region: ''
-
 })
 const form2 = reactive({
   region: ''
-
 })
 const form3 = reactive({
   region: ''
-
 })
 const form4 = reactive({
   region: ''
-
 })
 const form5 = reactive({
   region: ''
-
 })
 
 const moveCus = (e: any) => {
@@ -556,7 +600,6 @@ const moveCus = (e: any) => {
   getCurrentDelCusList(e).value.push(movedCus)
 
 }
-
 let movedCus: Cus = ref<Cus>;
 let temDay = '周一'
 const handleTagClick = (del, e) => {
@@ -590,19 +633,18 @@ const hideTagPreview = () => {
 
 
 };
-
-
-
-let weekday = "周一"
+let weekday = ref("周一")
 interface ColorMap {
   [key: string]: string;
 }
+//定义对象，给标签打颜色
 const colorForTag: ColorMap = {
   "一周内拜访": "red",
   "两周内拜访": "orange",
   "可一月内拜访": "yellow",
   "本周期已拜访": "lightblue"
-}//定义对象，给标签打颜色
+}
+
 //方法定义部分
 //处理原始客户
 // function getHandle() {
@@ -716,10 +758,16 @@ onMounted(() => {
 interface DelCustomers {
   [key: string]: any // any[] 可以替换成您的特定类型
 }
+interface TDPlus {
+  [key: string]: any // any[] 可以替换成您的特定类型
+}
+
+
 
 function getCurrentDelCusList(weekday: string) {
   return delCustomers[weekday]
 }
+
 
 function clearCurList(weekday: string) {
   let tempLi = [...delCustomers[weekday].value]
@@ -754,44 +802,6 @@ function clearDelCusList() {
   delCustomers4.value = []
   delCustomers5.value = []
 }
-//定义处理标签（即客户选择）的方法
-const handleClick = (cus: Cus) => {
-  // homeflag = true
-  if (colorForTag[cus.Visit[0].拜访建议] == 'red') {
-    getCurrentDelCusList(weekday).value.push(cus)
-    customers.value.splice(customers.value.indexOf(cus), 1)
-    insertTableData(getTableData(cus))
-    // console.log({ cus }.cus.Task[0]);
-    // console.log(customers.value[1]);
-    // console.log(delCustomers[weekday]);
-    // console.log(customers.value.map(item => (item)));
-    // console.log(sss.value)
-    // console.log(delCustomers1.value[0].Visit[0].客户代码_id);
-  }
-  else {
-    alert("请先处理红色客户")
-  }
-  stateFlag(customers.value)
-  // console.log(delCustomers1.value.length);
-  // getTime(cus, getCurrentDelCusList(weekday))
-  // updateMap()
-}
-
-const handleFalseClick = (cus: Cus) => {
-  if (colorForTag[cus.Visit[0].拜访建议] != 'red') {
-    getCurrentDelCusList(weekday).value.push(cus)
-    customers.value.splice(customers.value.indexOf(cus), 1)
-    insertTableData(getTableData(cus))
-    // console.log({ cus }.cus.Task[0]);
-    // console.log(customers.value[1]);
-    // console.log(delCustomers[weekday]);
-    // console.log(customers.value.map(item => (item)));
-    // console.log(sss.value)
-    // console.log(delCustomers1.value[0].Visit[0].客户代码_id);
-  }
-  // getTime(cus, getCurrentDelCusList(weekday))
-  // updateMap()
-}
 
 //定义巡视flag的函数
 function stateFlag(cus: any) {
@@ -820,30 +830,7 @@ const handleClose = (del: Cus) => {
   // console.log(tableData)
   // updateMap()
 }
-//定义右下角拜访列表的数据
-const weekdays = ["周一", "周二", "周三", "周四", "周五"]
-let tableDataObj: {
-  date: string, name: string, id: string, modern: string, road: string, latest_time: string,
-  open: string, close: string, visit_time: string, pos: string, type: string, address?: string,
-  last_date?: string, task?: object[], day_index: string, time?: number, visit_time_cost?: number
-}
 
-interface TableData {
-  date: string; name: string; id: string; modern: string; road: string; latest_time: string;
-  open: string; close: string; visit_time: string; pos: string; type: string; address?: string;
-  last_date?: string; task?: object[]; day_index: string; time?: number; visit_time_cost?: number;
-}
-//indexOf(weekdays,weekday)排序依据
-function getTableData(cus: Cus) {
-  tableDataObj = {
-    name: cus.Visit[0].客户简称, modern: cus.Visit[0].是否现代终端, id: cus.Visit[0].客户代码_id,
-    type: cus.Visit[0].经营业态, road: cus.Visit[0].送货路段, latest_time: cus.Visit[0].最晚线路规划时间, visit_time_cost: cus.Visit[0].拜访时长预估,
-    open: cus.Visit[0].开门时间, close: cus.Visit[0].关门时间, visit_time: cus.Visit[0].拜访日期, pos: cus.Visit[0].pos机类型,
-    date: weekday, task: cus.Task, day_index: ((indexOf(weekdays, weekday) as unknown as string) + (indexOf(getCurrentDelCusList(weekday), cus) + 2 as unknown as string)),
-
-  }
-  return (tableDataObj)
-}
 
 // function getTime(tableData, weekday) {
 //   const s = getCurrentDelCusList(weekday)
@@ -855,10 +842,24 @@ function getTableData(cus: Cus) {
 // }
 
 function insertTableData(tableDataObj: TableData) {
-  tableData.value.push(tableDataObj)
+  tableDatas[weekday.value].value.push(tableDataObj)
+  console.log(tableDatas[weekday.value].value)
 }
 
-const tableData = ref([])
+const tableData = computed(() => {
+  if (weekday.value === '周一') {
+    return tableData1.value;
+  } else if (weekday.value === '周二') {
+    return tableData2.value;
+  } else if (weekday.value === '周三') {
+    return tableData3.value;
+  } else if (weekday.value === '周四') {
+    return tableData4.value;
+  } else if (weekday.value === '周五') {
+    return tableData5.value;
+  }
+  return tableData1.value;
+});
 
 function deleteTableData(tableDataObj: TableData) {
   for (let i = 0; i < tableData.value.length; i++) {
@@ -881,6 +882,7 @@ function deleteTableData(tableDataObj: TableData) {
 //     }
 //     );
 // }
+
 </script>
       
 <style>
@@ -899,6 +901,10 @@ function deleteTableData(tableDataObj: TableData) {
 
 }
 
+.highlight {
+  background-color: yellow;
+}
+
 .tag-preview {
   display: flex;
   position: fixed;
@@ -911,7 +917,7 @@ function deleteTableData(tableDataObj: TableData) {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 15px;
-  
+
 }
 
 .tag-pre-left {
@@ -936,5 +942,4 @@ function deleteTableData(tableDataObj: TableData) {
 .margin-top {
   margin-top: 20px;
 }
-
-</style>      
+</style>     
