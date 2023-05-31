@@ -18,7 +18,7 @@
                   <el-tag v-for="  del in delCustomers1     " :key="del" type="info"
                     :color="colorForTag[del.Visit[0].拜访建议]"
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @mouseover="showTagPreview(del)"
-                    @mouseleave="hideTagPreview()" @close="handleClose(del)"
+                    @mouseleave="hideTagPreview()" @close="handleClose(del, '周一')"
                     @click="dialogForm1Visible = true; handleTagClick(del, '周一')">
 
                     {{ del.Visit[0].客户简称 }}
@@ -26,16 +26,16 @@
                       <div class="tag-pre-left"><el-icon size="large" color="blue">
                           <Bell />
                         </el-icon>
-                        <el-badge :value="previewContent.拜访建议 == '本周期已拜访' ? '...' : previewContent.最晚线路规划时间_工作日_field"
+                        <el-badge :value="previewContent.拜访建议 == '本周期已拜访' ? '...' : previewContent.最晚线路规划时间_工作日"
                           :style="{ color: colorForTag[previewContent.拜访建议] }">
                           <h2 text="2xl" justify="center"> {{ previewContent.客户简称 }}</h2>
                         </el-badge>
                         <h3>{{ previewContent.客户代码_id }}</h3>
                         <el>
                           <h3>
-                            <li><el-icon v-if="previewContent.是否现代终端 == '是现代终端'">
+                            <li><el-icon v-if="previewContent.终端类型 == '现代终端' || '加盟终端' || '直营终端'">
                                 <Star />
-                              </el-icon>{{ previewContent.是否现代终端 }}</li>
+                              </el-icon>{{ previewContent.终端类型 }}</li>
                           </h3>
                           <h3>
                             <li>{{ previewContent.送货路段 }}</li>
@@ -80,7 +80,7 @@
                   <el-tag v-for="     del      in      delCustomers2     " :key="del" type="info"
                     :color="colorForTag[del.Visit[0].拜访建议]"
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @mouseover="showTagPreview(del)"
-                    @mouseleave="hideTagPreview()" @close="handleClose(del)"
+                    @mouseleave="hideTagPreview()" @close="handleClose(del, '周二')"
                     @click="dialogForm2Visible = true; handleTagClick(del, '周二')">
 
                     {{ del.Visit[0].客户简称 }}
@@ -88,16 +88,16 @@
                       <div class="tag-pre-left"><el-icon size="large" color="blue">
                           <Bell />
                         </el-icon>
-                        <el-badge :value="previewContent.拜访建议 == '本周期已拜访' ? '...' : previewContent.最晚线路规划时间_工作日_field"
+                        <el-badge :value="previewContent.拜访建议 == '本周期已拜访' ? '...' : previewContent.最晚线路规划时间_工作日"
                           :style="{ color: colorForTag[previewContent.拜访建议] }">
                           <h2 text="2xl" justify="center"> {{ previewContent.客户简称 }}</h2>
                         </el-badge>
                         <h3>{{ previewContent.客户代码_id }}</h3>
                         <el>
                           <h3>
-                            <li><el-icon v-if="previewContent.是否现代终端 == '是现代终端'">
+                            <li><el-icon v-if="previewContent.终端类型 == '现代终端' || '加盟终端' || '直营终端'">
                                 <Star />
-                              </el-icon>{{ previewContent.是否现代终端 }}</li>
+                              </el-icon>{{ previewContent.终端类型 }}</li>
                           </h3>
                           <h3>
                             <li>{{ previewContent.送货路段 }}</li>
@@ -145,7 +145,7 @@
                   <el-tag v-for="     del      in      delCustomers3     " :key="del" type="info"
                     :color="colorForTag[del.Visit[0].拜访建议]"
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @mouseover="showTagPreview(del)"
-                    @mouseleave="hideTagPreview()" @close="handleClose(del)"
+                    @mouseleave="hideTagPreview()" @close="handleClose(del, '周三')"
                     @click="dialogForm3Visible = true; handleTagClick(del, '周三')">
 
                     {{ del.Visit[0].客户简称 }}
@@ -153,16 +153,16 @@
                       <div class="tag-pre-left"><el-icon size="large" color="blue">
                           <Bell />
                         </el-icon>
-                        <el-badge :value="previewContent.拜访建议 == '本周期已拜访' ? '...' : previewContent.最晚线路规划时间_工作日_field"
+                        <el-badge :value="previewContent.拜访建议 == '本周期已拜访' ? '...' : previewContent.最晚线路规划时间_工作日"
                           :style="{ color: colorForTag[previewContent.拜访建议] }">
                           <h2 text="2xl" justify="center"> {{ previewContent.客户简称 }}</h2>
                         </el-badge>
                         <h3>{{ previewContent.客户代码_id }}</h3>
                         <el>
                           <h3>
-                            <li><el-icon v-if="previewContent.是否现代终端 == '是现代终端'">
+                            <li><el-icon v-if="previewContent.终端类型 == '现代终端' || '加盟终端' || '直营终端'">
                                 <Star />
-                              </el-icon>{{ previewContent.是否现代终端 }}</li>
+                              </el-icon>{{ previewContent.终端类型 }}</li>
                           </h3>
                           <h3>
                             <li>{{ previewContent.送货路段 }}</li>
@@ -208,7 +208,7 @@
                   <el-tag v-for="     del      in      delCustomers4     " :key="del" type="info"
                     :color="colorForTag[del.Visit[0].拜访建议]"
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @mouseover="showTagPreview(del)"
-                    @mouseleave="hideTagPreview()" @close="handleClose(del)"
+                    @mouseleave="hideTagPreview()" @close="handleClose(del, '周四')"
                     @click="dialogForm4Visible = true; handleTagClick(del, '周四')">
 
                     {{ del.Visit[0].客户简称 }}
@@ -216,16 +216,16 @@
                       <div class="tag-pre-left"><el-icon size="large" color="blue">
                           <Bell />
                         </el-icon>
-                        <el-badge :value="previewContent.拜访建议 == '本周期已拜访' ? '...' : previewContent.最晚线路规划时间_工作日_field"
+                        <el-badge :value="previewContent.拜访建议 == '本周期已拜访' ? '...' : previewContent.最晚线路规划时间_工作日"
                           :style="{ color: colorForTag[previewContent.拜访建议] }">
                           <h2 text="2xl" justify="center"> {{ previewContent.客户简称 }}</h2>
                         </el-badge>
                         <h3>{{ previewContent.客户代码_id }}</h3>
                         <el>
                           <h3>
-                            <li><el-icon v-if="previewContent.是否现代终端 == '是现代终端'">
+                            <li><el-icon v-if="previewContent.终端类型 == '现代终端' || '加盟终端' || '直营终端'">
                                 <Star />
-                              </el-icon>{{ previewContent.是否现代终端 }}</li>
+                              </el-icon>{{ previewContent.终端类型 }}</li>
                           </h3>
                           <h3>
                             <li>{{ previewContent.送货路段 }}</li>
@@ -272,7 +272,7 @@
                   <el-tag v-for="     del      in      delCustomers5     " :key="del" type="info"
                     :color="colorForTag[del.Visit[0].拜访建议]"
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @mouseover="showTagPreview(del)"
-                    @mouseleave="hideTagPreview()" @close="handleClose(del)"
+                    @mouseleave="hideTagPreview()" @close="handleClose(del, '周五')"
                     @click="dialogForm5Visible = true; handleTagClick(del, '周五')">
 
                     {{ del.Visit[0].客户简称 }}
@@ -280,16 +280,16 @@
                       <div class="tag-pre-left"><el-icon size="large" color="blue">
                           <Bell />
                         </el-icon>
-                        <el-badge :value="previewContent.拜访建议 == '本周期已拜访' ? '...' : previewContent.最晚线路规划时间_工作日_field"
+                        <el-badge :value="previewContent.拜访建议 == '本周期已拜访' ? '...' : previewContent.最晚线路规划时间_工作日"
                           :style="{ color: colorForTag[previewContent.拜访建议] }">
                           <h2 text="2xl" justify="center"> {{ previewContent.客户简称 }}</h2>
                         </el-badge>
                         <h3>{{ previewContent.客户代码_id }}</h3>
                         <el>
                           <h3>
-                            <li><el-icon v-if="previewContent.是否现代终端 == '是现代终端'">
+                            <li><el-icon v-if="previewContent.终端类型 == '现代终端' || '加盟终端' || '直营终端'">
                                 <Star />
-                              </el-icon>{{ previewContent.是否现代终端 }}</li>
+                              </el-icon>{{ previewContent.终端类型 }}</li>
                           </h3>
                           <h3>
                             <li>{{ previewContent.送货路段 }}</li>
@@ -341,7 +341,7 @@
         <el-divider style="margin-bottom:15px;">
           <el-icon><star-filled /></el-icon>
         </el-divider>
-        <el-scrollbar height="75vh" always:true min-size:100>
+        <el-scrollbar height="30  vh" always:true>
           <el-tag v-for="     cus, index      in      customers     " :key="index"
             @click="flag ? handleFalseClick(cus) : handleClick(cus)" :color="colorForTag[cus.Visit[0].拜访建议]"
             @mouseover="showTagPreview(cus)" @mouseleave="hideTagPreview()">{{
@@ -350,16 +350,16 @@
               <div class="tag-pre-left"><el-icon size="large" color="blue">
                   <Bell />
                 </el-icon>
-                <el-badge :value="previewContent.拜访建议 == '本周期已拜访' ? '...' : previewContent.最晚线路规划时间_工作日_field"
+                <el-badge :value="previewContent.拜访建议 == '本周期已拜访' ? '...' : previewContent.最晚线路规划时间_工作日"
                   :style="{ color: colorForTag[previewContent.拜访建议] }">
                   <h2 text="2xl" justify="center"> {{ previewContent.客户简称 }}</h2>
                 </el-badge>
                 <h3>{{ previewContent.客户代码_id }}</h3>
                 <el>
                   <h3>
-                    <li><el-icon v-if="previewContent.是否现代终端 == '是现代终端'">
+                    <li><el-icon v-if="previewContent.终端类型 == '现代终端' || '加盟终端' || '直营终端'">
                         <Star />
-                      </el-icon>{{ previewContent.是否现代终端 }}</li>
+                      </el-icon>{{ previewContent.终端类型 }}</li>
                   </h3>
                   <h3>
                     <li>{{ previewContent.送货路段 }}</li>
@@ -367,11 +367,15 @@
                   <h3>
                     <li>{{ previewContent.经营业态 }}</li>
                   </h3>
+                  <h3>
+                    <li>最晚拜访时间:{{ previewContent.最晚线路规划时间_工作日 || '已拜访' }}</li>
+                  </h3>
                 </el>
               </div>
               <div class="tag-pre-right">
                 <h2 text="2xl" justify="center" style="text-align:center ;align-items: center;"> 任务列表</h2>
                 <el-table :data="previewTaskContent">
+                  <el-table-column prop="任务状态" label="任务状态" width="90" />
                   <el-table-column prop="任务内容" label="任务内容" width="180" />
                   <el-table-column prop="任务剩余完成时间_工作日" label="剩余天数" width="90" />
                   <el-table-column prop="预估时间_分钟" label="预估时长" />
@@ -437,7 +441,6 @@
               </el-table-column>
               <el-table-column label="周期" prop="date" />
               <el-table-column label="客户名称" prop="name" />
-              <el-table-column label="组别" prop="day_index" />
               <el-table-column label="时间" prop="time" />
             </el-table>
           </keep-alive>
@@ -505,18 +508,18 @@ const weekdays = ["周一", "周二", "周三", "周四", "周五"]
 let tableDataObj: {
   date: string, name: string, id: string, modern: string, road: string, latest_time: string,
   open: string, close: string, visit_time: string, pos: string, type: string, address?: string,
-  last_date?: string, task?: object[],time?: number, visit_time_cost?: number
+  last_date?: string, task?: object[], time?: number, visit_time_cost?: number
 }
 
 interface TableData {
   date: string; name: string; id: string; modern: string; road: string; latest_time: string;
   open: string; close: string; visit_time: string; pos: string; type: string; address?: string;
-  last_date?: string; task?: object[];  time?: number; visit_time_cost?: number;
+  last_date?: string; task?: object[]; time?: number; visit_time_cost?: number;
 }
 //indexOf(weekdays,weekday)排序依据
 function getTableData(cus: Cus) {
   tableDataObj = {
-    name: cus.Visit[0].客户简称, modern: cus.Visit[0].是否现代终端, id: cus.Visit[0].客户代码_id,
+    name: cus.Visit[0].客户简称, modern: cus.Visit[0].终端类型, id: cus.Visit[0].客户代码_id,
     type: cus.Visit[0].经营业态, road: cus.Visit[0].送货路段, latest_time: cus.Visit[0].最晚线路规划时间, visit_time_cost: cus.Visit[0].拜访时长预估,
     open: cus.Visit[0].开门时间, close: cus.Visit[0].关门时间, visit_time: cus.Visit[0].拜访日期, pos: cus.Visit[0].pos机类型,
     date: weekday, task: cus.Task,
@@ -527,7 +530,7 @@ function getTableData(cus: Cus) {
 }
 
 function getCurrentTableData(e: string) {
-    return tableDatas[e]
+  return tableDatas[e]
 
 }
 //定义处理标签（即客户选择）的方法
@@ -537,7 +540,7 @@ const handleClick = (cus: Cus) => {
     getCurrentDelCusList(weekday.value).value.push(cus)
     customers.value.splice(customers.value.indexOf(cus), 1)
     insertTableData(getTableData(cus))
-    
+
   }
   else {
     alert("请先处理红色客户")
@@ -596,29 +599,29 @@ const handleTagClick = (del, e) => {
   temDay = e
   console.log(del);
   console.log(e);
-  
-  
+
+
 };
 
 
 const moveCus = (e: any) => {
- 
+
   const temIndex = getCurrentDelCusList(temDay).value.indexOf(movedCus)
-  
+
   console.log(temIndex);
   // console.log(temTableIndex);
-  
-  console.log(getCurrentTableData(temDay).value) 
+
+  console.log(getCurrentTableData(temDay).value)
   console.log(getTableData(movedCus))
   if (temIndex > -1) {
     getCurrentDelCusList(temDay).value.splice(temIndex, 1);
     getCurrentDelCusList(e).value.push(movedCus)
   }
-  
-    tableDatas[temDay].value.splice(temIndex,1)
-    tableDatas[e].value.push(tableDataObj)
-  
- 
+
+  tableDatas[temDay].value.splice(temIndex, 1)
+  tableDatas[e].value.push(tableDataObj)
+
+
 
 }
 
@@ -718,7 +721,7 @@ function postRoad(e) {
 //处理请求客户(base客户经理)
 function postHandle(e: string) {
   clearDelCusList()
-  axios.post("http://122.9.67.194:8000/api/customer/info/cusForManTest/",
+  axios.post("http://122.9.67.194:8000/api/customer/info/cusForMan/",
     { text: e }, {})
     .then((res) => { customers.value = res.data; }
     );
@@ -828,7 +831,7 @@ function stateFlag(cus: any) {
 }
 
 //定义处理标签（即客户退回）的方法
-const handleClose = (del: Cus) => {
+const handleClose = (del: Cus, e: string) => {
   deleteTableData(getTableData(del))
   let i_index: number = ref()
   for (let i = 0; i < customers.value.length; i++) {
@@ -841,7 +844,9 @@ const handleClose = (del: Cus) => {
   }
   console.log(i_index)
   customers.value.splice(i_index, 0, del)
-  getCurrentDelCusList(weekday.value).value.splice(getCurrentDelCusList(weekday.value).value.indexOf(del), 1)
+  tableDatas[e].value.splice(getCurrentDelCusList(e).value.indexOf(del), 1)
+  getCurrentDelCusList(e).value.splice(getCurrentDelCusList(e).value.indexOf(del), 1)
+
   // console.log(tableData)
   // updateMap()
 }
@@ -858,7 +863,7 @@ const handleClose = (del: Cus) => {
 
 function insertTableData(tableDataObj: TableData) {
   tableDatas[weekday.value].value.push(tableDataObj)
- 
+
 }
 
 
