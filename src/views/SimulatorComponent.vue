@@ -611,15 +611,15 @@ const moveCus = (e: any) => {
   console.log(temIndex);
   // console.log(temTableIndex);
 
-  console.log(getCurrentTableData(temDay).value)
-  console.log(getTableData(movedCus))
+  // console.log(getCurrentTableData(temDay).value)
+  // console.log(getTableData(movedCus))
   if (temIndex > -1) {
     getCurrentDelCusList(temDay).value.splice(temIndex, 1);
     getCurrentDelCusList(e).value.push(movedCus)
   }
 
   tableDatas[temDay].value.splice(temIndex, 1)
-  tableDatas[e].value.push(tableDataObj)
+  tableDatas[e].value.push(getTableData(movedCus))
 
 
 
@@ -711,10 +711,17 @@ function postRoad(e) {
     .then((res) => {
       let newRoad = ref([])
       newRoad.value = res.data
-      console.log(newRoad.value[0]);
       console.log(resetRoad(getCurrentDelCusList(e), newRoad));
+      console.log(newRoad.value)
       getCurrentDelCusList(e).value = resetRoad(getCurrentDelCusList(e), newRoad).value
-      tableData.value = resetTable(tableData, newRoad).value
+      tableData.value.sort((a,b)=>{
+        const indexA=newRoad.value.indexOf(a.id)
+        const indexB=newRoad.value.indexOf(b.id)
+        return indexA-indexB
+      }
+      )
+      // tableData.value = resetTable(tableData, newRoad).value
+      
     }
     );
 }
@@ -832,7 +839,7 @@ function stateFlag(cus: any) {
 
 //定义处理标签（即客户退回）的方法
 const handleClose = (del: Cus, e: string) => {
-  deleteTableData(getTableData(del))
+  
   let i_index: number = ref()
   for (let i = 0; i < customers.value.length; i++) {
     const element: TableData = customers.value[i];
