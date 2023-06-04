@@ -33,7 +33,7 @@
                         <h3>{{ previewContent.客户代码_id }}</h3>
                         <el>
                           <h3>
-                            <li><el-icon v-if="previewContent.终端类型 == '现代终端' || '加盟终端' || '直营终端'">
+                            <li><el-icon v-if="previewContent.终端类型 == '现代终端' || previewContent.终端类型 =='加盟终端' || previewContent.终端类型 =='直营终端'">
                                 <Star />
                               </el-icon>{{ previewContent.终端类型 }}</li>
                           </h3>
@@ -44,14 +44,6 @@
                             <li>{{ previewContent.经营业态 }}</li>
                           </h3>
                         </el>
-                      </div>
-                      <div class="tag-pre-right">
-                        <h2 text="2xl" justify="center" style="text-align:center ;align-items: center;"> 任务列表</h2>
-                        <el-table :data="previewTaskContent">
-                          <el-table-column prop="任务内容" label="任务内容" width="180" />
-                          <el-table-column prop="任务剩余完成时间_工作日" label="剩余天数" width="90" />
-                          <el-table-column prop="预估时间_分钟" label="预估时长" />
-                        </el-table>
                       </div>
                     </div>
                   </el-tag>
@@ -95,7 +87,7 @@
                         <h3>{{ previewContent.客户代码_id }}</h3>
                         <el>
                           <h3>
-                            <li><el-icon v-if="previewContent.终端类型 == '现代终端' || '加盟终端' || '直营终端'">
+                            <li><el-icon v-if="previewContent.终端类型 == '现代终端'  ||previewContent.终端类型 == '加盟终端' ||previewContent.终端类型 == '直营终端'">
                                 <Star />
                               </el-icon>{{ previewContent.终端类型 }}</li>
                           </h3>
@@ -106,14 +98,6 @@
                             <li>{{ previewContent.经营业态 }}</li>
                           </h3>
                         </el>
-                      </div>
-                      <div class="tag-pre-right">
-                        <h2 text="2xl" justify="center" style="text-align:center ;align-items: center;"> 任务列表</h2>
-                        <el-table :data="previewTaskContent">
-                          <el-table-column prop="任务内容" label="任务内容" width="180" />
-                          <el-table-column prop="任务剩余完成时间_工作日" label="剩余天数" width="90" />
-                          <el-table-column prop="预估时间_分钟" label="预估时长" />
-                        </el-table>
                       </div>
                     </div>
                   </el-tag>
@@ -160,7 +144,7 @@
                         <h3>{{ previewContent.客户代码_id }}</h3>
                         <el>
                           <h3>
-                            <li><el-icon v-if="previewContent.终端类型 == '现代终端' || '加盟终端' || '直营终端'">
+                            <li><el-icon v-if="previewContent.终端类型 == '现代终端' ||previewContent.终端类型 == '加盟终端' ||previewContent.终端类型 =='直营终端'">
                                 <Star />
                               </el-icon>{{ previewContent.终端类型 }}</li>
                           </h3>
@@ -171,14 +155,6 @@
                             <li>{{ previewContent.经营业态 }}</li>
                           </h3>
                         </el>
-                      </div>
-                      <div class="tag-pre-right">
-                        <h2 text="2xl" justify="center" style="text-align:center ;align-items: center;"> 任务列表</h2>
-                        <el-table :data="previewTaskContent">
-                          <el-table-column prop="任务内容" label="任务内容" width="180" />
-                          <el-table-column prop="任务剩余完成时间_工作日" label="剩余天数" width="90" />
-                          <el-table-column prop="预估时间_分钟" label="预估时长" />
-                        </el-table>
                       </div>
                     </div>
                   </el-tag>
@@ -223,7 +199,7 @@
                         <h3>{{ previewContent.客户代码_id }}</h3>
                         <el>
                           <h3>
-                            <li><el-icon v-if="previewContent.终端类型 == '现代终端' || '加盟终端' || '直营终端'">
+                            <li><el-icon v-if="previewContent.终端类型 == '现代终端'||previewContent.终端类型 =='加盟终端' ||previewContent.终端类型 =='直营终端' ">
                                 <Star />
                               </el-icon>{{ previewContent.终端类型 }}</li>
                           </h3>
@@ -234,14 +210,6 @@
                             <li>{{ previewContent.经营业态 }}</li>
                           </h3>
                         </el>
-                      </div>
-                      <div class="tag-pre-right">
-                        <h2 text="2xl" justify="center" style="text-align:center ;align-items: center;"> 任务列表</h2>
-                        <el-table :data="previewTaskContent">
-                          <el-table-column prop="任务内容" label="任务内容" width="180" />
-                          <el-table-column prop="任务剩余完成时间_工作日" label="剩余天数" width="90" />
-                          <el-table-column prop="预估时间_分钟" label="预估时长" />
-                        </el-table>
                       </div>
                     </div>
                   </el-tag>
@@ -287,7 +255,7 @@
                         <h3>{{ previewContent.客户代码_id }}</h3>
                         <el>
                           <h3>
-                            <li><el-icon v-if="previewContent.终端类型 == '现代终端' || '加盟终端' || '直营终端'">
+                            <li><el-icon v-if="previewContent.终端类型 == '现代终端' ||previewContent.终端类型 == '加盟终端' || previewContent.终端类型 =='直营终端'">
                                 <Star />
                               </el-icon>{{ previewContent.终端类型 }}</li>
                           </h3>
@@ -298,14 +266,6 @@
                             <li>{{ previewContent.经营业态 }}</li>
                           </h3>
                         </el>
-                      </div>
-                      <div class="tag-pre-right">
-                        <h2 text="2xl" justify="center" style="text-align:center ;align-items: center;"> 任务列表</h2>
-                        <el-table :data="previewTaskContent">
-                          <el-table-column prop="任务内容" label="任务内容" width="180" />
-                          <el-table-column prop="任务剩余完成时间_工作日" label="剩余天数" width="90" />
-                          <el-table-column prop="预估时间_分钟" label="预估时长" />
-                        </el-table>
                       </div>
                     </div>
                   </el-tag>
@@ -357,7 +317,7 @@
                 <h3>{{ previewContent.客户代码_id }}</h3>
                 <el>
                   <h3>
-                    <li><el-icon v-if="previewContent.终端类型 == '现代终端' || '加盟终端' || '直营终端'">
+                    <li><el-icon v-if="previewContent.终端类型 == '现代终端' || previewContent.终端类型 =='加盟终端' || previewContent.终端类型 =='直营终端'">
                         <Star />
                       </el-icon>{{ previewContent.终端类型 }}</li>
                   </h3>
@@ -391,17 +351,17 @@
     <el-row class='row-bottom'>
       <!-- 左下：列表展示部分    -->
       <el-col :span="12" class="col-right-bottom">
-        <el-scrollbar height="42.5vh">
-          <el-button type="warning" @click="clearCurList(weekday)" style="z-index: 100;">重置当天客户</el-button>
+        <el-button type="warning" @click="clearCurList(weekday)" style="z-index: 100;">重置当天客户</el-button>
           <el-button type="warning" @click="postRoad(weekday)" style="z-index: 100;">生成当天最优线路</el-button>
+        <el-scrollbar height="42.5vh">
           <keep-alive>
-            <el-table :data="tableData" style="width: 100%;" :default-sort='{ prop: "day_index", order: "ascending" }'
-              empty-text="没有客户被排入行程" stripe>
-              <el-table-column type="expand">
+            <el-table :data="tableData" style="width: 100%;" 
+              empty-text="没有客户被排入行程"  height="40vh"  sum-text="合计"  show-summary  :summary-method="summaryMethod"  stripe>
+              <el-table-column type="expand" >
                 <template #default="props">
                   <div m="4" class="inTable">
                     <div class="p-info-father" style="display: flex;">
-                      <div class="p-info" style="width:50%">
+                      <div class="p-info" style="width:50%;">
                         <p style="font-weight:bold;"> {{ props.row.modern }}</p>
                         <p><el-icon>
                             <Avatar />
@@ -414,7 +374,7 @@
                           </el-icon>开门时间: {{ props.row.open }}</p>
                       </div>
                       <div style="width: 50%;">
-                        <p style="font-weight:bold;">最晚拜访时间: {{ props.row.latest_time || (props.row.visit_time + '已拜访') }}
+                        <p style="font-weight:bold;">拜访建议: {{ props.row.visit_advice || (props.row.visit_advice + '已拜访') }}
                         </p>
                         <p><el-icon>
                             <Position />
@@ -431,18 +391,29 @@
                         <Star />
                       </el-icon></h3>
                     <el-table :data="props.row.task" :row-key="(row) => row.id" :reserve-selection="true">
+                      <el-table-column label="任务状态" prop="任务状态" />
                       <el-table-column label="任务内容" prop="任务内容" />
-                      <el-table-column label="预估时长(分钟)" prop="预估时间_分钟" highlight-current-row="true" />
+                      <el-table-column label="预估时长(分钟)" prop="预估时间_分钟"  />
 
                       <el-table-column label="剩余完成时间(工作日)" prop="任务剩余完成时间_工作日" />
                     </el-table>
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column label="周期" prop="date" />
-              <el-table-column label="客户名称" prop="name" />
-              <el-table-column label="时间" prop="time" />
+              <el-table-column label="周期" prop="date" width="auto" />
+              <el-table-column label="客户代码" prop="id" width="auto" />
+              <el-table-column label="客户名称" prop="name" width="auto"/>
+              <el-table-column label="客户地址" prop="address" width="auto"/>
+              <el-table-column label="任务数量" prop="tasknum" width="auto" />
+              <el-table-column label="任务时间" prop="visit_time_cost" width="auto" />
+              <el-table-column label="在途时间" prop="visit_road_time" width="auto" />
+              <el-table-column label="总时间" prop="all_time" width="auto" />
+            
             </el-table>
+
+
+
+
           </keep-alive>
         </el-scrollbar>
       </el-col>
@@ -452,10 +423,44 @@
 <script setup lang="ts">
 // 导入部分
 import { StarFilled, Star, Avatar, InfoFilled, Sunny, MoonNight, Printer, Position, Bell } from '@element-plus/icons-vue'
-import { onBeforeMount, onMounted, reactive, ref, computed } from 'vue';
+import { onBeforeMount, onMounted, reactive, ref, computed ,watch} from 'vue';
 import axios from "axios";
 import { indexOf } from 'lodash';
 import type { ElTable } from 'element-plus';
+
+
+function summaryMethod({ columns, data }) {
+      const sums = [];
+      
+      columns.forEach((column, columnIndex) => {
+        const values = data.map((item) => Number(item[column.property]));
+        if (column.property === 'date') {
+          sums[columnIndex] = '合计';
+          return;
+        }
+        if (column.property === 'id') {
+          sums[columnIndex] = data.length+"家";
+          return;
+        }
+        if (!values.every((value) => isNaN(value))) {
+          sums[columnIndex] = values.reduce((prev, curr) => {
+            const value = Number(curr);
+            if (!isNaN(value)) {
+              return prev + curr;
+            } else {
+              return prev;
+            }
+          }, 0);
+        } else {
+          sums[columnIndex] = '';
+        }
+      });
+      sums[5]=sums[5]+"个"
+      sums[6] =Math.floor(parseInt(sums[6])/60 )+"小时"+parseInt(sums[6])%60+"分钟"
+      return sums;
+    }
+  
+
 
 interface TD {
   date: string,
@@ -506,23 +511,24 @@ let tableDatas: TDPlus = {
 //定义右下角拜访列表的数据
 const weekdays = ["周一", "周二", "周三", "周四", "周五"]
 let tableDataObj: {
-  date: string, name: string, id: string, modern: string, road: string, latest_time: string,
-  open: string, close: string, visit_time: string, pos: string, type: string, address?: string,
-  last_date?: string, task?: object[], time?: number, visit_time_cost?: number
+  date: string, name: string, id: string, modern: string, road: string, visit_advice: string,
+  open: string, close: string, visit_time: string, pos: string, type: string, address?: string,tasknum?:number,
+  last_date?: string, task?: object[], time?: number, visit_time_cost?: number,visit_road_time?:number,all_time?:number,
 }
 
 interface TableData {
-  date: string; name: string; id: string; modern: string; road: string; latest_time: string;
+  date: string; name: string; id: string; modern: string; road: string; visit_advice: string;
   open: string; close: string; visit_time: string; pos: string; type: string; address?: string;
-  last_date?: string; task?: object[]; time?: number; visit_time_cost?: number;
+  last_date?: string; task?: object[]; time?: number; visit_time_cost?: number;tasknum?:number;
+  visit_road_time?:number;all_time?:number;
 }
 //indexOf(weekdays,weekday)排序依据
 function getTableData(cus: Cus) {
   tableDataObj = {
     name: cus.Visit[0].客户简称, modern: cus.Visit[0].终端类型, id: cus.Visit[0].客户代码_id,
-    type: cus.Visit[0].经营业态, road: cus.Visit[0].送货路段, latest_time: cus.Visit[0].最晚线路规划时间, visit_time_cost: cus.Visit[0].拜访时长预估,
-    open: cus.Visit[0].开门时间, close: cus.Visit[0].关门时间, visit_time: cus.Visit[0].拜访日期, pos: cus.Visit[0].pos机类型,
-    date: weekday, task: cus.Task,
+    type: cus.Visit[0].经营业态, road: cus.Visit[0].送货路段, visit_advice: cus.Visit[0].拜访建议, visit_time_cost: cus.Visit[0].拜访时长预估,
+    open: cus.Visit[0].开门时间, close: cus.Visit[0].关门时间, visit_time: cus.Visit[0].拜访日期, pos: cus.Visit[0].pos机类型,address:cus.Visit[0].客户地址,
+    date: weekday, task: cus.Task,tasknum:cus.Task.length,visit_road_time:0,all_time: 0
     //  day_index: ((indexOf(weekdays, weekday) as unknown as string) + (indexOf(getCurrentDelCusList(weekday), cus) + 2 as unknown as string)),
 
   }
@@ -597,8 +603,6 @@ let temDay = '周一'
 const handleTagClick = (del, e) => {
   movedCus = del
   temDay = e
-  console.log(del);
-  console.log(e);
 
 
 };
@@ -608,7 +612,6 @@ const moveCus = (e: any) => {
 
   const temIndex = getCurrentDelCusList(temDay).value.indexOf(movedCus)
 
-  console.log(temIndex);
   // console.log(temTableIndex);
 
   // console.log(getCurrentTableData(temDay).value)
@@ -663,14 +666,17 @@ const colorForTag: ColorMap = {
   "本周期已拜访": "lightblue"
 }
 
+
+
+const routeInfo =ref([])
 //方法定义部分
 //处理原始客户
-// function getHandle() {
-//   axios.get("http://122.9.67.194:8000/api/customer/info/",
-//     { params: {}, headers: {} })
-//     .then((res) => { customers.value = res.data; }
-//     );
-// }
+function getHandle() {
+  axios.get("http://122.9.67.194:8000/api/customer/info/",
+    )
+    .then((res) => { routeInfo.value = res.data; }
+    );
+}
 //处理线路重新规划逻辑
 function resetRoad(array, newarray) {
   let temroad = ref([])
@@ -711,8 +717,6 @@ function postRoad(e) {
     .then((res) => {
       let newRoad = ref([])
       newRoad.value = res.data
-      console.log(resetRoad(getCurrentDelCusList(e), newRoad));
-      console.log(newRoad.value)
       getCurrentDelCusList(e).value = resetRoad(getCurrentDelCusList(e), newRoad).value
       tableData.value.sort((a,b)=>{
         const indexA=newRoad.value.indexOf(a.id)
@@ -720,8 +724,25 @@ function postRoad(e) {
         return indexA-indexB
       }
       )
-      // tableData.value = resetTable(tableData, newRoad).value
-      
+     
+      tableData.value[0].visit_road_time=0
+      for (let i =1;i<tableData.value.length-1;i++){
+        
+        const targetRow = routeInfo.value.find((row, index) => {   
+          
+           if (index >0  && row.value[index].起点 === tableData.value[i - 1].id && row.value[index].终点 === tableData.value[i].id) {
+
+           return true;
+               }
+                });
+          console.log(targetRow);
+          
+         tableData.value[i].visit_road_time=targetRow.value.时间
+   
+        // if(routeInfo.value['起点']===tableData.value[i-1].id &&routeInfo.value['终点']===tableData.value[i].id)
+        // tableData.value[i].visit_road_time=routeInfo.value[i-1].时间
+        
+      }
     }
     );
 }
@@ -748,43 +769,20 @@ const cusMangers = [
   { value: 10, text: "何玉萍", Lng: 121.51352, Lat: 31.306419 },
   { value: 11, text: "沈秀月", Lng: 121.532549, Lat: 31.281506 },
 ]
-// const company:object = {
-//   Lng: 121.525144, Lat: 31.29509
-// }
-//处理客户经理选择--处理方法
-// function oncusMChange(e: number) {
-//   const cusMName = cusMangers[e - 1].text
-//   delCustomers1.value = []
-//   tableData.value = []
-//   cusMIndex = e
-//   flag = true
-//   postHandle(cusMName)
-//   clearPaths(paths)
-//   path1.value.push(new AMap.LngLat(cusMangers[e - 1].Lng, cusMangers[e - 1].Lat))
-//   path2.value.push(new AMap.LngLat(cusMangers[e - 1].Lng, cusMangers[e - 1].Lat))
-//   path3.value.push(new AMap.LngLat(cusMangers[e - 1].Lng, cusMangers[e - 1].Lat))
-//   path4.value.push(new AMap.LngLat(cusMangers[e - 1].Lng, cusMangers[e - 1].Lat))
-//   path5.value.push(new AMap.LngLat(cusMangers[e - 1].Lng, cusMangers[e - 1].Lat))
-// }
-
 //处理地图原始渲染，此处必须加key  
 //生命周期函数
 onBeforeMount(() => {
-  // console.log("BEF"+customers)
-  // getHandle()
-  // console.log("BEF4")
-  // initMap()
 })
 onMounted(() => {
-  // getRoad(weekday)
   postHandle("闻毅")
+  getHandle()
 })
 
 interface DelCustomers {
-  [key: string]: any // any[] 可以替换成您的特定类型
+  [key: string]: any // any[] 
 }
 interface TDPlus {
-  [key: string]: any // any[] 可以替换成您的特定类型
+  [key: string]: any // any[] 
 }
 
 
@@ -805,10 +803,6 @@ function clearCurList(weekday: string) {
       deleteTableData(getTableData(element))
     }
   }
-
-  // delCustomers[weekday].value = []
-
-  // clearTableData(tableData, weekday)
 }
 function clearTableData(tableData: TableData[], weekday: string) {
   const tindex: array = []
@@ -834,7 +828,6 @@ function stateFlag(cus: any) {
     return (colorForTag[item.Visit[0].拜访建议] != 'red');
   })
   flag = state
-  // console.log(state);
 }
 
 //定义处理标签（即客户退回）的方法
@@ -846,31 +839,14 @@ const handleClose = (del: Cus, e: string) => {
     if (colorForTag[element.Visit[0].拜访建议] == colorForTag[del.Visit[0].拜访建议]) {
       i_index = i; break
     }
-
-    // customers.value.unshift(del)
   }
-  console.log(i_index)
   customers.value.splice(i_index, 0, del)
   tableDatas[e].value.splice(getCurrentDelCusList(e).value.indexOf(del), 1)
   getCurrentDelCusList(e).value.splice(getCurrentDelCusList(e).value.indexOf(del), 1)
-
-  // console.log(tableData)
-  // updateMap()
 }
-
-
-// function getTime(tableData, weekday) {
-//   const s = getCurrentDelCusList(weekday)
-//   for (let index = 0; index < tableData.value.length; index++) {
-//     const element = tableData.value[index];
-//   }
-//   const ti = sss.value.filter(item => item.OD === ("<" + s.value[index_t].Visit[0].客户代码_id + "," + s.value[index_t + 11].Visit[0].客户代码_id + ">"))
-//   console.log(ti);
-// }
 
 function insertTableData(tableDataObj: TableData) {
   tableDatas[weekday.value].value.push(tableDataObj)
-
 }
 
 
@@ -890,6 +866,16 @@ const tableData = computed(() => {
   return tableData1.value;
 });
 
+watch(tableData,(newValue,oldValue)=>{
+
+})
+
+
+
+
+
+
+
 function deleteTableData(tableDataObj: TableData) {
   for (let i = 0; i < tableData.value.length; i++) {
     const element: TableData = tableData.value[i];
@@ -898,19 +884,6 @@ function deleteTableData(tableDataObj: TableData) {
     }
   }
 }
-// let sss = ref([])
-// function getRoad(Q) {
-//   axios.post("http://122.9.67.194:8000/api/customer/info/road/",
-//     {
-//       text: customers.value
-
-//     }, {})
-//     .then((res) => {
-//       sss.value = res.data
-//       console.log(sss.value[0].OD)
-//     }
-//     );
-// }
 
 </script>
       

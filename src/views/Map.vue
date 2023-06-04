@@ -3,7 +3,7 @@
       import { onBeforeMount, onMounted, ref } from 'vue';
       import axios from "axios";
       import AMapLoader from '@amap/amap-jsapi-loader';
-      
+      import delCustomers1 from '@/views/SimulatorComponent.vue'
       
       let path1 =ref([]);
       let path2 =ref([]);
@@ -19,54 +19,9 @@
       
       let weekday="周一"
       const value = ref('')//客户经理value
- /*     const colorForTag:Object={
-        "一周内拜访":"red",
-        "两周内拜访":"orange",
-        "可一月内拜访":"yellow",
-        "本周期已拜访":"lightblue"
-      }
-      
-     */ 
-      //定义对象，给标签打颜色
-      //方法定义部分
-      //处理原始客户
-        // function getHandle(){
-        //   axios.get("http://122.9.67.194:8000/api/customer/info/",
-        //   {params:{},headers:{}})
-        //   .then((res)=>{customers.value=res.data;}
-          
-          
-        //   );
-        // }
-      //处理请求客户(base客户经理)
-  /*       function postHandle(e:string){
-          clearDelCusList()
-          axios.post("http://122.9.67.194:8000/api/customer/info/cusForMan/",
-          {text:e},{})
-          .then((res)=>{customers.value=res.data;}
-          );
-        } 
-*/       let cusMIndex:number=1
-        //处理客户经理选择--定义数据
-        const cusMangers = [
-        { value: 1, text: "闻毅" ,Lng:121.529512,Lat:31.32098},
-          { value: 2, text: "王毅" ,Lng:121.521791,Lat:31.279471},
-          { value: 3, text: "邹宸" ,Lng:121.538858,Lat:31.296965},
-          { value: 4, text: "刘昌敏" ,Lng:121.525144,Lat:31.29509},
-          { value: 5, text: "王宏燕" ,Lng:121.519169,Lat:31.282271},
-          { value: 6, text: "潘琦" ,Lng:121.530509,Lat:31.293561},
-          { value: 7, text: "沈磊" ,Lng:121.536999,Lat:31.324108},
-          { value: 8, text: "于丽琴" ,Lng:121.54199,Lat:31.287674},
-          { value: 9, text: "刘嘉" ,Lng:121.519169,Lat:31.282271},
-          { value: 10, text: "何玉萍", Lng:121.51352,Lat:31.306419},
-          { value: 11, text: "沈秀月" ,Lng:121.532549,Lat:31.281506},
-      ]
-      
       const company={
         Lng:121.525144,Lat:31.29509
       }
-      
-      
       //处理地图原始渲染，此处必须加key
       function initMap(){
               AMapLoader.load({
@@ -95,7 +50,7 @@
           }
       
       
-      function get_path(path:array,cusArray:array){
+      function get_path(path:any,cusArray:any){
                 path.value.length=1
             for (let index = 0; index < cusArray.value.length; index++) {
              path.value.push (new AMap.LngLat(cusArray.value[index].Visit[0].经营地址的经度,cusArray.value[index].Visit[0].经营地址的纬度));
@@ -184,6 +139,7 @@
       onMounted(()=>{
         
         initMap()
+        get_path(path1,delCustomers1)
       })
       
       function getCurrentDelCusList(weekday:string){

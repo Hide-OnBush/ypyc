@@ -10,6 +10,7 @@
             <RouterLink to="/map" style="margin-left: 15px;">地图页</RouterLink>
           </h3>
         </div>
+        
         <div class="header-child" style="display: flex;vertical-align: middle;">
           <div><img :src="homeIcon" style="height: 9vh;width: 16vh;margin-top: 0.5vh;"></div>
           <div>
