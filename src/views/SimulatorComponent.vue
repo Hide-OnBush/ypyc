@@ -33,7 +33,8 @@
                         <h3>{{ previewContent.客户代码_id }}</h3>
                         <el>
                           <h3>
-                            <li><el-icon v-if="previewContent.终端类型 == '现代终端' || previewContent.终端类型 =='加盟终端' || previewContent.终端类型 =='直营终端'">
+                            <li><el-icon
+                                v-if="previewContent.终端类型 == '现代终端' || previewContent.终端类型 == '加盟终端' || previewContent.终端类型 == '直营终端'">
                                 <Star />
                               </el-icon>{{ previewContent.终端类型 }}</li>
                           </h3>
@@ -87,7 +88,8 @@
                         <h3>{{ previewContent.客户代码_id }}</h3>
                         <el>
                           <h3>
-                            <li><el-icon v-if="previewContent.终端类型 == '现代终端'  ||previewContent.终端类型 == '加盟终端' ||previewContent.终端类型 == '直营终端'">
+                            <li><el-icon
+                                v-if="previewContent.终端类型 == '现代终端' || previewContent.终端类型 == '加盟终端' || previewContent.终端类型 == '直营终端'">
                                 <Star />
                               </el-icon>{{ previewContent.终端类型 }}</li>
                           </h3>
@@ -144,7 +146,8 @@
                         <h3>{{ previewContent.客户代码_id }}</h3>
                         <el>
                           <h3>
-                            <li><el-icon v-if="previewContent.终端类型 == '现代终端' ||previewContent.终端类型 == '加盟终端' ||previewContent.终端类型 =='直营终端'">
+                            <li><el-icon
+                                v-if="previewContent.终端类型 == '现代终端' || previewContent.终端类型 == '加盟终端' || previewContent.终端类型 == '直营终端'">
                                 <Star />
                               </el-icon>{{ previewContent.终端类型 }}</li>
                           </h3>
@@ -199,7 +202,8 @@
                         <h3>{{ previewContent.客户代码_id }}</h3>
                         <el>
                           <h3>
-                            <li><el-icon v-if="previewContent.终端类型 == '现代终端'||previewContent.终端类型 =='加盟终端' ||previewContent.终端类型 =='直营终端' ">
+                            <li><el-icon
+                                v-if="previewContent.终端类型 == '现代终端' || previewContent.终端类型 == '加盟终端' || previewContent.终端类型 == '直营终端'">
                                 <Star />
                               </el-icon>{{ previewContent.终端类型 }}</li>
                           </h3>
@@ -255,7 +259,8 @@
                         <h3>{{ previewContent.客户代码_id }}</h3>
                         <el>
                           <h3>
-                            <li><el-icon v-if="previewContent.终端类型 == '现代终端' ||previewContent.终端类型 == '加盟终端' || previewContent.终端类型 =='直营终端'">
+                            <li><el-icon
+                                v-if="previewContent.终端类型 == '现代终端' || previewContent.终端类型 == '加盟终端' || previewContent.终端类型 == '直营终端'">
                                 <Star />
                               </el-icon>{{ previewContent.终端类型 }}</li>
                           </h3>
@@ -317,7 +322,8 @@
                 <h3>{{ previewContent.客户代码_id }}</h3>
                 <el>
                   <h3>
-                    <li><el-icon v-if="previewContent.终端类型 == '现代终端' || previewContent.终端类型 =='加盟终端' || previewContent.终端类型 =='直营终端'">
+                    <li><el-icon
+                        v-if="previewContent.终端类型 == '现代终端' || previewContent.终端类型 == '加盟终端' || previewContent.终端类型 == '直营终端'">
                         <Star />
                       </el-icon>{{ previewContent.终端类型 }}</li>
                   </h3>
@@ -352,12 +358,12 @@
       <!-- 左下：列表展示部分    -->
       <el-col :span="12" class="col-right-bottom">
         <el-button type="warning" @click="clearCurList(weekday)" style="z-index: 100;">重置当天客户</el-button>
-          <el-button type="warning" @click="postRoad(weekday)" style="z-index: 100;">生成当天最优线路</el-button>
+        <el-button type="warning" @click="postRoad(weekday); setClick()" style="z-index: 100;">生成当天最优线路</el-button>
         <el-scrollbar height="42.5vh">
           <keep-alive>
-            <el-table :data="tableData" style="width: 100%;" 
-              empty-text="没有客户被排入行程"  height="40vh"  sum-text="合计"  show-summary  :summary-method="summaryMethod"  stripe>
-              <el-table-column type="expand" >
+            <el-table :data="tableData" :columns="tableColumns" style="width: 100%;" empty-text="没有客户被排入行程" height="40vh"
+              sum-text="合计" show-summary :summary-method="summaryMethod" stripe>
+              <el-table-column type="expand">
                 <template #default="props">
                   <div m="4" class="inTable">
                     <div class="p-info-father" style="display: flex;">
@@ -374,7 +380,8 @@
                           </el-icon>开门时间: {{ props.row.open }}</p>
                       </div>
                       <div style="width: 50%;">
-                        <p style="font-weight:bold;">拜访建议: {{ props.row.visit_advice || (props.row.visit_advice + '已拜访') }}
+                        <p style="font-weight:bold;">拜访建议: {{ props.row.visit_advice || (props.row.visit_advice + '已拜访')
+                        }}
                         </p>
                         <p><el-icon>
                             <Position />
@@ -393,7 +400,7 @@
                     <el-table :data="props.row.task" :row-key="(row) => row.id" :reserve-selection="true">
                       <el-table-column label="任务状态" prop="任务状态" />
                       <el-table-column label="任务内容" prop="任务内容" />
-                      <el-table-column label="预估时长(分钟)" prop="预估时间_分钟"  />
+                      <el-table-column label="预估时长(分钟)" prop="预估时间_分钟" />
 
                       <el-table-column label="剩余完成时间(工作日)" prop="任务剩余完成时间_工作日" />
                     </el-table>
@@ -402,13 +409,13 @@
               </el-table-column>
               <el-table-column label="周期" prop="date" width="auto" />
               <el-table-column label="客户代码" prop="id" width="auto" />
-              <el-table-column label="客户名称" prop="name" width="auto"/>
-              <el-table-column label="客户地址" prop="address" width="auto"/>
+              <el-table-column label="客户名称" prop="name" width="auto" />
+              <el-table-column label="客户地址" prop="address" width="auto" />
               <el-table-column label="任务数量" prop="tasknum" width="auto" />
               <el-table-column label="任务时间" prop="visit_time_cost" width="auto" />
               <el-table-column label="在途时间" prop="visit_road_time" width="auto" />
               <el-table-column label="总时间" prop="all_time" width="auto" />
-            
+
             </el-table>
 
 
@@ -423,43 +430,61 @@
 <script setup lang="ts">
 // 导入部分
 import { StarFilled, Star, Avatar, InfoFilled, Sunny, MoonNight, Printer, Position, Bell } from '@element-plus/icons-vue'
-import { onBeforeMount, onMounted, reactive, ref, computed ,watch} from 'vue';
+import { onBeforeMount, onMounted, reactive, ref, computed, watch, toRaw } from 'vue';
 import axios from "axios";
 import { indexOf } from 'lodash';
-import type { ElTable } from 'element-plus';
+import { ElMessage, ElMessageBox, type ElTable } from 'element-plus';
+import { column } from 'element-plus/es/components/table-v2/src/common';
 
+
+const tableColumns = ref([
+  { prop: 'date', label: 'date' },
+  { prop: 'id', label: 'id' },
+  { prop: 'name', label: 'name' },
+  { prop: 'address', label: 'address' },
+  { prop: 'tasknum', label: 'tasknum' },
+  { prop: 'visit_time_cost', label: 'visit_time_cost' },
+  { prop: 'visit_road_time', label: 'visit_road_time' },
+  { prop: 'all_time', label: 'all_time' },
+
+])
+const sums = ref([]);
 
 function summaryMethod({ columns, data }) {
-      const sums = [];
-      
-      columns.forEach((column, columnIndex) => {
-        const values = data.map((item) => Number(item[column.property]));
-        if (column.property === 'date') {
-          sums[columnIndex] = '合计';
-          return;
-        }
-        if (column.property === 'id') {
-          sums[columnIndex] = data.length+"家";
-          return;
-        }
-        if (!values.every((value) => isNaN(value))) {
-          sums[columnIndex] = values.reduce((prev, curr) => {
-            const value = Number(curr);
-            if (!isNaN(value)) {
-              return prev + curr;
-            } else {
-              return prev;
-            }
-          }, 0);
-        } else {
-          sums[columnIndex] = '';
-        }
-      });
-      sums[5]=sums[5]+"个"
-      sums[6] =Math.floor(parseInt(sums[6])/60 )+"小时"+parseInt(sums[6])%60+"分钟"
-      return sums;
+  // const summaryMethod = async ({ columns, data }) => {
+
+  columns.forEach((column, columnIndex) => {
+    const values = data.map((item) => Number(item[column.property]));
+    if (column.property === 'date') {
+      sums.value[columnIndex] = '合计';
+      return;
     }
-  
+    if (column.property === 'id') {
+      sums.value[columnIndex] = data.length + "家";
+      return;
+    }
+    if (!values.every((value) => isNaN(value))) {
+      sums.value[columnIndex] = values.reduce((prev, curr) => {
+        const value = Number(curr);
+        if (!isNaN(value)) {
+          return prev + curr;
+        } else {
+          return prev;
+        }
+      }, 0);
+    } else {
+      sums.value[columnIndex] = '';
+    }
+  });
+  sums.value[5] = sums.value[5] + "个"
+  sums.value[6] = Math.floor(parseInt(sums.value[6]) / 60) + "小时" + parseInt(sums.value[6]) % 60 + "分钟"
+  sums.value[7] = Math.floor(parseInt(sums.value[7]) / 60) + "小时" + parseInt(sums.value[7]) % 60 + "分钟"
+  TotalTime.value = sums.value[8]
+  sums.value[8] = Math.floor(parseInt(sums.value[8]) / 60) + "小时" + parseInt(sums.value[8]) % 60 + "分钟"
+
+
+  return sums.value;
+}
 
 
 interface TD {
@@ -512,23 +537,23 @@ let tableDatas: TDPlus = {
 const weekdays = ["周一", "周二", "周三", "周四", "周五"]
 let tableDataObj: {
   date: string, name: string, id: string, modern: string, road: string, visit_advice: string,
-  open: string, close: string, visit_time: string, pos: string, type: string, address?: string,tasknum?:number,
-  last_date?: string, task?: object[], time?: number, visit_time_cost?: number,visit_road_time?:number,all_time?:number,
+  open: string, close: string, visit_time: string, pos: string, type: string, address?: string, tasknum?: number,
+  last_date?: string, task?: object[], time?: number, visit_time_cost?: number, visit_road_time?: number, all_time?: number,
 }
 
 interface TableData {
   date: string; name: string; id: string; modern: string; road: string; visit_advice: string;
   open: string; close: string; visit_time: string; pos: string; type: string; address?: string;
-  last_date?: string; task?: object[]; time?: number; visit_time_cost?: number;tasknum?:number;
-  visit_road_time?:number;all_time?:number;
+  last_date?: string; task?: object[]; time?: number; visit_time_cost?: number; tasknum?: number;
+  visit_road_time?: number; all_time?: number;
 }
 //indexOf(weekdays,weekday)排序依据
 function getTableData(cus: Cus) {
   tableDataObj = {
     name: cus.Visit[0].客户简称, modern: cus.Visit[0].终端类型, id: cus.Visit[0].客户代码_id,
     type: cus.Visit[0].经营业态, road: cus.Visit[0].送货路段, visit_advice: cus.Visit[0].拜访建议, visit_time_cost: cus.Visit[0].拜访时长预估,
-    open: cus.Visit[0].开门时间, close: cus.Visit[0].关门时间, visit_time: cus.Visit[0].拜访日期, pos: cus.Visit[0].pos机类型,address:cus.Visit[0].客户地址,
-    date: weekday, task: cus.Task,tasknum:cus.Task.length,visit_road_time:0,all_time: 0
+    open: cus.Visit[0].开门时间, close: cus.Visit[0].关门时间, visit_time: cus.Visit[0].拜访日期, pos: cus.Visit[0].pos机类型, address: cus.Visit[0].客户地址,
+    date: weekday, task: cus.Task, tasknum: cus.Task.length, visit_road_time: 0, all_time: 0
     //  day_index: ((indexOf(weekdays, weekday) as unknown as string) + (indexOf(getCurrentDelCusList(weekday), cus) + 2 as unknown as string)),
 
   }
@@ -562,19 +587,6 @@ const handleFalseClick = (cus: Cus) => {
   }
 
 }
-
-// let path1 = ref([]);
-// let path2 = ref([]);
-// let path3 = ref([]);
-// let path4 = ref([]);
-// let path5 = ref([]);
-// let paths = [path1, path2, path3, path4, path5]
-// function clearPaths(paths) {
-//   for (let index = 0; index < paths.length; index++) {
-//     paths[index].value = [];
-//   }
-// }
-
 
 //设置处理已选客户移动的逻辑
 const dialogForm1Visible = ref(false)
@@ -611,11 +623,6 @@ const handleTagClick = (del, e) => {
 const moveCus = (e: any) => {
 
   const temIndex = getCurrentDelCusList(temDay).value.indexOf(movedCus)
-
-  // console.log(temTableIndex);
-
-  // console.log(getCurrentTableData(temDay).value)
-  // console.log(getTableData(movedCus))
   if (temIndex > -1) {
     getCurrentDelCusList(temDay).value.splice(temIndex, 1);
     getCurrentDelCusList(e).value.push(movedCus)
@@ -668,13 +675,18 @@ const colorForTag: ColorMap = {
 
 
 
-const routeInfo =ref([])
+const routeInfo = ref([])
 //方法定义部分
 //处理原始客户
 function getHandle() {
   axios.get("http://122.9.67.194:8000/api/customer/info/",
-    )
-    .then((res) => { routeInfo.value = res.data; }
+  )
+    .then((res) => {
+
+
+      routeInfo.value = res.data;
+      // console.log(routeInfo.value[0]);
+    }
     );
 }
 //处理线路重新规划逻辑
@@ -705,11 +717,15 @@ function resetTable(array, newarray) {
   return temroad
 }
 //处理最终路线的渲染
-function postRoad(e) {
+const postRoad = async (e: string) => {
+  // function postRoad(e) {
+  console.log("函数执行前" + TotalTime.value);
+
   let cusList11 = ref([])
-  cusList11 = getCurrentDelCusList(e)
+  cusList11.value = getCurrentDelCusList(e).value
   let idPost = ref([])
   for (let index = 0; index < cusList11.value.length; index++) {
+
     idPost.value.push(cusList11.value[index].Visit[0].客户代码_id);
   }
   axios.post("http://122.9.67.194:8000/api/customer/info/getRoad/",
@@ -718,34 +734,82 @@ function postRoad(e) {
       let newRoad = ref([])
       newRoad.value = res.data
       getCurrentDelCusList(e).value = resetRoad(getCurrentDelCusList(e), newRoad).value
-      tableData.value.sort((a,b)=>{
-        const indexA=newRoad.value.indexOf(a.id)
-        const indexB=newRoad.value.indexOf(b.id)
-        return indexA-indexB
+      tableData.value.sort((a, b) => {
+        const indexA = newRoad.value.indexOf(a.id)
+        const indexB = newRoad.value.indexOf(b.id)
+        return indexA - indexB
       }
       )
-     
-      tableData.value[0].visit_road_time=0
-      for (let i =1;i<tableData.value.length-1;i++){
-        
-        const targetRow = routeInfo.value.find((row, index) => {   
-          
-           if (index >0  && row.value[index].起点 === tableData.value[i - 1].id && row.value[index].终点 === tableData.value[i].id) {
 
-           return true;
-               }
-                });
-          console.log(targetRow);
-          
-         tableData.value[i].visit_road_time=targetRow.value.时间
-   
-        // if(routeInfo.value['起点']===tableData.value[i-1].id &&routeInfo.value['终点']===tableData.value[i].id)
-        // tableData.value[i].visit_road_time=routeInfo.value[i-1].时间
-        
+      tableData.value[0].visit_road_time = 0
+      tableData.value[0].all_time = tableData.value[0].visit_time_cost
+      for (let i = 1; i < tableData.value.length; i++) {
+        const targetRow = routeInfo.value.find((row, index) => {
+          if (index > 0 && row.起点 === tableData.value[i - 1].id && row.终点 === tableData.value[i].id) {
+            return true;
+          }
+        });
+        tableData.value[i].visit_road_time = Math.floor(targetRow['时间'] / 60)
+        tableData.value[i].all_time = Math.floor(targetRow['时间'] / 60) + tableData.value[i].visit_time_cost
       }
+
+      getTotalTime(summaryMethod({ columns: tableColumns.value, data: tableData.value }))
+
+      watch([TotalTime, clickCount], ([newVal1, newVal2], [oldVal1, oldVal2]) => {
+
+        if (oldVal1 > 300 && oldVal2 !== newVal2) {
+
+
+          ElMessageBox.alert(
+            '您今天的预计拜访时间已超5小时，建议您减少一些客户哦',
+            '温馨提示',
+            {
+              confirmButtonText: 'OK',
+              type: 'warning',
+            }
+          )
+        }
+        if (oldVal1 < 240 && oldVal2 !== newVal2) {
+          console.log("旧的" + oldVal1);
+          console.log("新的" + newVal1);
+          ElMessageBox.prompt(`你当天的拜访总时长不足4小时,请选择是否继续或备注原因`, '提示', {
+            inputPlaceholder: "请输入原因"
+            , confirmButtonText: '备注',
+            cancelButtonText: '没啥问题，我要继续',
+          })
+            .then(({ value }) => {
+              ElMessage({
+                type: 'success',
+                message: `备注成功`,
+              })
+            })
+            .catch(() => {
+              ElMessage({
+                type: 'info',
+                message: '请继续选择客户',
+              })
+            })
+        }
+      }
+      )
+
     }
     );
+
+
 }
+
+
+
+const clickCount = ref(0);
+
+const setClick = () => {
+  clickCount.value++;
+};
+
+
+
+
 //处理请求客户(base客户经理)
 function postHandle(e: string) {
   clearDelCusList()
@@ -777,7 +841,6 @@ onMounted(() => {
   postHandle("闻毅")
   getHandle()
 })
-
 interface DelCustomers {
   [key: string]: any // any[] 
 }
@@ -790,8 +853,6 @@ interface TDPlus {
 function getCurrentDelCusList(weekday: string) {
   return delCustomers[weekday]
 }
-
-
 function clearCurList(weekday: string) {
   let tempLi = [...delCustomers[weekday].value]
 
@@ -804,6 +865,37 @@ function clearCurList(weekday: string) {
     }
   }
 }
+const tableData = computed(() => {
+  if (weekday.value === '周一') {
+    return tableData1.value;
+  } else if (weekday.value === '周二') {
+    return tableData2.value;
+  } else if (weekday.value === '周三') {
+    return tableData3.value;
+  } else if (weekday.value === '周四') {
+    return tableData4.value;
+  } else if (weekday.value === '周五') {
+    return tableData5.value;
+  }
+  return tableData1.value;
+});
+const TotalTime = ref(tableData.value.reduce((acc, cur) => {
+  const [hours, minutes] = cur.all_time.split("小时");
+  const minutesValue = parseInt(minutes) || 0;
+  return acc + parseInt(hours) * 60 + minutesValue;
+}, 0))
+
+
+const getTotalTime = async (e) => {
+  summaryMethod({ columns: tableColumns.value, data: tableData.value })
+  console.log(TotalTime.value);
+
+  return TotalTime
+}
+
+
+
+
 function clearTableData(tableData: TableData[], weekday: string) {
   const tindex: array = []
   for (let index = 0; index < tableData.value.length; index++) {
@@ -821,7 +913,6 @@ function clearDelCusList() {
   delCustomers4.value = []
   delCustomers5.value = []
 }
-
 //定义巡视flag的函数
 function stateFlag(cus: any) {
   let state = cus.every(function (item: any) {
@@ -829,10 +920,9 @@ function stateFlag(cus: any) {
   })
   flag = state
 }
-
 //定义处理标签（即客户退回）的方法
 const handleClose = (del: Cus, e: string) => {
-  
+
   let i_index: number = ref()
   for (let i = 0; i < customers.value.length; i++) {
     const element: TableData = customers.value[i];
@@ -844,37 +934,9 @@ const handleClose = (del: Cus, e: string) => {
   tableDatas[e].value.splice(getCurrentDelCusList(e).value.indexOf(del), 1)
   getCurrentDelCusList(e).value.splice(getCurrentDelCusList(e).value.indexOf(del), 1)
 }
-
 function insertTableData(tableDataObj: TableData) {
   tableDatas[weekday.value].value.push(tableDataObj)
 }
-
-
-
-const tableData = computed(() => {
-  if (weekday.value === '周一') {
-    return tableData1.value;
-  } else if (weekday.value === '周二') {
-    return tableData2.value;
-  } else if (weekday.value === '周三') {
-    return tableData3.value;
-  } else if (weekday.value === '周四') {
-    return tableData4.value;
-  } else if (weekday.value === '周五') {
-    return tableData5.value;
-  }
-  return tableData1.value;
-});
-
-watch(tableData,(newValue,oldValue)=>{
-
-})
-
-
-
-
-
-
 
 function deleteTableData(tableDataObj: TableData) {
   for (let i = 0; i < tableData.value.length; i++) {
