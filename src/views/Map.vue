@@ -12,12 +12,12 @@ let path2 = ref([]);
 let path3 = ref([]);
 let path4 = ref([]);
 let path5 = ref([]);
-let paths = [path1, path2, path3, path4, path5]
-function clearPaths(paths) {
-  for (let index = 0; index < paths.length; index++) {
-    paths[index].value = [];
-  }
-}
+// let paths:any = [path1, path2, path3, path4, path5]
+// function clearPaths(paths) {
+//   for (let index = 0; index < paths.length; index++) {
+//     paths[index].value = [];
+//   }
+// }
 
 let weekday = "周一"
 const value = ref('')//客户经理value
@@ -52,16 +52,16 @@ function initMap() {
 }
 
 
-function get_path(path: any, cusArray: any) {
-  path.value.length = 1
-  for (let index = 0; index < cusArray.value.length; index++) {
-    path.value.push(new AMap.LngLat(cusArray.value[index].Visit[0].经营地址的经度, cusArray.value[index].Visit[0].经营地址的纬度));
-  }
-  path.value.push(new AMap.LngLat(121.525144, 31.29509))
-  console.log(path.value);
+// function get_path(path: any, cusArray: any) {
+//   path.value.length = 1
+//   for (let index = 0; index < cusArray.value.length; index++) {
+//     path.value.push(new AMap.LngLat(cusArray.value[index].Visit[0].经营地址的经度, cusArray.value[index].Visit[0].经营地址的纬度));
+//   }
+//   path.value.push(new AMap.LngLat(121.525144, 31.29509))
+//   console.log(path.value);
 
 
-}
+// }
 //处理地图更新
 function updateMap() {
   AMapLoader.load({
@@ -77,11 +77,11 @@ function updateMap() {
 
     });
 
-    get_path(path1, delCustomers1)
-    get_path(path2, delCustomers2)
-    get_path(path3, delCustomers3)
-    get_path(path4, delCustomers4)
-    get_path(path5, delCustomers5)
+    // get_path(path1, delCustomers1)
+    // get_path(path2, delCustomers2)
+    // get_path(path3, delCustomers3)
+    // get_path(path4, delCustomers4)
+    // get_path(path5, delCustomers5)
     var polyline1 = new AMap.Polyline({
       path: path1.value,
       strokeWeight: 6,
@@ -142,41 +142,11 @@ onBeforeMount(() => {
 onMounted(() => {
 
   initMap()
-  get_path(path1, delCustomers1)
+  // get_path(path1, delCustomers1)
 })
 
-function getCurrentDelCusList(weekday: string) {
-  return delCustomers[weekday]
-}
 function clearDelCusList() {
   delCustomers1.value = []
-  delCustomers2.value = []
-  delCustomers3.value = []
-  delCustomers4.value = []
-  delCustomers5.value = []
-}
-
-
-//定义处理标签（即客户选择）的方法
-const handleClick = (cus: string) => {
-  getCurrentDelCusList(weekday).value.push(cus)
-  customers.value.splice(customers.value.indexOf(cus), 1)
-  insertTableData(getTableData(cus))
-  updateMap()
-  console.log(tableData)
-}
-
-
-function deleteTableData(tableDataObj) {
-  for (let i = 0; i < tableData.value.length; i++) {
-    const element = tableData.value[i];
-    if (element.name == tableDataObj.name) {
-      tableData.value.splice(i, 1)
-    }
-
-  }
-  console.log(tableData.value);
-
 }
 
 

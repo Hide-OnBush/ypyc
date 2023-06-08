@@ -450,13 +450,13 @@ const tableColumns = ref([
   { prop: 'all_time', label: 'all_time' },
 
 ])
-const sums = ref([]);
+const sums:any = ref([]);
 
-function summaryMethod({ columns, data }) {
+function summaryMethod({ columns, data }:any) {
   // const summaryMethod = async ({ columns, data }) => {
 
-  columns.forEach((column, columnIndex) => {
-    const values = data.map((item) => Number(item[column.property]));
+  columns.forEach((column:any, columnIndex:any) => {
+    const values = data.map((item:any) => Number(item[column.property]));
     if (column.property === 'date') {
       sums.value[columnIndex] = '合计';
       return;
@@ -465,8 +465,8 @@ function summaryMethod({ columns, data }) {
       sums.value[columnIndex] = data.length + "家";
       return;
     }
-    if (!values.every((value) => isNaN(value))) {
-      sums.value[columnIndex] = values.reduce((prev, curr) => {
+    if (!values.every((value:any) => isNaN(value))) {
+      sums.value[columnIndex] = values.reduce((prev:any, curr:any) => {
         const value = Number(curr);
         if (!isNaN(value)) {
           return prev + curr;
@@ -489,7 +489,7 @@ function summaryMethod({ columns, data }) {
 }
 
 
-const convertWeekdayToNum = {
+const convertWeekdayToNum:any = {
   "周一": 1,
   "周二": 2,
   "周三": 3,
@@ -556,15 +556,15 @@ let tableDatas: TDPlus = {
   "周五": tableData5
 }
 //定义右下角拜访列表的数据
-const weekdays = ["周一", "周二", "周三", "周四", "周五"]
+const weekdays:any = ["周一", "周二", "周三", "周四", "周五"]
 let tableDataObj: {
-  date: string, name: string, id: string, modern: string, road: string, visit_advice: string,
+  date: any, name: string, id: string, modern: string, road: string, visit_advice: string,
   open: string, close: string, visit_time: string, pos: string, type: string, address?: string, tasknum?: number,
   last_date?: string, task?: object[], time?: number, visit_time_cost?: number, visit_road_time?: number, all_time?: number,
 }
 
 interface TableData {
-  date: string; name: string; id: string; modern: string; road: string; visit_advice: string;
+  date: any; name: string; id: string; modern: string; road: string; visit_advice: string;
   open: string; close: string; visit_time: string; pos: string; type: string; address?: string;
   last_date?: string; task?: object[]; time?: number; visit_time_cost?: number; tasknum?: number;
   visit_road_time?: number; all_time?: number;
@@ -637,13 +637,11 @@ const form4 = reactive({
 const form5 = reactive({
   region: ''
 })
-let movedCus: Cus = ref<Cus>;
+let movedCus: any = {};
 let temDay = '周一'
-const handleTagClick = (del, e) => {
-  movedCus = del
+const handleTagClick = (del:Cus, e:string) => {
+  movedCus= del
   temDay = e
-
-
 };
 
 
@@ -673,10 +671,10 @@ const moveCus = (e: any) => {
 
 // 处理鼠标放在客户tag上悬停显示信息的逻辑
 const showPreview = ref(false);
-const previewContent = ref('');
+const previewContent = ref();
 const previewTop = ref('');
 const previewLeft = ref('');
-const previewTaskContent = ref('')
+const previewTaskContent = ref()
 const showTagPreview = (del: any) => {
   showPreview.value = true;
   previewContent.value = del.Visit[0];
@@ -724,12 +722,12 @@ function getHandle() {
     );
 }
 //处理线路重新规划逻辑
-function resetRoad(array, newarray) {
-  let temroad = ref([])
+function resetRoad(array:any, newarray:any) {
+  let temroad:any = ref([])
   for (let index = 0; index < newarray.value.length; index++) {
     const element1 = newarray.value[index];
     for (let i = 0; i < array.value.length; i++) {
-      const element2 = array.value[i];
+      const element2:any = array.value[i];
       if (element1 == element2.Visit[0].客户代码_id) {
         temroad.value.push(element2)
       }
@@ -737,8 +735,8 @@ function resetRoad(array, newarray) {
   }
   return temroad
 }
-function resetTable(array, newarray) {
-  let temroad = ref([])
+function resetTable(array:any, newarray:any) {
+  let temroad:any = ref([])
   for (let index = 0; index < newarray.value.length; index++) {
     const element1 = newarray.value[index];
     for (let i = 0; i < array.value.length; i++) {
@@ -755,9 +753,9 @@ const postRoad = async (e: string) => {
   // function postRoad(e) {
 
 
-  let cusList11 = ref([])
+  let cusList11:any= ref([])
   cusList11.value = getCurrentDelCusList(e).value
-  let idPost = ref([])
+  let idPost:any = ref([])
   for (let index = 0; index < cusList11.value.length; index++) {
 
     idPost.value.push(cusList11.value[index].Visit[0].客户代码_id);
@@ -765,12 +763,12 @@ const postRoad = async (e: string) => {
   axios.post("http://122.9.67.194:8000/api/customer/info/getRoad/",
     { text: idPost.value }, {})
     .then((res) => {
-      let newRoad = ref([])
+      let newRoad:any = ref([])
       newRoad.value = res.data
       getCurrentDelCusList(e).value = resetRoad(getCurrentDelCusList(e), newRoad).value
-      tableData.value.sort((a, b) => {
-        const indexA = newRoad.value.indexOf(a.id)
-        const indexB = newRoad.value.indexOf(b.id)
+      tableData.value.sort((a:any, b:any) => {
+        const indexA:number = newRoad.value.indexOf(a.id)
+        const indexB:number= newRoad.value.indexOf(b.id)
         return indexA - indexB
       }
       )
@@ -778,7 +776,7 @@ const postRoad = async (e: string) => {
       tableData.value[0].visit_road_time = 0
       tableData.value[0].all_time = tableData.value[0].visit_time_cost
       for (let i = 1; i < tableData.value.length; i++) {
-        const targetRow = routeInfo.value.find((row, index) => {
+        const targetRow:any = routeInfo.value.find((row:any, index) => {
           if (index > 0 && row.起点 === tableData.value[i - 1].id && row.终点 === tableData.value[i].id) {
             return true;
           }
@@ -902,7 +900,7 @@ function clearCurList(weekday: string) {
     }
   }
 }
-const tableData = computed(() => {
+const tableData:any = computed(() => {
   if (weekday.value === '周一') {
     return tableData1.value;
   } else if (weekday.value === '周二') {
@@ -916,14 +914,14 @@ const tableData = computed(() => {
   }
   return tableData1.value;
 });
-const TotalTime = ref(tableData.value.reduce((acc, cur) => {
+const TotalTime = ref(tableData.value.reduce((acc:any, cur:any) => {
   const [hours, minutes] = cur.all_time.split("小时");
   const minutesValue = parseInt(minutes) || 0;
   return acc + parseInt(hours) * 60 + minutesValue;
 }, 0))
 
 
-const getTotalTime = async (e) => {
+const getTotalTime = async (e:any) => {
   summaryMethod({ columns: tableColumns.value, data: tableData.value })
   return TotalTime
 }
@@ -931,8 +929,8 @@ const getTotalTime = async (e) => {
 
 
 
-function clearTableData(tableData: TableData[], weekday: string) {
-  const tindex: array = []
+function clearTableData(tableData: any, weekday: string) {
+  const tindex: any = []
   for (let index = 0; index < tableData.value.length; index++) {
     const element = tableData.value[index];
     if (element.date == weekday) {
