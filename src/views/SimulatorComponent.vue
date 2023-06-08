@@ -307,7 +307,7 @@
           <el-icon><star-filled /></el-icon>
         </el-divider>
         <el-scrollbar height="30  vh" always:true>
-          <el-tag v-for="     cus, index      in      customers     " :key="index"
+          <el-tag v-for="     cus, index      in        customers       " :key="index"
             @click="flag ? handleFalseClick(cus) : handleClick(cus)" :color="colorForTag[cus.Visit[0].拜访建议]"
             @mouseover="showTagPreview(cus)" @mouseleave="hideTagPreview()">{{
               cus.Visit[0].客户简称 }}
@@ -334,18 +334,19 @@
                     <li>{{ previewContent.经营业态 }}</li>
                   </h3>
                   <h3>
-                    <li>最晚拜访时间:{{ previewContent.最晚线路规划时间_工作日 || '已拜访' }}</li>
+                    <li>拜访建议:{{ previewContent.拜访建议 || '已拜访' }}</li>
                   </h3>
                 </el>
               </div>
               <div class="tag-pre-right">
                 <h2 text="2xl" justify="center" style="text-align:center ;align-items: center;"> 任务列表</h2>
                 <el-table :data="previewTaskContent">
-                  <el-table-column prop="任务状态" label="任务状态" width="90" />
+                  <el-table-column prop="任务状态" label="任务状态" width="90" fixed="left" />
                   <el-table-column prop="任务内容" label="任务内容" width="180" />
                   <el-table-column prop="任务剩余完成时间_工作日" label="剩余天数" width="90" />
                   <el-table-column prop="预估时间_分钟" label="预估时长" />
                 </el-table>
+
               </div>
             </div>
 
@@ -359,6 +360,7 @@
       <el-col :span="12" class="col-right-bottom">
         <el-button type="warning" @click="clearCurList(weekday)" style="z-index: 100;">重置当天客户</el-button>
         <el-button type="warning" @click="postRoad(weekday); setClick()" style="z-index: 100;">生成当天最优线路</el-button>
+        <!-- <el-button type="warning" @click="confirmRoute()" style="z-index: 100;">确认线路</el-button> -->
         <el-scrollbar height="42.5vh">
           <keep-alive>
             <el-table :data="tableData" :columns="tableColumns" style="width: 100%;" empty-text="没有客户被排入行程" height="40vh"
@@ -487,6 +489,26 @@ function summaryMethod({ columns, data }) {
 }
 
 
+const convertWeekdayToNum = {
+  "周一": 1,
+  "周二": 2,
+  "周三": 3,
+  "周四": 4,
+  "周五": 5
+}
+
+const checkMoveValid = (cus: Cus, date: string) => {
+  let minDate: number = parseInt(cus.Visit[0].最晚线路规划时间_工作日)
+  const checkMoveFlag = ref(true)
+  console.log(convertWeekdayToNum[date])
+  if (minDate < convertWeekdayToNum[date]) {
+    checkMoveFlag.value = !checkMoveFlag.value
+  }
+  return checkMoveFlag.value
+}
+
+
+
 interface TD {
   date: string,
   name: string,
@@ -568,9 +590,14 @@ function getCurrentTableData(e: string) {
 const handleClick = (cus: Cus) => {
   // homeflag = true
   if (colorForTag[cus.Visit[0].拜访建议] == 'red') {
-    getCurrentDelCusList(weekday.value).value.push(cus)
-    customers.value.splice(customers.value.indexOf(cus), 1)
-    insertTableData(getTableData(cus))
+    if (checkMoveValid(cus, weekday.value)) {
+      getCurrentDelCusList(weekday.value).value.push(cus)
+      customers.value.splice(customers.value.indexOf(cus), 1)
+      insertTableData(getTableData(cus))
+    }
+    else {
+      alert(`该客户有一个${cus.Visit[0].最晚线路规划时间_工作日}天内的任务需要完成`)
+    }
 
   }
   else {
@@ -624,12 +651,19 @@ const moveCus = (e: any) => {
 
   const temIndex = getCurrentDelCusList(temDay).value.indexOf(movedCus)
   if (temIndex > -1) {
-    getCurrentDelCusList(temDay).value.splice(temIndex, 1);
-    getCurrentDelCusList(e).value.push(movedCus)
+    if (checkMoveValid(movedCus, e)) {
+      getCurrentDelCusList(temDay).value.splice(temIndex, 1);
+      getCurrentDelCusList(e).value.push(movedCus)
+
+      tableDatas[temDay].value.splice(temIndex, 1)
+      tableDatas[e].value.push(getTableData(movedCus))
+    }
+    else {
+      alert(`您不能将该客户移动至${e},因为他有一个${movedCus.Visit[0].最晚线路规划时间_工作日}天内的任务需要完成`)
+    }
   }
 
-  tableDatas[temDay].value.splice(temIndex, 1)
-  tableDatas[e].value.push(getTableData(movedCus))
+
 
 
 
@@ -648,7 +682,7 @@ const showTagPreview = (del: any) => {
   previewContent.value = del.Visit[0];
   previewTaskContent.value = del.Task;
   previewTop.value = 'calc(60vh - 10px)';
-  previewLeft.value = 'calc(60vw - 10px)';
+  previewLeft.value = 'calc(55vw - 10px)';
 };
 
 const hideTagPreview = () => {
@@ -719,7 +753,7 @@ function resetTable(array, newarray) {
 //处理最终路线的渲染
 const postRoad = async (e: string) => {
   // function postRoad(e) {
-  console.log("函数执行前" + TotalTime.value);
+
 
   let cusList11 = ref([])
   cusList11.value = getCurrentDelCusList(e).value
@@ -753,13 +787,9 @@ const postRoad = async (e: string) => {
         tableData.value[i].all_time = Math.floor(targetRow['时间'] / 60) + tableData.value[i].visit_time_cost
       }
 
-      getTotalTime(summaryMethod({ columns: tableColumns.value, data: tableData.value }))
-
-      watch([TotalTime, clickCount], ([newVal1, newVal2], [oldVal1, oldVal2]) => {
-
-        if (oldVal1 > 300 && oldVal2 !== newVal2) {
-
-
+      getTotalTime(summaryMethod({ columns: tableColumns.value, data: tableData.value })).then((res) => {
+        console.log(res.value);
+        if (res.value > 300) {
           ElMessageBox.alert(
             '您今天的预计拜访时间已超5小时，建议您减少一些客户哦',
             '温馨提示',
@@ -769,9 +799,7 @@ const postRoad = async (e: string) => {
             }
           )
         }
-        if (oldVal1 < 240 && oldVal2 !== newVal2) {
-          console.log("旧的" + oldVal1);
-          console.log("新的" + newVal1);
+        if (res.value < 240) {
           ElMessageBox.prompt(`你当天的拜访总时长不足4小时,请选择是否继续或备注原因`, '提示', {
             inputPlaceholder: "请输入原因"
             , confirmButtonText: '备注',
@@ -790,8 +818,23 @@ const postRoad = async (e: string) => {
               })
             })
         }
-      }
-      )
+
+        // watch([TotalTime, clickCount], ([newVal1, newVal2], [oldVal1, oldVal2]) => {
+
+        //   if (newVal1 > 300 && oldVal2 !== newVal2) {
+
+
+
+        //   }
+        //   if (newVal1 < 240 && oldVal2 !== newVal2) {
+        //     console.log("旧的" + oldVal1);
+        //     console.log("新的" + newVal1);
+
+        // }
+        // )
+      })
+
+
 
     }
     );
@@ -799,17 +842,10 @@ const postRoad = async (e: string) => {
 
 }
 
-
-
 const clickCount = ref(0);
-
 const setClick = () => {
   clickCount.value++;
 };
-
-
-
-
 //处理请求客户(base客户经理)
 function postHandle(e: string) {
   clearDelCusList()
@@ -859,9 +895,10 @@ function clearCurList(weekday: string) {
   for (let i = tempLi.length - 1; i >= 0; i--) {
     const element = tempLi[i]
     if (colorForTag[element.Visit[0].拜访建议] !== 'red') {
-      customers.value.unshift(element)
-      delCustomers[weekday].value.splice(i, 1)
-      deleteTableData(getTableData(element))
+      handleClose(element, weekday)
+      // customers.value.unshift(element)
+      // delCustomers[weekday].value.splice(i, 1)
+      // deleteTableData(getTableData(element))
     }
   }
 }
@@ -888,8 +925,6 @@ const TotalTime = ref(tableData.value.reduce((acc, cur) => {
 
 const getTotalTime = async (e) => {
   summaryMethod({ columns: tableColumns.value, data: tableData.value })
-  console.log(TotalTime.value);
-
   return TotalTime
 }
 
@@ -923,9 +958,9 @@ function stateFlag(cus: any) {
 //定义处理标签（即客户退回）的方法
 const handleClose = (del: Cus, e: string) => {
 
-  let i_index: number = ref()
+  let i_index: number = 0
   for (let i = 0; i < customers.value.length; i++) {
-    const element: TableData = customers.value[i];
+    const element: any = customers.value[i];
     if (colorForTag[element.Visit[0].拜访建议] == colorForTag[del.Visit[0].拜访建议]) {
       i_index = i; break
     }
@@ -981,7 +1016,6 @@ function deleteTableData(tableDataObj: TableData) {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 15px;
-
 }
 
 .tag-pre-left {
