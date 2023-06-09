@@ -432,9 +432,8 @@
 <script setup lang="ts">
 // 导入部分
 import { StarFilled, Star, Avatar, InfoFilled, Sunny, MoonNight, Printer, Position, Bell } from '@element-plus/icons-vue'
-import { onBeforeMount, onMounted, reactive, ref, computed, watch, toRaw } from 'vue';
+import { onBeforeMount, onMounted, reactive, ref, computed } from 'vue';
 import axios from "axios";
-import { indexOf } from 'lodash';
 import { ElMessage, ElMessageBox, type ElTable } from 'element-plus';
 import { column } from 'element-plus/es/components/table-v2/src/common';
 
@@ -450,13 +449,13 @@ const tableColumns = ref([
   { prop: 'all_time', label: 'all_time' },
 
 ])
-const sums:any = ref([]);
+const sums: any = ref([]);
 
-function summaryMethod({ columns, data }:any) {
+function summaryMethod({ columns, data }: any) {
   // const summaryMethod = async ({ columns, data }) => {
 
-  columns.forEach((column:any, columnIndex:any) => {
-    const values = data.map((item:any) => Number(item[column.property]));
+  columns.forEach((column: any, columnIndex: any) => {
+    const values = data.map((item: any) => Number(item[column.property]));
     if (column.property === 'date') {
       sums.value[columnIndex] = '合计';
       return;
@@ -465,8 +464,8 @@ function summaryMethod({ columns, data }:any) {
       sums.value[columnIndex] = data.length + "家";
       return;
     }
-    if (!values.every((value:any) => isNaN(value))) {
-      sums.value[columnIndex] = values.reduce((prev:any, curr:any) => {
+    if (!values.every((value: any) => isNaN(value))) {
+      sums.value[columnIndex] = values.reduce((prev: any, curr: any) => {
         const value = Number(curr);
         if (!isNaN(value)) {
           return prev + curr;
@@ -489,7 +488,7 @@ function summaryMethod({ columns, data }:any) {
 }
 
 
-const convertWeekdayToNum:any = {
+const convertWeekdayToNum: any = {
   "周一": 1,
   "周二": 2,
   "周三": 3,
@@ -556,7 +555,7 @@ let tableDatas: TDPlus = {
   "周五": tableData5
 }
 //定义右下角拜访列表的数据
-const weekdays:any = ["周一", "周二", "周三", "周四", "周五"]
+const weekdays: any = ["周一", "周二", "周三", "周四", "周五"]
 let tableDataObj: {
   date: any, name: string, id: string, modern: string, road: string, visit_advice: string,
   open: string, close: string, visit_time: string, pos: string, type: string, address?: string, tasknum?: number,
@@ -639,8 +638,8 @@ const form5 = reactive({
 })
 let movedCus: any = {};
 let temDay = '周一'
-const handleTagClick = (del:Cus, e:string) => {
-  movedCus= del
+const handleTagClick = (del: Cus, e: string) => {
+  movedCus = del
   temDay = e
 };
 
@@ -722,12 +721,12 @@ function getHandle() {
     );
 }
 //处理线路重新规划逻辑
-function resetRoad(array:any, newarray:any) {
-  let temroad:any = ref([])
+function resetRoad(array: any, newarray: any) {
+  let temroad: any = ref([])
   for (let index = 0; index < newarray.value.length; index++) {
     const element1 = newarray.value[index];
     for (let i = 0; i < array.value.length; i++) {
-      const element2:any = array.value[i];
+      const element2: any = array.value[i];
       if (element1 == element2.Visit[0].客户代码_id) {
         temroad.value.push(element2)
       }
@@ -735,8 +734,8 @@ function resetRoad(array:any, newarray:any) {
   }
   return temroad
 }
-function resetTable(array:any, newarray:any) {
-  let temroad:any = ref([])
+function resetTable(array: any, newarray: any) {
+  let temroad: any = ref([])
   for (let index = 0; index < newarray.value.length; index++) {
     const element1 = newarray.value[index];
     for (let i = 0; i < array.value.length; i++) {
@@ -753,9 +752,9 @@ const postRoad = async (e: string) => {
   // function postRoad(e) {
 
 
-  let cusList11:any= ref([])
+  let cusList11: any = ref([])
   cusList11.value = getCurrentDelCusList(e).value
-  let idPost:any = ref([])
+  let idPost: any = ref([])
   for (let index = 0; index < cusList11.value.length; index++) {
 
     idPost.value.push(cusList11.value[index].Visit[0].客户代码_id);
@@ -763,12 +762,12 @@ const postRoad = async (e: string) => {
   axios.post("http://122.9.67.194:8000/api/customer/info/getRoad/",
     { text: idPost.value }, {})
     .then((res) => {
-      let newRoad:any = ref([])
+      let newRoad: any = ref([])
       newRoad.value = res.data
       getCurrentDelCusList(e).value = resetRoad(getCurrentDelCusList(e), newRoad).value
-      tableData.value.sort((a:any, b:any) => {
-        const indexA:number = newRoad.value.indexOf(a.id)
-        const indexB:number= newRoad.value.indexOf(b.id)
+      tableData.value.sort((a: any, b: any) => {
+        const indexA: number = newRoad.value.indexOf(a.id)
+        const indexB: number = newRoad.value.indexOf(b.id)
         return indexA - indexB
       }
       )
@@ -776,7 +775,7 @@ const postRoad = async (e: string) => {
       tableData.value[0].visit_road_time = 0
       tableData.value[0].all_time = tableData.value[0].visit_time_cost
       for (let i = 1; i < tableData.value.length; i++) {
-        const targetRow:any = routeInfo.value.find((row:any, index) => {
+        const targetRow: any = routeInfo.value.find((row: any, index) => {
           if (index > 0 && row.起点 === tableData.value[i - 1].id && row.终点 === tableData.value[i].id) {
             return true;
           }
@@ -794,6 +793,7 @@ const postRoad = async (e: string) => {
             {
               confirmButtonText: 'OK',
               type: 'warning',
+
             }
           )
         }
@@ -802,6 +802,9 @@ const postRoad = async (e: string) => {
             inputPlaceholder: "请输入原因"
             , confirmButtonText: '备注',
             cancelButtonText: '没啥问题，我要继续',
+            showClose: false,
+            closeOnClickModal: false,
+
           })
             .then(({ value }) => {
               ElMessage({
@@ -900,7 +903,7 @@ function clearCurList(weekday: string) {
     }
   }
 }
-const tableData:any = computed(() => {
+const tableData: any = computed(() => {
   if (weekday.value === '周一') {
     return tableData1.value;
   } else if (weekday.value === '周二') {
@@ -914,14 +917,14 @@ const tableData:any = computed(() => {
   }
   return tableData1.value;
 });
-const TotalTime = ref(tableData.value.reduce((acc:any, cur:any) => {
+const TotalTime = ref(tableData.value.reduce((acc: any, cur: any) => {
   const [hours, minutes] = cur.all_time.split("小时");
   const minutesValue = parseInt(minutes) || 0;
   return acc + parseInt(hours) * 60 + minutesValue;
 }, 0))
 
 
-const getTotalTime = async (e:any) => {
+const getTotalTime = async (e: any) => {
   summaryMethod({ columns: tableColumns.value, data: tableData.value })
   return TotalTime
 }
