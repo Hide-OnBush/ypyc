@@ -19,8 +19,6 @@
           </div>
         </div>
       </el-header>
-      <!-- <keep-alive><RouterView></RouterView></keep-alive> -->
-      <!-- <RouterView v-slot="{Component}" ><keep-alive :is="Component"></keep-alive></RouterView> -->
       <router-view v-slot="{ Component }">
         <keep-alive>
           <component :is="Component" />
@@ -33,7 +31,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import homeIcon from '@/assets/logo.png'
+import homeIcon from './assets/logo.png'
 
 
 
@@ -66,9 +64,6 @@ body {
   .wlbox {
     flex: 1;
     height: 30vh;
-
-
-
   }
 
   .el-header {
@@ -105,20 +100,6 @@ body {
     height: 42.5vh;
 
   }
-
-  .el-col {
-    //分列 根据具体的span赋值，12即为1/2的vw
-    // border:solid;
-
-  }
-
-  // .col-left-top{
-  //   height: 40vh;
-  // }
-  // .col-right-bottom{
-
-  //   height: 100vh;
-  // }
 
   .el-tag {
     //标签原始样式
@@ -171,7 +152,7 @@ body {
 
   .el-tabs__item {
     //分栏内边距
-    padding-bottom: 50px;
+    padding-bottom: 0px;
   }
 
   .el-divider--horizontal {
@@ -184,7 +165,7 @@ body {
 }
 
 .col-right-top {
-  height: 40vh;
+  height: 20vh;
 }
 
 .tab-content {

@@ -13,7 +13,6 @@
               <el-tab-pane label="周四" name="周四"></el-tab-pane>
               <el-tab-pane label="周五" name="周五"></el-tab-pane>
               <div class="wlcontainer">
-
                 <div class="wlbox">
                   <el-tag v-for="  del in delCustomers1     " :key="del" type="info"
                     :color="colorForTag[del.Visit[0].拜访建议]"
@@ -124,9 +123,6 @@
                     </template>
                   </el-dialog>
                 </div>
-
-
-
                 <div class="wlbox">
                   <el-tag v-for="     del      in      delCustomers3     " :key="del" type="info"
                     :color="colorForTag[del.Visit[0].拜访建议]"
@@ -189,7 +185,6 @@
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @mouseover="showTagPreview(del)"
                     @mouseleave="hideTagPreview()" @close="handleClose(del, '周四')"
                     @click="dialogForm4Visible = true; handleTagClick(del, '周四')">
-
                     {{ del.Visit[0].客户简称 }}
                     <div class="tag-preview" v-if="showPreview" :style="{ top: previewTop, left: previewLeft }">
                       <div class="tag-pre-left"><el-icon size="large" color="blue">
@@ -238,8 +233,6 @@
                     </template>
                   </el-dialog>
                 </div>
-
-
                 <div class="wlbox">
                   <el-tag v-for="     del      in      delCustomers5     " :key="del" type="info"
                     :color="colorForTag[del.Visit[0].拜访建议]"
@@ -338,15 +331,14 @@
                   </h3>
                 </el>
               </div>
-              <div class="tag-pre-right">
-                <h2 text="2xl" justify="center" style="text-align:center ;align-items: center;"> 任务列表</h2>
+              <div class="tag-pre-right" style="max-height: 50vh;overflow: auto;">
+                <h2 text=" 2xl" justify="center" style="text-align:center ;align-items: center;"> 任务列表</h2>
                 <el-table :data="previewTaskContent">
                   <el-table-column prop="任务状态" label="任务状态" width="90" fixed="left" />
                   <el-table-column prop="任务内容" label="任务内容" width="180" />
                   <el-table-column prop="任务剩余完成时间_工作日" label="剩余天数" width="90" />
                   <el-table-column prop="预估时间_分钟" label="预估时长" />
                 </el-table>
-
               </div>
             </div>
 
@@ -678,8 +670,8 @@ const showTagPreview = (del: any) => {
   showPreview.value = true;
   previewContent.value = del.Visit[0];
   previewTaskContent.value = del.Task;
-  previewTop.value = 'calc(60vh - 10px)';
-  previewLeft.value = 'calc(55vw - 10px)';
+  previewTop.value = 'calc(40vh - 10px)';
+  previewLeft.value = 'calc(52vw - 10px)';
 };
 
 const hideTagPreview = () => {
@@ -999,6 +991,11 @@ function deleteTableData(tableDataObj: TableData) {
   justify-items: stretch;
 
 
+}
+
+.el-tabs__item {
+  display: flex;
+  align-items: center;
 }
 
 .highlight {
