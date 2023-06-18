@@ -9,6 +9,9 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 
 // https://vitejs.dev/config/
+
+// const IS_PRODUCTION =process.env.NODE_ENV === "production";
+
 export default defineConfig({
   plugins: [vue(), vueJsx(),
     
@@ -18,7 +21,11 @@ export default defineConfig({
     Components({
       resolvers: [ElementPlusResolver()],
     })],
-    
+  //  base:IS_PRODUCTION ?"/dist/":"/" ,
+  //  build:{
+  //   outDir:"../public/dist",
+  //   emptyOutDir:true,
+  //  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

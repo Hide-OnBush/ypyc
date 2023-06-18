@@ -352,11 +352,14 @@
       <el-col :span="12" class="col-right-bottom">
         <el-button type="warning" @click="clearCurList(weekday)" style="z-index: 100;">重置当天客户</el-button>
         <el-button type="warning" @click="postRoad(weekday); setClick()" style="z-index: 100;">生成当天最优线路</el-button>
+        <el-button @click="downloadExcel">导出 Excel</el-button>
+
         <!-- <el-button type="warning" @click="confirmRoute()" style="z-index: 100;">确认线路</el-button> -->
         <el-scrollbar height="42.5vh">
           <keep-alive>
+         
             <el-table :data="tableData" :columns="tableColumns" style="width: 100%;" empty-text="没有客户被排入行程" height="40vh"
-              sum-text="合计" show-summary :summary-method="summaryMethod" stripe>
+              sum-text="合计" stripe     show-summary :summary-method="summaryMethod">
               <el-table-column type="expand">
                 <template #default="props">
                   <div m="4" class="inTable">
@@ -426,8 +429,30 @@
 import { StarFilled, Star, Avatar, InfoFilled, Sunny, MoonNight, Printer, Position, Bell } from '@element-plus/icons-vue'
 import { onBeforeMount, onMounted, reactive, ref, computed } from 'vue';
 import axios from "axios";
-import { ElMessage, ElMessageBox, type ElTable } from 'element-plus';
+import { ElMessage, ElMessageBox, ElTable } from 'element-plus';
 import { column } from 'element-plus/es/components/table-v2/src/common';
+import XLSX from 'xlsx'
+import FileSaver from 'file-saver'
+
+function downloadExcel () {
+    console.log(tableData.value);
+    
+
+        const blob = new Blob([tableData.value.map],{type: 'application/vnd.ms-excel'})
+        const fileName = 'excel.xls'
+        if (window.navigator.msSaveOrOpenBlob) { // IE
+            navigator.msSaveBlob(blob, fileName)
+        } else {
+           const link = document.createElement('a')
+           link.href = window.URL.createObjectURL(blob)
+           link.download = fileName
+           link.click()
+           window.URL.revokeObjectURL(link.href)
+
+}
+
+
+}
 
 
 const tableColumns = ref([
@@ -441,23 +466,55 @@ const tableColumns = ref([
   { prop: 'all_time', label: 'all_time' },
 
 ])
-const sums: any = ref([]);
+// const sums: any = ref([]);
+
+// function summaryMethod({ columns, data }: any) {
+//   columns.forEach((column: any, columnIndex: any) => {
+//     const values = data.map((item: any) => Number(item[column.property]));
+//     if (column.property === 'date') {
+//       sums.value[columnIndex] = '合计';
+//       return;
+//     }
+//     if (column.property === 'id') {
+//       sums.value[columnIndex] = data.length + "家";
+//       return;
+//     }
+//     if (!values.every((value: any) => isNaN(value))) {
+//       sums.value[columnIndex] = values.reduce((prev: any, curr: any) => {
+//         const value = Number(curr);
+//         if (!isNaN(value)) {
+//           return prev + curr;
+//         } else {
+//           return prev;
+//         }
+//       }, 0);
+//     } else {
+//       sums.value[columnIndex] = '';
+//     }
+//   });
+//   sums.value[5] = sums.value[5] + "个"
+//   sums.value[6] = Math.floor(parseInt(sums.value[6]) / 60) + "小时" + parseInt(sums.value[6]) % 60 + "分钟"
+//   sums.value[7] = Math.floor(parseInt(sums.value[7]) / 60) + "小时" + parseInt(sums.value[7]) % 60 + "分钟"
+//   TotalTime.value = sums.value[8]
+//   sums.value[8] = Math.floor(parseInt(sums.value[8]) / 60) + "小时" + parseInt(sums.value[8]) % 60 + "分钟"
+//   return sums.value;
+// }
 
 function summaryMethod({ columns, data }: any) {
+  const sums: string[] = []
   // const summaryMethod = async ({ columns, data }) => {
-
   columns.forEach((column: any, columnIndex: any) => {
     const values = data.map((item: any) => Number(item[column.property]));
     if (column.property === 'date') {
-      sums.value[columnIndex] = '合计';
+      sums[columnIndex] = '合计';
       return;
     }
     if (column.property === 'id') {
-      sums.value[columnIndex] = data.length + "家";
+      sums[columnIndex] = data.length + "家";
       return;
     }
     if (!values.every((value: any) => isNaN(value))) {
-      sums.value[columnIndex] = values.reduce((prev: any, curr: any) => {
+      sums[columnIndex] = values.reduce((prev: any, curr: any) => {
         const value = Number(curr);
         if (!isNaN(value)) {
           return prev + curr;
@@ -466,18 +523,19 @@ function summaryMethod({ columns, data }: any) {
         }
       }, 0);
     } else {
-      sums.value[columnIndex] = '';
+      sums[columnIndex] = '';
     }
   });
-  sums.value[5] = sums.value[5] + "个"
-  sums.value[6] = Math.floor(parseInt(sums.value[6]) / 60) + "小时" + parseInt(sums.value[6]) % 60 + "分钟"
-  sums.value[7] = Math.floor(parseInt(sums.value[7]) / 60) + "小时" + parseInt(sums.value[7]) % 60 + "分钟"
-  TotalTime.value = sums.value[8]
-  sums.value[8] = Math.floor(parseInt(sums.value[8]) / 60) + "小时" + parseInt(sums.value[8]) % 60 + "分钟"
+  sums[5] = sums[5] + "个"
+  sums[6] = Math.floor(parseInt(sums[6]) / 60) + "小时" + parseInt(sums[6]) % 60 + "分钟"
+  sums[7] = Math.floor(parseInt(sums[7]) / 60) + "小时" + parseInt(sums[7]) % 60 + "分钟"
+  TotalTime.value = sums[8]
+  sums[8] = Math.floor(parseInt(sums[8]) / 60) + "小时" + parseInt(sums[8]) % 60 + "分钟"
 
 
-  return sums.value;
+  return sums;
 }
+
 
 
 const convertWeekdayToNum: any = {
@@ -491,7 +549,6 @@ const convertWeekdayToNum: any = {
 const checkMoveValid = (cus: Cus, date: string) => {
   let minDate: number = parseInt(cus.Visit[0].最晚线路规划时间_工作日)
   const checkMoveFlag = ref(true)
-  console.log(convertWeekdayToNum[date])
   if (minDate < convertWeekdayToNum[date]) {
     checkMoveFlag.value = !checkMoveFlag.value
   }
@@ -652,10 +709,6 @@ const moveCus = (e: any) => {
     }
   }
 
-
-
-
-
 }
 
 
@@ -775,12 +828,12 @@ const postRoad = async (e: string) => {
         tableData.value[i].visit_road_time = Math.floor(targetRow['时间'] / 60)
         tableData.value[i].all_time = Math.floor(targetRow['时间'] / 60) + tableData.value[i].visit_time_cost
       }
-
-      getTotalTime(summaryMethod({ columns: tableColumns.value, data: tableData.value })).then((res) => {
-        console.log(res.value);
-        if (res.value > 300) {
+      summaryMethod({ columns: tableColumns.value, data: tableData.value })
+      getTotalTime(1)
+      .then((res) => {
+        if (TotalTime.value > 350) {
           ElMessageBox.alert(
-            '您今天的预计拜访时间已超5小时，建议您减少一些客户哦',
+            '您今天的预计拜访时间已超5.5小时，建议您减少一些客户哦',
             '温馨提示',
             {
               confirmButtonText: 'OK',
@@ -789,14 +842,14 @@ const postRoad = async (e: string) => {
             }
           )
         }
-        if (res.value < 240) {
-          ElMessageBox.prompt(`你当天的拜访总时长不足4小时,请选择是否继续或备注原因`, '提示', {
+        if (TotalTime.value < 270) {
+          ElMessageBox.prompt(`你当天的拜访总时长不足4.5小时,请选择是否继续或备注原因`, '提示', {
             inputPlaceholder: "请输入原因"
             , confirmButtonText: '备注',
             cancelButtonText: '没啥问题，我要继续',
             showClose: false,
             closeOnClickModal: false,
-
+            
           })
             .then(({ value }) => {
               ElMessage({
@@ -917,7 +970,7 @@ const TotalTime = ref(tableData.value.reduce((acc: any, cur: any) => {
 
 
 const getTotalTime = async (e: any) => {
-  summaryMethod({ columns: tableColumns.value, data: tableData.value })
+  // summaryMethod({ columns: tableColumns.value, data: tableData.value })
   return TotalTime
 }
 
