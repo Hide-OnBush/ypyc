@@ -64,6 +64,8 @@ body {
   .wlbox {
     flex: 1;
     height: 30vh;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .el-header {

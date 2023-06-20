@@ -1,153 +1,50 @@
 <template>
   <div id="container"> </div>
 </template>
+
 <script setup lang="ts" >
-import { onBeforeMount, onMounted, ref } from 'vue';
+import { onBeforeMount, onMounted, ref, version } from 'vue';
 import axios from "axios";
 import AMapLoader from '@amap/amap-jsapi-loader';
-import delCustomers1 from '@/views/SimulatorComponent.vue'
 
-let path1 = ref([]);
-let path2 = ref([]);
-let path3 = ref([]);
-let path4 = ref([]);
-let path5 = ref([]);
-// let paths:any = [path1, path2, path3, path4, path5]
-// function clearPaths(paths) {
-//   for (let index = 0; index < paths.length; index++) {
-//     paths[index].value = [];
-//   }
+// let weekday = "周一"
+// const value = ref('')//客户经理value
+// const company = {
+//   Lng: 121.525144, Lat: 31.29509
 // }
-
-let weekday = "周一"
-const value = ref('')//客户经理value
-const company = {
-  Lng: 121.525144, Lat: 31.29509
-}
 //处理地图原始渲染，此处必须加key
-function initMap() {
-  AMapLoader.load({
-    key: "97faaa07fd10db3b317137503de756ed",             // 申请好的Web端开发者Key，首次调用 load 时必填
-    version: "2.0",      // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
-    plugins: ['AMap.Scale', "AMap.ToolBar"],       // 需要使用的的插件列表，如比例尺'AMap.Scale'等
-  })
-    .then((AMap) => {
-      const map = new AMap.Map("container", {  //设置地图容器id
-        // mapStyle: 'amap://styles/darkblue',
-        viewMode: "3D",    //是否为3D地图模式
-        zoom: 13,           //初始化地图级别
-        center: [121.530682, 31.297311], //初始化地图中心点位置
-
-      });
-
-      map.setDefaultCursor("pointer"); //使用CSS默认样式定义地图上的鼠标样式（default/pointer/move/crosshair）
-      map.addControl(new AMap.Scale()); //异步同时加载多个插件
-      map.addControl(new AMap.ToolBar());
-      // map.addControl(new AMap.Geolocation());
 
 
-    }).catch(e => {
-      console.log(e);
-    })
-}
-
-
-// function get_path(path: any, cusArray: any) {
-//   path.value.length = 1
-//   for (let index = 0; index < cusArray.value.length; index++) {
-//     path.value.push(new AMap.LngLat(cusArray.value[index].Visit[0].经营地址的经度, cusArray.value[index].Visit[0].经营地址的纬度));
-//   }
-//   path.value.push(new AMap.LngLat(121.525144, 31.29509))
-//   console.log(path.value);
-
-
-// }
-//处理地图更新
-function updateMap() {
-  AMapLoader.load({
-    key: "97faaa07fd10db3b317137503de756ed",
-    version: "2.0",      // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
-    plugins: ['AMap.Scale', "AMap.ToolBar"],       // 需要使用的的插件列表，如比例尺'AMap.Scale'等
-  }).then((AMap) => {
-    const map = new AMap.Map("container", {  //设置地图容器id
-      // mapStyle: 'amap://styles/darkblue',
-      viewMode: "3D",    //是否为3D地图模式
-      zoom: 13,           //初始化地图级别
-      center: [121.530682, 31.297311], //初始化地图中心点位置
-
+const map = new AMap.Map("container", {
+        center: [116.397559, 39.89621],
+        zoom: 14
     });
 
-    // get_path(path1, delCustomers1)
-    // get_path(path2, delCustomers2)
-    // get_path(path3, delCustomers3)
-    // get_path(path4, delCustomers4)
-    // get_path(path5, delCustomers5)
-    var polyline1 = new AMap.Polyline({
-      path: path1.value,
-      strokeWeight: 6,
-      borderWeight: 100, // 线条宽度，默认为 1
-      showDir: true,
-      strokeColor: 'red', // 线条颜色
-      lineJoin: 'round' // 折线拐点连接处样式
-    });
-    var polyline2 = new AMap.Polyline({
-      path: path2.value,
-      strokeWeight: 6,
-      borderWeight: 100, // 线条宽度，默认为 1
-      showDir: true,
-      strokeColor: 'green', // 线条颜色
-      lineJoin: 'round' // 折线拐点连接处样式
-    });
-    var polyline3 = new AMap.Polyline({
-      path: path3.value,
-      strokeWeight: 6,
-      borderWeight: 1, // 线条宽度，默认为 1
-      showDir: true,
-      strokeColor: 'yellow', // 线条颜色
-      lineJoin: 'round' // 折线拐点连接处样式
-    });
-    var polyline4 = new AMap.Polyline({
-      path: path4.value,
-      showDir: true,
-      strokeWeight: 6,
-      borderWeight: 1, // 线条宽度，默认为 1
-      strokeColor: 'orange', // 线条颜色
-      lineJoin: 'round' // 折线拐点连接处样式
-    });
-    var polyline5 = new AMap.Polyline({
-      path: path5.value,
-      showDir: true,
-      strokeWeight: 6,
-      borderWeight: 1, // 线条宽度，默认为 1
-      strokeColor: 'black', // 线条颜色
-      lineJoin: 'round' // 折线拐点连接处样式
-    });
-
-    map.add(polyline1)
-    map.add(polyline2)
-    map.add(polyline3)
-    map.add(polyline4)
-    map.add(polyline5)
-  }).catch(e => {
-    console.log(e);
-
-  })
-}
 
 
-//生命周期函数
+const ridingOption={policy:1}
+
+const riding=new AMap.Riding(ridingOption)
+
+riding.search([121.536341, 31.324918],[121.503676, 31.293989],function(status,result){
+  if(status==='complete'){
+    console.log(1);
+    
+  }else{
+    console.log("SHIBAI");
+    
+  }
+})
+
+
+
 onBeforeMount(() => {
 
 })
 onMounted(() => {
-
-  initMap()
-  // get_path(path1, delCustomers1)
+initMap()
 })
 
-function clearDelCusList() {
-  delCustomers1.value = []
-}
 
 
 
