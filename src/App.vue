@@ -64,8 +64,6 @@ body {
   .wlbox {
     flex: 1;
     height: 30vh;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   .el-header {
@@ -103,12 +101,30 @@ body {
 
   }
 
+  .is_closable {
+    text-align: left;
+  }
+
+  .el-tag__close {
+    order: -1;
+    /* 将关闭按钮的顺序设为-1，使其在标签内容之前显示 */
+    margin-right: 4px;
+
+    /* 可选：调整关闭按钮与标签内容之间的间距 */
+  }
+
   .el-tag {
     //标签原始样式
+    display: inline-flex;
+    text-align: left;
+    max-width: 9vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     font-size: small;
-    margin-right: 15px;
-    margin-bottom: 20px;
-    padding: 5px 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    // padding: 5px 10px;
     // border-radius: 10px;
     color: #2f3542;
     opacity: 1;

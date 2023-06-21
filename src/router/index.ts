@@ -15,7 +15,7 @@ const router = createRouter({
     {
       path: '/map',
       name: 'map',
-      component: () => import('../views/Map.vue'),
+      component: () => import('../views/GaoDeMap.vue'),
       meta: {
         keepAlive: true, 
         isBack: false

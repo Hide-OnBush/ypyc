@@ -12,8 +12,11 @@
               <el-tab-pane label="周三" name="周三"></el-tab-pane>
               <el-tab-pane label="周四" name="周四"></el-tab-pane>
               <el-tab-pane label="周五" name="周五"></el-tab-pane>
+
               <div class="wlcontainer">
+
                 <div class="wlbox">
+
                   <el-tag v-for="  del in delCustomers1     " :key="del" type="info"
                     :color="colorForTag[del.Visit[0].拜访建议]"
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @mouseover="showTagPreview(del)"
@@ -44,8 +47,11 @@
                             <li>{{ previewContent.经营业态 }}</li>
                           </h3>
                         </el>
+
                       </div>
+
                     </div>
+
                   </el-tag>
                   <el-dialog v-model="dialogForm1Visible" title="移动至" style="width: 30vw;height: 25vh;">
                     <el-form :model="form1">
@@ -67,7 +73,9 @@
                       </span>
                     </template>
                   </el-dialog>
+
                 </div>
+
                 <div class="wlbox">
                   <el-tag v-for="     del      in      delCustomers2     " :key="del" type="info"
                     :color="colorForTag[del.Visit[0].拜访建议]"
@@ -178,7 +186,6 @@
                     </template>
                   </el-dialog>
                 </div>
-
                 <div class="wlbox">
                   <el-tag v-for="     del      in      delCustomers4     " :key="del" type="info"
                     :color="colorForTag[del.Visit[0].拜访建议]"
@@ -352,14 +359,14 @@
       <el-col :span="12" class="col-right-bottom">
         <el-button type="warning" @click="clearCurList(weekday)" style="z-index: 100;">重置当天客户</el-button>
         <el-button type="warning" @click="postRoad(weekday); setClick()" style="z-index: 100;">生成当天最优线路</el-button>
-        <el-button @click="downloadExcel">导出 Excel</el-button>
+        <!-- <el-button @click="downloadExcel">导出 Excel</el-button> -->
 
         <!-- <el-button type="warning" @click="confirmRoute()" style="z-index: 100;">确认线路</el-button> -->
         <el-scrollbar height="42.5vh">
           <keep-alive>
-         
+
             <el-table :data="tableData" :columns="tableColumns" style="width: 100%;" empty-text="没有客户被排入行程" height="40vh"
-              sum-text="合计" stripe     show-summary :summary-method="summaryMethod">
+              sum-text="合计" stripe show-summary :summary-method="summaryMethod">
               <el-table-column type="expand">
                 <template #default="props">
                   <div m="4" class="inTable">
@@ -434,22 +441,22 @@ import { column } from 'element-plus/es/components/table-v2/src/common';
 import XLSX from 'xlsx'
 import FileSaver from 'file-saver'
 
-function downloadExcel () {
-    console.log(tableData.value);
-    
+function downloadExcel() {
+  console.log(tableData.value);
 
-        const blob = new Blob([tableData.value.map],{type: 'application/vnd.ms-excel'})
-        const fileName = 'excel.xls'
-        if (window.navigator.msSaveOrOpenBlob) { // IE
-            navigator.msSaveBlob(blob, fileName)
-        } else {
-           const link = document.createElement('a')
-           link.href = window.URL.createObjectURL(blob)
-           link.download = fileName
-           link.click()
-           window.URL.revokeObjectURL(link.href)
 
-}
+  const blob = new Blob([tableData.value.map], { type: 'application/vnd.ms-excel' })
+  const fileName = 'excel.xls'
+  if (window.navigator.msSaveOrOpenBlob) { // IE
+    navigator.msSaveBlob(blob, fileName)
+  } else {
+    const link = document.createElement('a')
+    link.href = window.URL.createObjectURL(blob)
+    link.download = fileName
+    link.click()
+    window.URL.revokeObjectURL(link.href)
+
+  }
 
 
 }
@@ -830,55 +837,55 @@ const postRoad = async (e: string) => {
       }
       summaryMethod({ columns: tableColumns.value, data: tableData.value })
       getTotalTime(1)
-      .then((res) => {
-        if (TotalTime.value > 350) {
-          ElMessageBox.alert(
-            '您今天的预计拜访时间已超5.5小时，建议您减少一些客户哦',
-            '温馨提示',
-            {
-              confirmButtonText: 'OK',
-              type: 'warning',
+        .then((res) => {
+          if (TotalTime.value > 350) {
+            ElMessageBox.alert(
+              '您今天的预计拜访时间已超5.5小时，建议您减少一些客户哦',
+              '温馨提示',
+              {
+                confirmButtonText: 'OK',
+                type: 'warning',
 
-            }
-          )
-        }
-        if (TotalTime.value < 270) {
-          ElMessageBox.prompt(`你当天的拜访总时长不足4.5小时,请选择是否继续或备注原因`, '提示', {
-            inputPlaceholder: "请输入原因"
-            , confirmButtonText: '备注',
-            cancelButtonText: '没啥问题，我要继续',
-            showClose: false,
-            closeOnClickModal: false,
-            
-          })
-            .then(({ value }) => {
-              ElMessage({
-                type: 'success',
-                message: `备注成功`,
-              })
+              }
+            )
+          }
+          if (TotalTime.value < 270) {
+            ElMessageBox.prompt(`你当天的拜访总时长不足4.5小时,请选择是否继续或备注原因`, '提示', {
+              inputPlaceholder: "请输入原因"
+              , confirmButtonText: '备注',
+              cancelButtonText: '没啥问题，我要继续',
+              showClose: false,
+              closeOnClickModal: false,
+
             })
-            .catch(() => {
-              ElMessage({
-                type: 'info',
-                message: '请继续选择客户',
+              .then(({ value }) => {
+                ElMessage({
+                  type: 'success',
+                  message: `备注成功`,
+                })
               })
-            })
-        }
+              .catch(() => {
+                ElMessage({
+                  type: 'info',
+                  message: '请继续选择客户',
+                })
+              })
+          }
 
-        // watch([TotalTime, clickCount], ([newVal1, newVal2], [oldVal1, oldVal2]) => {
+          // watch([TotalTime, clickCount], ([newVal1, newVal2], [oldVal1, oldVal2]) => {
 
-        //   if (newVal1 > 300 && oldVal2 !== newVal2) {
+          //   if (newVal1 > 300 && oldVal2 !== newVal2) {
 
 
 
-        //   }
-        //   if (newVal1 < 240 && oldVal2 !== newVal2) {
-        //     console.log("旧的" + oldVal1);
-        //     console.log("新的" + newVal1);
+          //   }
+          //   if (newVal1 < 240 && oldVal2 !== newVal2) {
+          //     console.log("旧的" + oldVal1);
+          //     console.log("新的" + newVal1);
 
-        // }
-        // )
-      })
+          // }
+          // )
+        })
 
 
 

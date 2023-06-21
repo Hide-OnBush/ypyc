@@ -27,6 +27,20 @@ const value = ref('')//客户经理value
 const company = {
   Lng: 121.525144, Lat: 31.29509
 }
+
+  {% comment %}
+    <script
+      type="text/javascript"
+      src="https://webapi.amap.com/maps?v=2.0&key=97faaa07fd10db3b317137503de756ed&plugin=AMap.Riding"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"
+    />
+    <script type="text/javascript">
+      window._AMapSecurityConfig = {
+          securityJsCode:'f34a1b5883370338b00da4fecfea5fa9',
+      } {% endcomment %}
 //处理地图原始渲染，此处必须加key
 function initMap() {
 
