@@ -9,13 +9,15 @@ const router = createRouter({
       component: ()=>import("../views/SimulatorComponent.vue"),
       meta: {
         keepAlive: true, 
-        isBack: false
-          }
+        isBack: false,
+        data:'Hello',
+        }
+          
     },
     {
       path: '/map',
       name: 'map',
-      component: () => import('../views/GaoDeMap.vue'),
+      component: () => import('../views/MapContainer.vue'),
       meta: {
         keepAlive: true, 
         isBack: false

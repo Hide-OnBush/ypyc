@@ -359,7 +359,7 @@
       <el-col :span="12" class="col-right-bottom">
         <el-button type="warning" @click="clearCurList(weekday)" style="z-index: 100;">重置当天客户</el-button>
         <el-button type="warning" @click="postRoad(weekday); setClick()" style="z-index: 100;">生成当天最优线路</el-button>
-        <!-- <el-button @click="downloadExcel">导出 Excel</el-button> -->
+        <el-button @click="updateMapData(tableData), postMapData(mapData)">查看当天拜访轨迹</el-button>
 
         <!-- <el-button type="warning" @click="confirmRoute()" style="z-index: 100;">确认线路</el-button> -->
         <el-scrollbar height="42.5vh">
@@ -437,29 +437,44 @@ import { StarFilled, Star, Avatar, InfoFilled, Sunny, MoonNight, Printer, Positi
 import { onBeforeMount, onMounted, reactive, ref, computed } from 'vue';
 import axios from "axios";
 import { ElMessage, ElMessageBox, ElTable } from 'element-plus';
-import { column } from 'element-plus/es/components/table-v2/src/common';
-import XLSX from 'xlsx'
-import FileSaver from 'file-saver'
-
-function downloadExcel() {
-  console.log(tableData.value);
+import { useRouter } from 'vue-router'
+import router from '@/router';
 
 
-  const blob = new Blob([tableData.value.map], { type: 'application/vnd.ms-excel' })
-  const fileName = 'excel.xls'
-  if (window.navigator.msSaveOrOpenBlob) { // IE
-    navigator.msSaveBlob(blob, fileName)
-  } else {
-    const link = document.createElement('a')
-    link.href = window.URL.createObjectURL(blob)
-    link.download = fileName
-    link.click()
-    window.URL.revokeObjectURL(link.href)
-
-  }
-
-
+type Item = {
+  yfcx: Array<mapCus>
 }
+
+type mapCus = {
+  name: string,
+  lng: number,
+  lat: number,
+}
+
+
+//定义一个地图数组
+const mapData = ref([])
+function updateMapData(data) {
+  const xxx: mapCus = { name: '', lng: 1, lat: 1 }
+  for (let index = 0; index < data.length; index++) {
+    xxx.name = data[index].name,
+      xxx.lat = data[index].lat,
+      xxx.lng = data[index].lng
+  }
+  mapData.value.push(xxx)
+}
+
+
+
+const postMapData = (item: Item) => {
+  router.push({
+    path: '/map',
+    query: item
+  })
+}
+
+
+
 
 
 const tableColumns = ref([
@@ -473,40 +488,6 @@ const tableColumns = ref([
   { prop: 'all_time', label: 'all_time' },
 
 ])
-// const sums: any = ref([]);
-
-// function summaryMethod({ columns, data }: any) {
-//   columns.forEach((column: any, columnIndex: any) => {
-//     const values = data.map((item: any) => Number(item[column.property]));
-//     if (column.property === 'date') {
-//       sums.value[columnIndex] = '合计';
-//       return;
-//     }
-//     if (column.property === 'id') {
-//       sums.value[columnIndex] = data.length + "家";
-//       return;
-//     }
-//     if (!values.every((value: any) => isNaN(value))) {
-//       sums.value[columnIndex] = values.reduce((prev: any, curr: any) => {
-//         const value = Number(curr);
-//         if (!isNaN(value)) {
-//           return prev + curr;
-//         } else {
-//           return prev;
-//         }
-//       }, 0);
-//     } else {
-//       sums.value[columnIndex] = '';
-//     }
-//   });
-//   sums.value[5] = sums.value[5] + "个"
-//   sums.value[6] = Math.floor(parseInt(sums.value[6]) / 60) + "小时" + parseInt(sums.value[6]) % 60 + "分钟"
-//   sums.value[7] = Math.floor(parseInt(sums.value[7]) / 60) + "小时" + parseInt(sums.value[7]) % 60 + "分钟"
-//   TotalTime.value = sums.value[8]
-//   sums.value[8] = Math.floor(parseInt(sums.value[8]) / 60) + "小时" + parseInt(sums.value[8]) % 60 + "分钟"
-//   return sums.value;
-// }
-
 function summaryMethod({ columns, data }: any) {
   const sums: string[] = []
   // const summaryMethod = async ({ columns, data }) => {
@@ -616,13 +597,14 @@ let tableDataObj: {
   date: any, name: string, id: string, modern: string, road: string, visit_advice: string,
   open: string, close: string, visit_time: string, pos: string, type: string, address?: string, tasknum?: number,
   last_date?: string, task?: object[], time?: number, visit_time_cost?: number, visit_road_time?: number, all_time?: number,
+  lng?: number, lat?: number
 }
 
 interface TableData {
   date: any; name: string; id: string; modern: string; road: string; visit_advice: string;
   open: string; close: string; visit_time: string; pos: string; type: string; address?: string;
   last_date?: string; task?: object[]; time?: number; visit_time_cost?: number; tasknum?: number;
-  visit_road_time?: number; all_time?: number;
+  visit_road_time?: number; all_time?: number; lng?: number; lat?: number;
 }
 //indexOf(weekdays,weekday)排序依据
 function getTableData(cus: Cus) {
@@ -630,7 +612,7 @@ function getTableData(cus: Cus) {
     name: cus.Visit[0].客户简称, modern: cus.Visit[0].终端类型, id: cus.Visit[0].客户代码_id,
     type: cus.Visit[0].经营业态, road: cus.Visit[0].送货路段, visit_advice: cus.Visit[0].拜访建议, visit_time_cost: cus.Visit[0].拜访时长预估,
     open: cus.Visit[0].开门时间, close: cus.Visit[0].关门时间, visit_time: cus.Visit[0].拜访日期, pos: cus.Visit[0].pos机类型, address: cus.Visit[0].客户地址,
-    date: weekday, task: cus.Task, tasknum: cus.Task.length, visit_road_time: 0, all_time: 0
+    date: weekday, task: cus.Task, tasknum: cus.Task.length, visit_road_time: 0, all_time: 0, lat: cus.Visit[0].经营地址的纬度, lng: cus.Visit[0].经营地址的经度,
     //  day_index: ((indexOf(weekdays, weekday) as unknown as string) + (indexOf(getCurrentDelCusList(weekday), cus) + 2 as unknown as string)),
 
   }
@@ -669,6 +651,9 @@ const handleFalseClick = (cus: Cus) => {
   }
 
 }
+
+
+
 
 //设置处理已选客户移动的逻辑
 const dialogForm1Visible = ref(false)
@@ -801,9 +786,6 @@ function resetTable(array: any, newarray: any) {
 }
 //处理最终路线的渲染
 const postRoad = async (e: string) => {
-  // function postRoad(e) {
-
-
   let cusList11: any = ref([])
   cusList11.value = getCurrentDelCusList(e).value
   let idPost: any = ref([])
@@ -823,7 +805,6 @@ const postRoad = async (e: string) => {
         return indexA - indexB
       }
       )
-
       tableData.value[0].visit_road_time = 0
       tableData.value[0].all_time = tableData.value[0].visit_time_cost
       for (let i = 1; i < tableData.value.length; i++) {
@@ -845,7 +826,6 @@ const postRoad = async (e: string) => {
               {
                 confirmButtonText: 'OK',
                 type: 'warning',
-
               }
             )
           }
@@ -871,28 +851,9 @@ const postRoad = async (e: string) => {
                 })
               })
           }
-
-          // watch([TotalTime, clickCount], ([newVal1, newVal2], [oldVal1, oldVal2]) => {
-
-          //   if (newVal1 > 300 && oldVal2 !== newVal2) {
-
-
-
-          //   }
-          //   if (newVal1 < 240 && oldVal2 !== newVal2) {
-          //     console.log("旧的" + oldVal1);
-          //     console.log("新的" + newVal1);
-
-          // }
-          // )
         })
-
-
-
     }
     );
-
-
 }
 
 const clickCount = ref(0);
@@ -949,9 +910,6 @@ function clearCurList(weekday: string) {
     const element = tempLi[i]
     if (colorForTag[element.Visit[0].拜访建议] !== 'red') {
       handleClose(element, weekday)
-      // customers.value.unshift(element)
-      // delCustomers[weekday].value.splice(i, 1)
-      // deleteTableData(getTableData(element))
     }
   }
 }
@@ -977,7 +935,6 @@ const TotalTime = ref(tableData.value.reduce((acc: any, cur: any) => {
 
 
 const getTotalTime = async (e: any) => {
-  // summaryMethod({ columns: tableColumns.value, data: tableData.value })
   return TotalTime
 }
 
@@ -1025,15 +982,7 @@ const handleClose = (del: Cus, e: string) => {
 function insertTableData(tableDataObj: TableData) {
   tableDatas[weekday.value].value.push(tableDataObj)
 }
-
-function deleteTableData(tableDataObj: TableData) {
-  for (let i = 0; i < tableData.value.length; i++) {
-    const element: TableData = tableData.value[i];
-    if (element.name == tableDataObj.name) {
-      tableData.value.splice(i, 1)
-    }
-  }
-}
+const mapPostData = { 'yfcx': mapData }
 
 </script>
       
