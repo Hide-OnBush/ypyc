@@ -1,15 +1,17 @@
 <template>
   <div id="container"> </div>
-  {{ route.query.yfcx }}
+  <div>
+
+  </div>
 </template>
 
 <script setup lang="ts" >
-import { onBeforeMount, onMounted, ref, version } from 'vue';
+import { onBeforeMount, onMounted, ref, version,inject, onUpdated, type Ref} from 'vue';
 import axios from "axios";
 import AMapLoader from '@amap/amap-jsapi-loader';
 import { useRoute } from 'vue-router';
-const route = useRoute();
-console.log(route.query)
+import { useMapStore } from '@/stores/counter';
+const store=useMapStore();
 const initMap = () => {
   AMapLoader.load({
     key: "97faaa07fd10db3b317137503de756ed",
@@ -26,19 +28,20 @@ const initMap = () => {
         map: map,
         hideMarkers: true,
       });
-      const P = [[121.491344, 31.293496], [121.500719, 31.336273], [121.525161, 31.281641], [121.548550, 31.267749]]
+      // const P = [[121.491344, 31.293496], [121.500719, 31.336273], [121.525161, 31.281641], [121.548550, 31.267749]]
 
-      for (let index = 0; index < P.length; index++) {
-
-        driving.search(P[index], P[index + 1], function (status, result) {
+      for (let index = 0; index < store.mapData.length-1; index++) {
+        let startP =new AMap.LngLat(store.mapData[index].lng, store.mapData[index].lat);
+        let endP = new AMap.LngLat(store.mapData[index+1].lng, store.mapData[index+1].lat);
+        driving.search(startP, endP, function (status, result) {
           if (status === 'complete') {
-            let pointPosition = new AMap.LngLat(P[index][0], P[index][1]);
+            let pointPosition = new AMap.LngLat(store.mapData[index].lng, store.mapData[index].lat);
             let pointMarker = new AMap.Marker({
               position: pointPosition,
               icon: createMarkerIcon(index + 1),
             });
             let shopText = new AMap.Text({
-              text: '烟草店', // 文字内容
+              text: store.mapData[index].name, // 文字内容
               position: pointPosition, // 文字位置
               map: map,// 将文字添加到地图上
               style: {
@@ -52,16 +55,19 @@ const initMap = () => {
             })
             map.add(shopText);
             map.add(pointMarker);
-            map.setFitView(pointMarker)
-            if (index === P.length - 2) {
-              let lastPosition = new AMap.LngLat(P[index + 1][0], P[index + 1][1]);
+            map.setFitView(pointMarker);
+
+
+
+            if (index === (store.mapData.length-2) ) {
+              let lastPosition = new AMap.LngLat(store.mapData[index + 1].lng, store.mapData[index + 1].lat);
               let lastOneMarker = new AMap.Marker({
                 position: lastPosition,
                 icon: createMarkerIcon(index + 2),
 
               });
               let lastText = new AMap.Text({
-                text: '烟草店', // 文字内容
+                text: store.mapData[index+1].name, // 文字内容
                 position: lastPosition, // 文字位置
                 map: map,// 将文字添加到地图上
                 style: {
@@ -76,12 +82,11 @@ const initMap = () => {
               map.add(lastText)
               map.add(lastOneMarker)
             }
+
             if (result.routes && result.routes.length) {
               drawRoute(result.routes[0])
             }
-          } else {
-            console.log('获取导航路径失败');
-          }
+          } 
         });
       }
       function createMarkerIcon(number) {
@@ -97,12 +102,7 @@ const initMap = () => {
       }
       function drawRoute(route) {
         let path = parseRouteToPath(route)
-        let startMarker = new AMap.Marker({
-          position: path[0],
-          // icon: 'https://webapi.amap.com/theme/v1.3/markers/n/start.png',
-          anchor: 'bottom-center',
-          map: map
-        })
+
         let routeLine = new AMap.Polyline({
           path: path,
           showDir: true,
@@ -149,8 +149,13 @@ onBeforeMount(() => {
 })
 onMounted(() => {
   initMap()
+  console.log(store.mapData.name)
 })
 
+onUpdated(()=>{
+  initMap()
+  console.log(store.mapData.name)
+})
 
 
 

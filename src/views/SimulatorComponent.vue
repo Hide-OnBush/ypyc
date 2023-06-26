@@ -11,18 +11,14 @@
               <el-tab-pane label="周二" name="周二"></el-tab-pane>
               <el-tab-pane label="周三" name="周三"></el-tab-pane>
               <el-tab-pane label="周四" name="周四"></el-tab-pane>
-              <el-tab-pane label="周五" name="周五"></el-tab-pane>
-
+              <el-tab-pane label="周五" name="周五"></el-tab-pane>  
               <div class="wlcontainer">
-
                 <div class="wlbox">
-
                   <el-tag v-for="  del in delCustomers1     " :key="del" type="info"
                     :color="colorForTag[del.Visit[0].拜访建议]"
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @mouseover="showTagPreview(del)"
                     @mouseleave="hideTagPreview()" @close="handleClose(del, '周一')"
                     @click="dialogForm1Visible = true; handleTagClick(del, '周一')">
-
                     {{ del.Visit[0].客户简称 }}
                     <div class="tag-preview" v-if="showPreview" :style="{ top: previewTop, left: previewLeft }">
                       <div class="tag-pre-left"><el-icon size="large" color="blue">
@@ -47,11 +43,8 @@
                             <li>{{ previewContent.经营业态 }}</li>
                           </h3>
                         </el>
-
                       </div>
-
                     </div>
-
                   </el-tag>
                   <el-dialog v-model="dialogForm1Visible" title="移动至" style="width: 30vw;height: 25vh;">
                     <el-form :model="form1">
@@ -73,16 +66,13 @@
                       </span>
                     </template>
                   </el-dialog>
-
                 </div>
-
                 <div class="wlbox">
                   <el-tag v-for="     del      in      delCustomers2     " :key="del" type="info"
                     :color="colorForTag[del.Visit[0].拜访建议]"
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @mouseover="showTagPreview(del)"
                     @mouseleave="hideTagPreview()" @close="handleClose(del, '周二')"
                     @click="dialogForm2Visible = true; handleTagClick(del, '周二')">
-
                     {{ del.Visit[0].客户简称 }}
                     <div class="tag-preview" v-if="showPreview" :style="{ top: previewTop, left: previewLeft }">
                       <div class="tag-pre-left"><el-icon size="large" color="blue">
@@ -137,7 +127,6 @@
                     :closable="colorForTag[del.Visit[0].拜访建议] == 'red' ? false : true" @mouseover="showTagPreview(del)"
                     @mouseleave="hideTagPreview()" @close="handleClose(del, '周三')"
                     @click="dialogForm3Visible = true; handleTagClick(del, '周三')">
-
                     {{ del.Visit[0].客户简称 }}
                     <div class="tag-preview" v-if="showPreview" :style="{ top: previewTop, left: previewLeft }">
                       <div class="tag-pre-left"><el-icon size="large" color="blue">
@@ -359,12 +348,10 @@
       <el-col :span="12" class="col-right-bottom">
         <el-button type="warning" @click="clearCurList(weekday)" style="z-index: 100;">重置当天客户</el-button>
         <el-button type="warning" @click="postRoad(weekday); setClick()" style="z-index: 100;">生成当天最优线路</el-button>
-        <el-button @click="updateMapData(tableData), postMapData(mapData)">查看当天拜访轨迹</el-button>
-
+        <el-button  type="warning" @click="updateMapData(tableData)">查看当天拜访轨迹</el-button>
         <!-- <el-button type="warning" @click="confirmRoute()" style="z-index: 100;">确认线路</el-button> -->
         <el-scrollbar height="42.5vh">
           <keep-alive>
-
             <el-table :data="tableData" :columns="tableColumns" style="width: 100%;" empty-text="没有客户被排入行程" height="40vh"
               sum-text="合计" stripe show-summary :summary-method="summaryMethod">
               <el-table-column type="expand">
@@ -405,7 +392,6 @@
                       <el-table-column label="任务状态" prop="任务状态" />
                       <el-table-column label="任务内容" prop="任务内容" />
                       <el-table-column label="预估时长(分钟)" prop="预估时间_分钟" />
-
                       <el-table-column label="剩余完成时间(工作日)" prop="任务剩余完成时间_工作日" />
                     </el-table>
                   </div>
@@ -419,31 +405,24 @@
               <el-table-column label="任务时间" prop="visit_time_cost" width="auto" />
               <el-table-column label="在途时间" prop="visit_road_time" width="auto" />
               <el-table-column label="总时间" prop="all_time" width="auto" />
-
             </el-table>
-
-
-
-
           </keep-alive>
         </el-scrollbar>
       </el-col>
     </el-row>
   </el-main>
+  
 </template>
 <script setup lang="ts">
 // 导入部分
 import { StarFilled, Star, Avatar, InfoFilled, Sunny, MoonNight, Printer, Position, Bell } from '@element-plus/icons-vue'
-import { onBeforeMount, onMounted, reactive, ref, computed } from 'vue';
+import { onBeforeMount, onMounted, reactive, ref, computed,provide } from 'vue';
 import axios from "axios";
 import { ElMessage, ElMessageBox, ElTable } from 'element-plus';
 import { useRouter } from 'vue-router'
-import router from '@/router';
-
-
-type Item = {
-  yfcx: Array<mapCus>
-}
+import { useMapStore } from '@/stores/counter';
+const store=useMapStore();
+const router =useRouter()
 
 type mapCus = {
   name: string,
@@ -452,29 +431,24 @@ type mapCus = {
 }
 
 
+
 //定义一个地图数组
-const mapData = ref([])
+
 function updateMapData(data) {
-  const xxx: mapCus = { name: '', lng: 1, lat: 1 }
-  for (let index = 0; index < data.length; index++) {
-    xxx.name = data[index].name,
-      xxx.lat = data[index].lat,
-      xxx.lng = data[index].lng
-  }
-  mapData.value.push(xxx)
-}
-
-
-
-const postMapData = (item: Item) => {
+  // const xxx:any = { name: '', lng: 1, lat: 1 }
+  // console.log(data)
+  // for (let index = 0; index < data.length; index++) {
+  //     xxx.name = data[index].name,
+  //     xxx.lat = data[index].lat,
+  //     xxx.lng = data[index].lng,
+  //     store.mapData.push(xxx)
+  // } 
+  // console.log(store.mapData)
+  store.mapData=data;
   router.push({
-    path: '/map',
-    query: item
+    path:'/map'
   })
 }
-
-
-
 
 
 const tableColumns = ref([
@@ -982,7 +956,6 @@ const handleClose = (del: Cus, e: string) => {
 function insertTableData(tableDataObj: TableData) {
   tableDatas[weekday.value].value.push(tableDataObj)
 }
-const mapPostData = { 'yfcx': mapData }
 
 </script>
       

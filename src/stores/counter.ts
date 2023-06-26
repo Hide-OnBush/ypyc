@@ -10,3 +10,8 @@ export const useCounterStore = defineStore('counter', () => {
 
   return { count, doubleCount, increment }
 })
+
+export const useMapStore=defineStore('mapstore',()=>{
+  const mapData=ref([])
+  return {mapData}
+})
